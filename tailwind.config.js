@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     backgroundColor: {
       default: colors.gray,
+      disabled: colors.warmGray,
       primary: colors.lightBlue,
       success: colors.green,
       warning: colors.yellow,
@@ -16,6 +17,11 @@ module.exports = {
       success: colors.white,
       warning: colors.white,
       danger: colors.white,
+    },
+  },
+  variants: {
+    extend: {
+      backgroundColor: ["active"],
     },
   },
 };
