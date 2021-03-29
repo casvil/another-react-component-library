@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Button = ({ disabled, kind, onClick, size, style, value }) => (
   <input

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "../public/index.css";
 import "tailwindcss/dist/tailwind.css";
 
-import Button from "./Button.jsx";
+import { Button } from "./components";
 
 ReactDOM.render(
   <React.Fragment>
