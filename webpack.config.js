@@ -8,7 +8,11 @@ module.exports = {
   output: {
     filename: "index.js",
     path: path.resolve(__dirname, "dist"),
-    libraryTarget: "commonjs",
+    library: {
+      name: "AnotherReactComponentLibrary",
+      type: "var",
+      export: "default",
+    },
   },
   plugins: [new CleanWebpackPlugin()],
   module: {
