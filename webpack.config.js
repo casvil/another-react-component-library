@@ -9,9 +9,7 @@ module.exports = {
     filename: "index.js",
     path: path.resolve(__dirname, "dist"),
     library: {
-      name: "AnotherReactComponentLibrary",
-      type: "var",
-      export: "default",
+      type: "commonjs",
     },
   },
   plugins: [new CleanWebpackPlugin()],
