@@ -1,28 +1,42 @@
 {
+  "name": "another-react-component-library",
+  "version": "0.0.0",
+  "description": "This is just another React component library",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "snowpack dev",
-    "build": "snowpack build",
-    "test": "jest"
+    "build": "webpack --mode production",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/casvil/another-react-library-component.git"
+  },
+  "author": "David Casanellas",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/casvil/another-react-library-component/issues"
+  },
+  "homepage": "https://github.com/casvil/another-react-library-component#readme",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.13.12",
-    "@babel/preset-react": "^7.13.13",
-    "@snowpack/app-scripts-react": "^2.0.1",
-    "@snowpack/plugin-babel": "^2.1.6",
-    "@snowpack/plugin-postcss": "^1.2.1",
-    "@snowpack/plugin-react-refresh": "^2.4.0",
-    "@testing-library/react": "^11.2.5",
-    "autoprefixer": "^10.2.5",
-    "babel-jest": "^26.6.3",
-    "jest": "^26.6.3",
-    "postcss": "^8.2.8",
-    "prop-types": "^15.7.2",
-    "react-test-renderer": "^17.0.2",
-    "snowpack": "^3.0.1",
-    "tailwindcss": "^2.0.4"
-  },
-  "dependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-links": "^6.3.7",
+    "@storybook/builder-webpack5": "^6.3.7",
+    "@storybook/manager-webpack5": "^6.3.7",
+    "@storybook/react": "^6.3.7",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "path": "^0.12.7",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }
