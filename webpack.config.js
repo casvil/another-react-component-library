@@ -9,7 +9,8 @@ module.exports = {
     filename: "index.js",
     path: path.resolve(__dirname, "dist"),
     library: {
-      type: "commonjs",
+      name: "AnotherReactComponentLibrary",
+      type: "umd",
     },
   },
   plugins: [new CleanWebpackPlugin()],
