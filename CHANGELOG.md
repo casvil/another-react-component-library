@@ -9,6 +9,10 @@
 ### Changed
 
 - Restart project from 0 [[#3]](https://github.com/casvil/another-react-component-library/issues/3)
+- Add static storybook build [[#14]](https://github.com/casvil/another-react-component-library/issues/14)
+
+### Added
+
 - Minor improvements in webpack and storybook configuration files [[#8]](https://github.com/casvil/another-react-component-library/issues/8)
 
 <!--[unreleased]: URL to compare v0.2.0 to master
