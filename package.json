@@ -7,7 +7,8 @@
     "build": "webpack --mode production",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest"
+    "test": "jest --coverage",
+    "debug-test": "jest --coverage --detectOpenHandles"
   },
   "repository": {
     "type": "git",
