@@ -2,6 +2,10 @@
 
 <!--## [Unreleased]-->
 
+### Added
+
+- Add testing [[#6]](https://github.com/casvil/another-react-component-library/issues/6)
+
 ### Changed
 
 - Restart project from 0 [[#3]](https://github.com/casvil/another-react-component-library/issues/3)
