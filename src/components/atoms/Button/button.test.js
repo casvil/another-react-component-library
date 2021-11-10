@@ -1,26 +1,9 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
+import { render } from "@testing-library/react";
 
-import Button from "./";
+import { PrimaryButton } from "./Buttons";
 
-let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
-
-it("renders with text content", () => {
-  act(() => {
-    render(<Button content="text" />, container);
-  });
-  expect(container.textContent).toBe("text");
+test("Renders a Primary Button", () => {
+  const { container } = render(<PrimaryButton />);
+  expect(container.firstChild).toMatchSnapshot();
 });

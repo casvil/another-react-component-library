@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders a Primary Button 1`] = `
+<button
+  class="sc-bdvvtL sc-gsDKAQ blxTGy dOiKxo"
+/>
+`;
