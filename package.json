@@ -4,6 +4,7 @@
   "description": "This is just another React component library",
   "main": "dist/index.js",
   "scripts": {
+    "prebuild": "npm run test",
     "build": "webpack --mode production",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
