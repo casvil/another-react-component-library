@@ -1,6 +1,6 @@
-build
 node_modules
 dist
 coverage
+storybook-static
 
 .DS_Store
