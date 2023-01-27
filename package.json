@@ -1,6 +1,6 @@
 {
   "name": "another-react-component-library",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "This is just another React component library",
   "main": "dist/index.js",
   "scripts": {
