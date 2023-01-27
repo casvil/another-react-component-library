@@ -1,4 +1,3 @@
-import Button from "./components/atoms/Button";
-import Select from "./components/atoms/Select";
+import Clock from "./components/Clock/Clock";
 
-export { Button, Select };
+export { Clock };
