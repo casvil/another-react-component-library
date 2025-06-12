@@ -110,7 +110,7 @@ const Circle = ({
   );
 };
 
-const Clock = ({ restartOnEnding, startTime, width }) => {
+const Clock = ({ restartOnEnding = false, startTime = 60, width }) => {
   const [timeStarted, setTimeStarted] = useState(false);
   const [initialTime, setInitialTime] = useState(startTime);
   const [time, setTime] = useState(initialTime);
@@ -144,11 +144,6 @@ Clock.propTypes = {
   restartOnEnding: PropTypes.bool,
   startTime: PropTypes.number,
   width: PropTypes.number.isRequired,
-};
-
-Clock.defaultProps = {
-  restartOnEnding: false,
-  startTime: 60,
 };
 
 export default Clock;
