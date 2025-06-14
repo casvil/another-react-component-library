@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node", "@vitest/globals", "@testing-library/jest-dom"],
+    "types": ["node", "@testing-library/jest-dom"],
     "declaration": true,
     "declarationDir": "dist",
     "emitDeclarationOnly": true,
