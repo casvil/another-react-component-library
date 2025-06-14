@@ -1,6 +1,7 @@
 {
   "name": "another-react-component-library",
   "version": "0.1.2",
+  "description": "A customizable React 19 component library build with Vite, Tailwind CSS v4 and TypeScript.",
   "type": "module",
   "files": [
     "dist"
