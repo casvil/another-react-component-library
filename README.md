@@ -28,14 +28,10 @@ npm i another-react-component-library
 ### 🧪 Use it!
 
 ```typescript
-import { Card, Button } from "another-react-component-library";
+import { Button } from "another-react-component-library";
 
 function App() {
-  return (
-    <Card>
-      <Button onClick={() => alert("Boom!")}>Launch</Button>
-    </Card>
-  );
+  return <Button onClick={() => alert("Boom!")}>Launch</Button>;
 }
 ```
 
