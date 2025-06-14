@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["node", "@vitest/globals", "@testing-library/jest-dom"],
     "declaration": true,
     "declarationDir": "dist",
     "emitDeclarationOnly": true,
@@ -9,7 +9,7 @@
     "module": "ESNext",
     "target": "ESNext",
     "moduleResolution": "bundler",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
   },
   "include": ["lib"]
 }

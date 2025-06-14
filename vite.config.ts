@@ -13,7 +13,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "lib/main.ts"),
-      name: "AnotherReactComponentLibrary",
+      name: "another-react-component-library",
       // the proper extensions will be added
       fileName: "another-react-component-library",
     },
@@ -29,5 +29,10 @@ export default defineConfig({
         },
       },
     },
+  },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: "./vitest.setup.ts", 
   },
 });
