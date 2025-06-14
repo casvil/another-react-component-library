@@ -1,35 +1,49 @@
-import './button.css';
+import { ButtonHTMLAttributes } from 'react';
+import clsx from 'clsx'; 
 
-export interface ButtonProps {
-  /** Is this the principal call to action on the page? */
-  primary?: boolean;
-  /** What background color to use */
-  backgroundColor?: string;
-  /** How large should the button be? */
-  size?: 'small' | 'medium' | 'large';
-  /** Button contents */
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'sm' | 'md' | 'lg';
   label: string;
-  /** Optional click handler */
-  onClick?: () => void;
+  icon?: React.ReactNode;
+  iconPosition?: 'left' | 'right';
 }
 
-/** Primary UI component for user interaction */
 export const Button = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
+  variant = 'primary',
+  size = 'md',
   label,
+  icon,
+  iconPosition = 'left',
+  className,
+  disabled = false,
   ...props
 }: ButtonProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+  const base =
+    'inline-flex items-center justify-center font-semibold rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
+
+  const variants = {
+    primary: 'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500',
+    secondary: 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-400',
+    tertiary: 'bg-transparent text-gray-800 hover:bg-gray-100 focus:ring-gray-300 border border-gray-300',
+  };
+
+  const sizes = {
+    sm: 'text-sm px-3 py-1.5',
+    md: 'text-base px-4 py-2',
+    lg: 'text-lg px-5 py-3',
+  };
+
   return (
     <button
       type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={{ backgroundColor }}
+      className={clsx(base, variants[variant], sizes[size], className)}
+      disabled={disabled}
       {...props}
     >
+      {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
       {label}
+      {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
     </button>
   );
 };
