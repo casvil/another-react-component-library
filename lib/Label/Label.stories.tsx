@@ -8,6 +8,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
+  tags: ["autodocs"],
   args: {
     htmlFor: "input-id",
     children: "Full Name",
