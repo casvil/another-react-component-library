@@ -58,5 +58,14 @@
     "vite": "^6.3.5",
     "vite-plugin-css-injected-by-js": "^3.5.2",
     "vitest": "^3.2.3"
-  }
+  },
+  "keywords": [
+    "react",
+    "component-library",
+    "ui-kit",
+    "tailwindcss",
+    "typescript",
+    "vite",
+    "storybook"
+  ]
 }
