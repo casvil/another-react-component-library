@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
+
 import { Button, ButtonProps } from "./Button";
-import { ArrowRight, ArrowLeft, Check } from "lucide-react";
 
 const meta = {
   title: "atoms/Button",
