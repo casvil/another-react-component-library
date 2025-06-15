@@ -9,7 +9,7 @@
     "module": "ESNext",
     "target": "ESNext",
     "moduleResolution": "bundler",
-    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   },
   "include": ["lib"]
 }
