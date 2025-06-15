@@ -36,3 +36,10 @@ export const LongHelperText: Story = {
       "This information is used to send you notifications and password resets.",
   },
 };
+
+export const WithCustomStyles: Story = {
+  args: {
+    children: "Custom colored helper text",
+    className: "text-red-600 italic",
+  },
+};

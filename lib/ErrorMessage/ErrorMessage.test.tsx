@@ -20,4 +20,17 @@ describe("ErrorMessage", () => {
     expect(alert).toHaveTextContent("This is an error");
     expect(alert).toHaveAttribute("id", "error-1");
   });
+
+  it("applies custom className and props", () => {
+    render(
+      <ErrorMessage id="error-2" className="italic" data-testid="error">
+        Something went wrong
+      </ErrorMessage>
+    );
+
+    const error = screen.getByTestId("error");
+
+    expect(error).toHaveClass("italic");
+    expect(error).toHaveAttribute("role", "alert");
+  });
 });
