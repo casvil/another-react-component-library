@@ -7,8 +7,6 @@ import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const CI = process.env.CI === "true";
-
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), cssInjectedByJsPlugin()],
@@ -31,11 +29,5 @@ export default defineConfig({
         },
       },
     },
-  },
-  test: {
-    environment: "jsdom",
-    globals: true,
-    setupFiles: "./vitest.setup.ts",
-    reporters: CI ? [["default", { summary: false }]] : ["verbose"],
   },
 });
