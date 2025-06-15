@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from "@storybook/react";
 
-import { ErrorMessage, ErrorMessageProps } from "./ErrorMessage";
+import { ErrorMessage } from "./ErrorMessage";
 
 const meta = {
   title: "atoms/ErrorMessage",
   component: ErrorMessage,
-    parameters: {
+  parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
@@ -24,5 +24,12 @@ export const Default: Story = {};
 export const Hidden: Story = {
   args: {
     children: undefined,
+  },
+};
+
+export const WithCustomStyles: Story = {
+  args: {
+    children: "Bold and red error message",
+    className: "font-bold underline",
   },
 };

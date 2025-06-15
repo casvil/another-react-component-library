@@ -18,4 +18,23 @@ describe("HelperText", () => {
     expect(helperText).toHaveTextContent("This is helper text");
     expect(helperText).toHaveAttribute("id", "helper-1");
   });
+
+  it("applies custom className and props", () => {
+    render(
+      <HelperText
+        id="helper-custom"
+        className="text-red-500"
+        data-testid="helper"
+      >
+        Custom styled helper
+      </HelperText>
+    );
+
+    const helperText = screen.getByTestId("helper");
+
+    expect(helperText).toBeInTheDocument();
+    expect(helperText).toHaveClass("text-red-500");
+    expect(helperText).toHaveAttribute("role", "note");
+    expect(helperText).toHaveAttribute("id", "helper-custom");
+  });
 });
