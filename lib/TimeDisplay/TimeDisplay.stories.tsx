@@ -1,6 +1,5 @@
-// lib/TimeDisplay/TimeDisplay.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
-import { TimeDisplay, TimeDisplayProps } from "./TimeDisplay";
+import { TimeDisplay } from "./TimeDisplay";
 
 const meta = {
   title: "atoms/TimeDisplay",
