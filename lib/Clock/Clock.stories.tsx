@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Clock, ClockProps } from "./Clock";
+
+import { Clock } from "./Clock";
 
 const meta = {
   title: "molecules/Clock",
@@ -26,11 +27,10 @@ export const Default: Story = {
   },
 };
 
-export const BorderedDigital: Story = {
+export const Bordered: Story = {
   args: {
     format: "HH:mm:ss",
     bordered: true,
-    className: "font-digital-7 text-2xl",
   },
 };
 
