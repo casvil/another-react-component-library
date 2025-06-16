@@ -9,7 +9,15 @@ export interface CheckboxProps
   labelClassName?: string; // for the <span>
   wrapperClassName?: string; // for the outer <label>
 }
-
+/* Checkbox atom component.
+ * Renders a native checkbox input wrapped with a label.
+ * Supports controlled `checked` state, disabled state,
+ * and an indeterminate state indicated via `aria-checked="mixed"`.
+ * Accepts a `label` to associate with the input for accessibility.
+ * Allows custom styling via `className` applied to the input element.
+ * Uses Tailwind CSS for basic styling and respects disabled styling.
+ * Supports forwarding refs to the underlying input element.
+ */
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {

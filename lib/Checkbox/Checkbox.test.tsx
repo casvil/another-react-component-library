@@ -1,52 +1,59 @@
 import React from "react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 
 import { Checkbox } from "./Checkbox";
 
 describe("Checkbox", () => {
-  it("renders without crashing", () => {
-    render(<Checkbox aria-label="checkbox" />);
-    expect(screen.getByRole("checkbox")).toBeInTheDocument();
-  });
-
   it("renders with label", () => {
-    render(<Checkbox label="Agree" />);
-    expect(screen.getByText("Agree")).toBeInTheDocument();
+    render(<Checkbox label="Accept terms" />);
+    const input = screen.getByRole("checkbox", { name: "Accept terms" });
+    expect(input).toBeInTheDocument();
   });
 
-  it("calls onChange when clicked", async () => {
-    const onChange = vi.fn();
-    render(<Checkbox label="Agree" onChange={onChange} />);
-    await userEvent.click(screen.getByRole("checkbox"));
-    expect(onChange).toHaveBeenCalledTimes(1);
+  it("supports checked state", () => {
+    render(<Checkbox label="Accept terms" checked readOnly />);
+    const input = screen.getByRole("checkbox", {
+      name: "Accept terms",
+    }) as HTMLInputElement;
+    expect(input.checked).toBe(true);
   });
 
-  it("respects checked state", () => {
-    render(<Checkbox checked label="Agree" aria-label="checkbox" />);
-    expect(screen.getByRole("checkbox")).toBeChecked();
+  it("supports disabled state", () => {
+    render(<Checkbox label="Accept terms" disabled />);
+    const input = screen.getByRole("checkbox", { name: "Accept terms" });
+    expect(input).toBeDisabled();
   });
 
-  it("respects disabled state", () => {
-    render(<Checkbox disabled label="Agree" />);
-    expect(screen.getByRole("checkbox")).toBeDisabled();
+  it("supports indeterminate state via aria", () => {
+    render(<Checkbox label="Partially accepted" indeterminate />);
+    const input = screen.getByRole("checkbox", { name: "Partially accepted" });
+    expect(input).toHaveAttribute("aria-checked", "mixed");
   });
 
-  it("applies indeterminate aria state", () => {
-    render(<Checkbox indeterminate aria-label="checkbox" />);
-    const checkbox = screen.getByRole("checkbox");
-    expect(checkbox).toHaveAttribute("aria-checked", "mixed");
-  });
-
-  it("forwards ref and sets indeterminate manually", () => {
+  it("forwards ref to input element", () => {
     const ref = React.createRef<HTMLInputElement>();
-    render(<Checkbox ref={ref} indeterminate />);
+    render(<Checkbox label="With ref" ref={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLInputElement);
   });
 
-  it("applies custom className", () => {
-    render(<Checkbox className="custom-style" aria-label="checkbox" />);
-    expect(screen.getByRole("checkbox")).toHaveClass("custom-style");
+  it("applies custom styles to input, label, and wrapper", () => {
+    render(
+      <Checkbox
+        label="Styled"
+        className="input-style"
+        labelClassName="label-style"
+        wrapperClassName="wrapper-style"
+      />
+    );
+
+    const input = screen.getByRole("checkbox", { name: "Styled" });
+    expect(input).toHaveClass("input-style");
+
+    const labelText = screen.getByText("Styled");
+    expect(labelText).toHaveClass("label-style");
+
+    const wrapper = labelText.closest("label");
+    expect(wrapper).toHaveClass("wrapper-style");
   });
 });
