@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 
 import { Label } from "../Label/Label";
 import { Input } from "../Input/Input";
@@ -15,6 +16,7 @@ export interface InputFieldProps extends React.ComponentProps<typeof Input> {
  * InputField molecule component.
  * Combines Label, Input, HelperText, and ErrorMessage into a single accessible form field.
  * Manages ARIA attributes for error and helper text associations.
+ * Delegates icon handling and padding fully to Input component.
  */
 export const InputField = ({
   id,
@@ -35,16 +37,19 @@ export const InputField = ({
   return (
     <div className="space-y-1">
       {label && <Label htmlFor={inputId}>{label}</Label>}
+
       <Input
         id={inputId}
         aria-invalid={!!error}
         aria-describedby={describedBy || undefined}
         className={className}
-        {...props}
+        {...props} // includes icon, iconPosition, etc.
       />
+
       {!error && helperText && (
         <HelperText id={`${inputId}-helper`}>{helperText}</HelperText>
       )}
+
       {error && <ErrorMessage id={`${inputId}-error`}>{error}</ErrorMessage>}
     </div>
   );
