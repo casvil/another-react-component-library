@@ -8,6 +8,6 @@ A component is **done** when:
 - [ ] Supports `className` for custom styles
 - [ ] Component is documented and has Storybook stories
 - [ ] Has unit tests and tests are passing
-- [ ] Passes build, lint, and type checks
-- [ ] A11y-compliant (accessible)
-- [ ] Properly exported
+- [ ] Passes build
+- [ ] Aria compliant (accessible)
+- [ ] Component is exported
