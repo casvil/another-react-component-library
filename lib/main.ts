@@ -1,5 +1,6 @@
 import { Avatar } from "./Avatar/Avatar";
 import { Button } from "./Button/Button";
+import { Checkbox } from "./Checkbox/Checkbox";
 import { Clock } from "./Clock/Clock";
 import { ErrorMessage } from "./ErrorMessage/ErrorMessage";
 import { HelperText } from "./HelperText/HelperText";
@@ -14,6 +15,7 @@ import { Tooltip } from "./Tooltip/Tooltip";
 export {
   Avatar,
   Button,
+  Checkbox,
   Clock,
   ErrorMessage,
   HelperText,
