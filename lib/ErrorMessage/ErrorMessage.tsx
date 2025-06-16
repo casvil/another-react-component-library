@@ -8,6 +8,11 @@ export interface ErrorMessageProps
   className?: string;
 }
 
+/**
+ * ErrorMessage atom component.
+ * Displays an accessible error message below a form field.
+ * Renders nothing if no children are provided and sets `role="alert"` for screen readers.
+ */
 export const ErrorMessage = ({
   id,
   children,

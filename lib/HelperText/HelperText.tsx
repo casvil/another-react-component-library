@@ -8,6 +8,11 @@ export interface HelperTextProps
   className?: string;
 }
 
+/**
+ * HelperText atom component.
+ * Provides additional context or guidance below a form field.
+ * Renders nothing if no content is passed and uses `role="note"` for accessibility.
+ */
 export const HelperText = ({
   id,
   children,

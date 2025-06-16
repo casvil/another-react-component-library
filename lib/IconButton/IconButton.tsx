@@ -4,11 +4,16 @@ import clsx from "clsx";
 export interface IconButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode;
-  "aria-label": string; // required for accessibility
+  "aria-label": string;
   size?: "sm" | "md" | "lg";
   variant?: "primary" | "secondary" | "tertiary";
 }
 
+/**
+ * IconButton atom component.
+ * Renders a button containing only an icon, with variant and size support.
+ * Requires an `aria-label` for accessibility and is styled with Tailwind CSS.
+ */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (
     {
