@@ -10,6 +10,11 @@ export interface TooltipProps {
   position?: "top" | "bottom" | "left" | "right";
 }
 
+/**
+ * Tooltip atom component.
+ * Displays a tooltip with customizable content and position on hover or focus.
+ * Adds ARIA attributes for accessibility and supports configurable show delay.
+ */
 export const Tooltip = ({
   children,
   content,

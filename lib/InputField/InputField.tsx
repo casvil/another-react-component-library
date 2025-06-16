@@ -11,6 +11,11 @@ export interface InputFieldProps extends React.ComponentProps<typeof Input> {
   helperText?: string;
 }
 
+/**
+ * InputField molecule component.
+ * Combines Label, Input, HelperText, and ErrorMessage into a single accessible form field.
+ * Manages ARIA attributes for error and helper text associations.
+ */
 export const InputField = ({
   id,
   label,

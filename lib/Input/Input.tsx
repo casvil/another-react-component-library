@@ -4,6 +4,11 @@ import clsx from "clsx";
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
 
+/**
+ * Input atom component.
+ * Renders a styled text input with support for disabled and read-only states.
+ * Uses Tailwind CSS for styling and supports all native input attributes.
+ */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => {
     return (

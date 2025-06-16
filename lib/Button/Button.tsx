@@ -9,6 +9,11 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconPosition?: "left" | "right";
 }
 
+/**
+ * Button atom component.
+ * Renders a styled button with support for variants, sizes, and optional icons.
+ * Uses Tailwind for styling and supports accessibility, custom classes, and disabled state.
+ */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
