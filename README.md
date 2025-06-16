@@ -84,5 +84,3 @@ Have an idea or want to improve a component? PRs welcome!
 ## 🪪 License
 
 [MIT](./LICENSE) — use, remix, or fork away!
-
-> Made with ✨ by devs who care.
