@@ -1,0 +1,3 @@
+import{j as a}from"./jsx-runtime-D_zvdyIk.js";import{c as n}from"./clsx-B-dksMZM.js";const s=({htmlFor:t,children:e,className:r,...o})=>e?a.jsx("label",{htmlFor:t,className:n("block text-sm font-medium text-gray-700",r),...o,children:e}):null;s.__docgenInfo={description:`Label atom component.
+Renders a styled label linked to a form input via htmlFor.
+Returns null if no children are provided.`,methods:[],displayName:"Label",props:{htmlFor:{required:!0,tsType:{name:"string"},description:""},children:{required:!1,tsType:{name:"ReactReactNode",raw:"React.ReactNode"},description:""}}};export{s as L};
