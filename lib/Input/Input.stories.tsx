@@ -1,9 +1,11 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { Search, Send } from "lucide-react";
 
 import { Input } from "./Input";
+import { Icon } from "../Icon/Icon";
 
 const meta: Meta<typeof Input> = {
-  title: "atoms/Input",
+  title: "molecules/Input",
   component: Input,
   parameters: {
     layout: "centered",
@@ -61,5 +63,21 @@ export const Invalid: Story = {
   args: {
     "aria-invalid": true,
     placeholder: "Invalid input",
+  },
+};
+
+export const WithLeftIcon: Story = {
+  args: {
+    placeholder: "Search...",
+    icon: <Icon icon={<Search />} size={18} />,
+    iconPosition: "left",
+  },
+};
+
+export const WithRightIcon: Story = {
+  args: {
+    placeholder: "Search...",
+    icon: <Icon icon={<Send />} size={18} />,
+    iconPosition: "right",
   },
 };

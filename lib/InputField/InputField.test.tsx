@@ -1,10 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { Search } from "lucide-react";
 
 import { InputField } from "./InputField";
 
 describe("InputField", () => {
-  it("renders label, input, helperText", () => {
+  it("renders without crashing", () => {
+    render(<InputField label="Test" />);
+    expect(screen.getByLabelText("Test")).toBeInTheDocument();
+  });
+
+  it("renders label, input, and helperText", () => {
     render(
       <InputField
         label="Email"
@@ -20,12 +26,9 @@ describe("InputField", () => {
   });
 
   it("renders error message and aria attributes", () => {
-    render(
-      <InputField label="Email" error="Required" data-testid="inputfield" />
-    );
-
-    expect(screen.getByText("Required")).toBeInTheDocument();
+    render(<InputField label="Email" error="Required" />);
     const input = screen.getByLabelText("Email");
+    expect(screen.getByText("Required")).toBeInTheDocument();
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAttribute("aria-describedby");
   });
@@ -45,15 +48,29 @@ describe("InputField", () => {
   });
 
   it("accepts and forwards className to input", () => {
-    render(
-      <InputField label="Email" className="w-64" data-testid="inputfield" />
-    );
-
+    render(<InputField label="Email" className="w-64" />);
     expect(screen.getByLabelText("Email")).toHaveClass("w-64");
   });
 
   it("supports disabled input", () => {
     render(<InputField label="Email" disabled />);
     expect(screen.getByLabelText("Email")).toBeDisabled();
+  });
+
+  it("renders icon if provided", () => {
+    render(
+      <InputField
+        label="Search"
+        icon={<Search data-testid="icon" />}
+        placeholder="Search..."
+      />
+    );
+    expect(screen.getByTestId("icon")).toBeInTheDocument();
+  });
+
+  it("removes input padding when no icon is provided", () => {
+    render(<InputField label="Search" placeholder="Type..." />);
+    const input = screen.getByLabelText("Search");
+    expect(input.className.includes("pl-10")).toBe(false);
   });
 });

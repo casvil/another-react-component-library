@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { MessageCircleWarning, User } from "lucide-react";
 
 import { InputField } from "./InputField";
+import { Icon } from "../Icon/Icon";
 
 const meta = {
   title: "molecules/InputField",
@@ -27,14 +29,36 @@ export const WithHelperText: Story = {
   },
 };
 
-export const WithError: Story = {
-  args: {
-    error: "Email is required",
-  },
-};
-
 export const Disabled: Story = {
   args: {
     disabled: true,
+  },
+};
+
+export const WithError: Story = {
+  args: {
+    label: "Username",
+    placeholder: "Enter your username",
+    icon: <Icon icon={<MessageCircleWarning />} size="sm" />,
+    iconPosition: "left",
+    error: "This field is required",
+  },
+};
+
+export const WithLeftIcon: Story = {
+  args: {
+    label: "Username",
+    placeholder: "Enter your username",
+    icon: <Icon icon={<User />} size="sm" />,
+    iconPosition: "left",
+  },
+};
+
+export const WithRightIcon: Story = {
+  args: {
+    label: "Username",
+    placeholder: "Enter your username",
+    icon: <Icon icon={<User />} size="sm" />,
+    iconPosition: "right",
   },
 };
