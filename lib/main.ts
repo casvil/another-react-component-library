@@ -1,3 +1,4 @@
+import { Avatar } from "./Avatar/Avatar";
 import { Button } from "./Button/Button";
 import { Clock } from "./Clock/Clock";
 import { ErrorMessage } from "./ErrorMessage/ErrorMessage";
@@ -10,6 +11,7 @@ import { TimeDisplay } from "./TimeDisplay/TimeDisplay";
 import { Tooltip } from "./Tooltip/Tooltip";
 
 export {
+  Avatar,
   Button,
   Clock,
   ErrorMessage,
