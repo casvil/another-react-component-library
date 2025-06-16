@@ -1,0 +1,3 @@
+import{j as r}from"./jsx-runtime-D_zvdyIk.js";import{r as e}from"./iframe-BooBQO3N.js";import{c as n}from"./clsx-B-dksMZM.js";const a=e.forwardRef(({className:o,...t},s)=>r.jsx("input",{ref:s,className:n("block rounded-md border px-3 py-2 text-sm shadow-sm","focus:outline-none focus:ring-2 focus:ring-blue-500",t.disabled&&"bg-gray-100 cursor-not-allowed",t.readOnly&&"bg-gray-50 text-gray-500",o),...t}));a.__docgenInfo={description:`Input atom component.
+Renders a styled text input with support for disabled and read-only states.
+Uses Tailwind CSS for styling and supports all native input attributes.`,methods:[],displayName:"Input"};export{a as I};
