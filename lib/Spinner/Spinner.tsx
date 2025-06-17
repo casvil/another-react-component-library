@@ -1,6 +1,6 @@
-import { LoaderCircle } from "lucide-react";
-import clsx from "clsx";
 import React from "react";
+import clsx from "clsx";
+import LoaderCircle from "lucide-react/icons/loader-circle";
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "sm" | "md" | "lg";
