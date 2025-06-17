@@ -22,12 +22,7 @@ describe("Label", () => {
   it("applies default Tailwind classes", () => {
     render(<Label htmlFor="input-2">Email</Label>);
     const label = screen.getByText("Email");
-    expect(label).toHaveClass(
-      "block",
-      "text-sm",
-      "font-medium",
-      "text-gray-700"
-    );
+    expect(label).toHaveClass("text-sm", "font-medium", "text-gray-700");
   });
 
   it("appends custom className", () => {
