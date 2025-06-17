@@ -74,8 +74,6 @@ describe("BadgeAvatar", () => {
     expect(avatar.className).toContain(expectedClass);
   });
 
-  // ✅ ARIA TESTS
-
   it("has role=status on the badge for screen reader announcements", () => {
     render(<BadgeAvatar avatarProps={{ name: "Aria" }}>Aria</BadgeAvatar>);
     const badge = screen.getByRole("status");
