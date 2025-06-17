@@ -5,11 +5,11 @@ import { Label } from "../Label/Label";
 
 export interface TextAreaProps
   extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> {
-  label?: string;
-  labelPosition?: "above" | "beside";
   className?: string;
-  wrapperClassName?: string;
+  label?: string;
   labelClassName?: string;
+  labelPosition?: "above" | "beside";
+  wrapperClassName?: string;
 }
 
 /**
