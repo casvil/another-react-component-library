@@ -4,7 +4,7 @@ import { TextArea } from "./TextArea";
 import { withFullWidthRoot } from "../../.storybook/decorators/withFullWidthRoot";
 
 const meta = {
-  title: "atoms/TextArea",
+  title: "molecules/TextArea",
   component: TextArea,
   parameters: {
     layout: "centered",
