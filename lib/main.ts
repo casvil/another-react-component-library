@@ -13,6 +13,7 @@ export { InputField } from "./InputField/InputField";
 export { Label } from "./Label/Label";
 export { ProgressBar } from "./ProgressBar/ProgressBar";
 export { Radio } from "./Radio/Radio";
+export { Spinner } from "./Spinner/Spinner";
 export { TextArea } from "./TextArea/TextArea";
 export { TimeDisplay } from "./TimeDisplay/TimeDisplay";
 export { Tooltip } from "./Tooltip/Tooltip";
