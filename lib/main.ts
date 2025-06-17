@@ -11,5 +11,6 @@ export { IconButton } from "./IconButton/IconButton";
 export { Input } from "./Input/Input";
 export { InputField } from "./InputField/InputField";
 export { Label } from "./Label/Label";
+export { Radio } from "./Radio/Radio";
 export { TimeDisplay } from "./TimeDisplay/TimeDisplay";
 export { Tooltip } from "./Tooltip/Tooltip";
