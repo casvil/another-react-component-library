@@ -31,4 +31,11 @@ export default defineConfig({
       },
     },
   },
+  resolve: {
+    alias: {
+      "lucide-react/icons": fileURLToPath(
+        new URL("./node_modules/lucide-react/dist/esm/icons", import.meta.url)
+      ),
+    },
+  },
 });
