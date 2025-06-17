@@ -1,29 +1,13 @@
-import { Avatar } from "./Avatar/Avatar";
-import { Button } from "./Button/Button";
-import { Checkbox } from "./Checkbox/Checkbox";
-import { Clock } from "./Clock/Clock";
-import { ErrorMessage } from "./ErrorMessage/ErrorMessage";
-import { HelperText } from "./HelperText/HelperText";
-import { Icon } from "./Icon/Icon";
-import { IconButton } from "./IconButton/IconButton";
-import { Input } from "./Input/Input";
-import { InputField } from "./InputField/InputField";
-import { Label } from "./Label/Label";
-import { TimeDisplay } from "./TimeDisplay/TimeDisplay";
-import { Tooltip } from "./Tooltip/Tooltip";
-
-export {
-  Avatar,
-  Button,
-  Checkbox,
-  Clock,
-  ErrorMessage,
-  HelperText,
-  Icon,
-  IconButton,
-  Input,
-  InputField,
-  Label,
-  TimeDisplay,
-  Tooltip,
-};
+export { Avatar } from "./Avatar/Avatar";
+export { Button } from "./Button/Button";
+export { Checkbox } from "./Checkbox/Checkbox";
+export { Clock } from "./Clock/Clock";
+export { ErrorMessage } from "./ErrorMessage/ErrorMessage";
+export { HelperText } from "./HelperText/HelperText";
+export { Icon } from "./Icon/Icon";
+export { IconButton } from "./IconButton/IconButton";
+export { Input } from "./Input/Input";
+export { InputField } from "./InputField/InputField";
+export { Label } from "./Label/Label";
+export { TimeDisplay } from "./TimeDisplay/TimeDisplay";
+export { Tooltip } from "./Tooltip/Tooltip";
