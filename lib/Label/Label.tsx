@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 export interface LabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement> {
-  htmlFor: string;
+  htmlFor?: string;
   children?: React.ReactNode;
 }
 
