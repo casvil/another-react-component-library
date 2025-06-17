@@ -42,13 +42,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const WithIcon: Story = {
-  args: {
-    children: "Info",
-    variant: "info",
-  },
-};
-
 export const Success: Story = {
   args: {
     children: "Success",
@@ -73,6 +66,6 @@ export const Error: Story = {
 export const CustomStyle: Story = {
   args: {
     children: "Custom",
-    className: "bg-purple-100 text-purple-800 border border-purple-300",
+    className: "px-3 bg-purple-100 text-purple-800 border border-purple-300",
   },
 };
