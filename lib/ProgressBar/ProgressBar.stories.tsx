@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { ProgressBar } from "./ProgressBar";
+import { withFullWidthRoot } from "../../.storybook/decorators/withFullWidthRoot";
 
 const meta = {
   title: "atoms/ProgressBar",
@@ -21,6 +21,7 @@ const meta = {
     barClassName: { control: "text" },
     labelClassName: { control: "text" },
   },
+  decorators: [withFullWidthRoot],
 } satisfies Meta<typeof ProgressBar>;
 
 export default meta;
