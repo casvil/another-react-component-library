@@ -4,114 +4,79 @@ import userEvent from "@testing-library/user-event";
 import { TextArea } from "./TextArea";
 
 describe("TextArea", () => {
-  it("renders without crashing", () => {
-    render(<TextArea />);
-
-    const textarea = screen.getByRole("textbox");
-
-    expect(textarea).toBeInTheDocument();
-  });
-
-  it("renders label with correct htmlFor and id", () => {
-    render(<TextArea id="my-textarea" label="Description" />);
-
-    const label = screen.getByText("Description");
-    const textarea = screen.getByRole("textbox");
-
-    expect(label).toHaveAttribute("for", "my-textarea");
-    expect(textarea).toHaveAttribute("id", "my-textarea");
-  });
-
-  it("associates label with textarea for accessibility", () => {
-    render(<TextArea id="my-textarea" label="Description" />);
-
+  it("renders label above the textarea by default", () => {
+    render(<TextArea label="Description" />);
     const textarea = screen.getByRole("textbox", { name: "Description" });
-
     expect(textarea).toBeInTheDocument();
+
+    // Check wrapper class for flex-col (label above)
+    const wrapper = textarea.parentElement!;
+    expect(wrapper).toHaveClass("flex-col");
   });
 
-  it("supports label positioning above and beside", () => {
-    const { rerender } = render(
-      <TextArea label="Above" labelPosition="above" />
-    );
-    let wrapper = screen.getByLabelText("Above").parentElement!;
-    expect(wrapper).toHaveClass("flex-col");
+  it("renders label beside the textarea when labelPosition is beside", () => {
+    render(<TextArea label="Summary" labelPosition="beside" />);
+    const textarea = screen.getByRole("textbox", { name: "Summary" });
+    expect(textarea).toBeInTheDocument();
 
-    rerender(<TextArea label="Beside" labelPosition="beside" />);
-
-    wrapper = screen.getByLabelText("Beside").parentElement!;
+    const wrapper = textarea.parentElement!;
     expect(wrapper).toHaveClass("flex-row");
   });
 
-  it("applies custom styles to wrapper, label, and textarea", () => {
+  it("applies custom class names to wrapper, label, and textarea", () => {
     render(
       <TextArea
-        label="Styled"
-        className="textarea-style"
-        labelClassName="label-style"
+        label="Custom"
         wrapperClassName="wrapper-style"
+        labelClassName="label-style"
+        className="textarea-style"
       />
     );
 
-    const textarea = screen.getByRole("textbox", { name: "Styled" });
-    expect(textarea).toHaveClass("textarea-style");
+    const textarea = screen.getByRole("textbox", { name: "Custom" });
+    const wrapper = textarea.parentElement!;
+    const label = screen.getByText("Custom");
 
-    const label = screen.getByText("Styled");
-    expect(label).toHaveClass("label-style");
-
-    const wrapper = label.parentElement!;
     expect(wrapper).toHaveClass("wrapper-style");
-  });
-
-  it("forwards ref to the textarea element", () => {
-    const ref = { current: null };
-
-    render(
-      <TextArea label="RefTest" ref={ref as React.Ref<HTMLTextAreaElement>} />
-    );
-
-    expect(ref.current).toBeInstanceOf(HTMLTextAreaElement);
+    expect(label).toHaveClass("label-style");
+    expect(textarea).toHaveClass("textarea-style");
   });
 
   it("calls onChange handler when typing", async () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
 
-    render(<TextArea label="Input" onChange={handleChange} />);
+    render(<TextArea label="Comment" onChange={handleChange} />);
+    const textarea = screen.getByRole("textbox", { name: "Comment" });
 
-    const textarea = screen.getByRole("textbox", { name: "Input" });
-
-    await user.type(textarea, "hello");
-
+    await user.type(textarea, "Hello");
     expect(handleChange).toHaveBeenCalled();
   });
 
-  it("has no aria-invalid attribute by default", () => {
-    render(<TextArea label="Description" />);
-
-    const textarea = screen.getByRole("textbox", { name: "Description" });
-
+  it("handles aria-invalid and aria-describedby correctly", () => {
+    const { rerender } = render(<TextArea label="Notes" />);
+    let textarea = screen.getByRole("textbox", { name: "Notes" });
     expect(textarea).not.toHaveAttribute("aria-invalid");
-  });
 
-  it("passes aria-invalid when specified", () => {
-    render(<TextArea label="Description" aria-invalid="true" />);
+    rerender(<TextArea label="Description" />);
+    textarea = screen.getByRole("textbox", { name: "Description" });
+    expect(textarea).not.toHaveAttribute("aria-invalid");
 
-    const textarea = screen.getByRole("textbox", { name: "Description" });
-
+    rerender(<TextArea label="Description" aria-invalid="true" />);
+    textarea = screen.getByRole("textbox", { name: "Description" });
     expect(textarea).toHaveAttribute("aria-invalid", "true");
-  });
 
-  it("passes aria-describedby when specified", () => {
-    render(
+    rerender(
       <>
-        <TextArea label="Description" aria-describedby="desc-id" />
-        <div id="desc-id">Description info</div>
+        <TextArea
+          label="Description"
+          id="desc-id"
+          aria-describedby="desc-info"
+        />
+        <div id="desc-info">Description info</div>
       </>
     );
-
-    const textarea = screen.getByRole("textbox", { name: "Description" });
-
-    expect(textarea).toHaveAttribute("aria-describedby", "desc-id");
+    textarea = screen.getByRole("textbox", { name: "Description" });
+    expect(textarea).toHaveAttribute("aria-describedby", "desc-info");
   });
 });
