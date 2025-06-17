@@ -73,12 +73,6 @@ export const NoLabel: Story = {
   },
 };
 
-// export const CustomStyle: Story = {
-//   args: {
-//     className: "text-green-600 focus:ring-green-500",
-//   },
-// };
-
 export const CustomStyled: Story = {
   args: {
     label: "Custom",
