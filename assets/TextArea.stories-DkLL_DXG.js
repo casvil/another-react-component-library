@@ -1,0 +1,15 @@
+import{j as r}from"./jsx-runtime-D_zvdyIk.js";import{r as i}from"./iframe-BtY6RC1z.js";import{c as l}from"./clsx-B-dksMZM.js";import{L as q}from"./Label-BnpzQARg.js";import{w as F}from"./withFullWidthRoot-BnUcBWVT.js";const x=i.forwardRef(({label:o,labelPosition:y="above",wrapperClassName:h,labelClassName:w,id:N,className:T,...v},C)=>{const S=i.useId(),t=N??S,j=y==="beside"?"flex-row":"flex-col";return r.jsxs("div",{className:l("flex gap-2",j,h),children:[o&&r.jsx(q,{htmlFor:t,className:w,children:o}),r.jsx("textarea",{id:t,ref:C,className:l("resize-none rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500",T),...v})]})});x.__docgenInfo={description:`TextArea molecule component.
+Renders a customizable <textarea> with optional label support, using Tailwind CSS styles.
+It supports label positioning (above or beside), accessibility via \`aria-*\` attributes,
+and custom styling through wrapper, label, and textarea class names.`,methods:[],displayName:"TextArea",props:{className:{required:!1,tsType:{name:"string"},description:""},label:{required:!1,tsType:{name:"string"},description:""},labelClassName:{required:!1,tsType:{name:"string"},description:""},labelPosition:{required:!1,tsType:{name:"union",raw:'"above" | "beside"',elements:[{name:"literal",value:'"above"'},{name:"literal",value:'"beside"'}]},description:"",defaultValue:{value:'"above"',computed:!1}},wrapperClassName:{required:!1,tsType:{name:"string"},description:""}},composes:["Omit"]};const P={title:"atoms/TextArea",component:x,parameters:{layout:"centered"},args:{label:"Description",placeholder:"Type here..."},tags:["autodocs"],argTypes:{labelPosition:{control:{type:"radio"},options:["above","beside"]}}},e={},s={args:{labelPosition:"beside"}},a={args:{className:"border-red-500",labelClassName:"text-indigo-700 font-semibold",wrapperClassName:"bg-yellow-100 p-4 rounded"},decorators:[F]};var n,d,c;e.parameters={...e.parameters,docs:{...(n=e.parameters)==null?void 0:n.docs,source:{originalSource:"{}",...(c=(d=e.parameters)==null?void 0:d.docs)==null?void 0:c.source}}};var p,m,u;s.parameters={...s.parameters,docs:{...(p=s.parameters)==null?void 0:p.docs,source:{originalSource:`{
+  args: {
+    labelPosition: "beside"
+  }
+}`,...(u=(m=s.parameters)==null?void 0:m.docs)==null?void 0:u.source}}};var b,g,f;a.parameters={...a.parameters,docs:{...(b=a.parameters)==null?void 0:b.docs,source:{originalSource:`{
+  args: {
+    className: "border-red-500",
+    labelClassName: "text-indigo-700 font-semibold",
+    wrapperClassName: "bg-yellow-100 p-4 rounded"
+  },
+  decorators: [withFullWidthRoot]
+}`,...(f=(g=a.parameters)==null?void 0:g.docs)==null?void 0:f.source}}};const W=["Default","LabelBeside","CustomStylesFullWidth"];export{a as CustomStylesFullWidth,e as Default,s as LabelBeside,W as __namedExportsOrder,P as default};
