@@ -23,7 +23,7 @@ export const Label = ({
   return (
     <label
       htmlFor={htmlFor}
-      className={clsx("block text-sm font-medium text-gray-700", className)}
+      className={clsx("text-sm font-medium text-gray-700", className)}
       {...props}
     >
       {children}
