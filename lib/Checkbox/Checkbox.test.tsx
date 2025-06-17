@@ -53,7 +53,7 @@ describe("Checkbox", () => {
     const labelText = screen.getByText("Styled");
     expect(labelText).toHaveClass("label-style");
 
-    const wrapper = labelText.closest("label");
+    const wrapper = labelText.closest("div");
     expect(wrapper).toHaveClass("wrapper-style");
   });
 });

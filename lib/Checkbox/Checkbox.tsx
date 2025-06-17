@@ -1,28 +1,27 @@
-import { forwardRef, InputHTMLAttributes } from "react";
+import { forwardRef, InputHTMLAttributes, useId } from "react";
 import clsx from "clsx";
+
+import { Label } from "../Label/Label";
 
 export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
   label?: string;
   indeterminate?: boolean;
   className?: string; // for the <input>
-  labelClassName?: string; // for the <span>
-  wrapperClassName?: string; // for the outer <label>
+  labelClassName?: string; // for the <Label>
+  wrapperClassName?: string; // for the outer <div>
 }
-/* Checkbox atom component.
- * Renders a native checkbox input wrapped with a label.
- * Supports controlled `checked` state, disabled state,
- * and an indeterminate state indicated via `aria-checked="mixed"`.
- * Accepts a `label` to associate with the input for accessibility.
- * Allows custom styling via `className` applied to the input element.
- * Uses Tailwind CSS for basic styling and respects disabled styling.
- * Supports forwarding refs to the underlying input element.
+
+/**
+ * Checkbox atom component.
+ * Renders a native checkbox input with an optional label using the custom Label component.
+ * Supports controlled and indeterminate states, as well as custom styling.
  */
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
       checked,
-      onChange,
+      id,
       label,
       indeterminate = false,
       className,
@@ -33,35 +32,35 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     },
     ref
   ) => {
+    const checkboxId = id || useId();
+
     return (
-      <label
+      <div
         className={clsx(
-          "inline-flex items-center space-x-2 cursor-pointer select-none",
-          disabled && "cursor-not-allowed opacity-50",
+          "inline-flex items-center space-x-2",
+          disabled && "opacity-50 cursor-not-allowed",
           wrapperClassName
         )}
       >
         <input
           ref={ref}
+          id={checkboxId}
           type="checkbox"
           checked={checked}
-          onChange={onChange}
           disabled={disabled}
           aria-checked={indeterminate ? "mixed" : checked}
           className={clsx(
-            "form-checkbox h-4 w-4 text-primary rounded border-gray-300 focus:ring focus:ring-primary/30",
+            "form-checkbox h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500",
             className
           )}
           {...rest}
         />
         {label && (
-          <span className={clsx("text-sm text-gray-800", labelClassName)}>
+          <Label className={labelClassName} htmlFor={checkboxId}>
             {label}
-          </span>
+          </Label>
         )}
-      </label>
+      </div>
     );
   }
 );
-
-Checkbox.displayName = "Checkbox";
