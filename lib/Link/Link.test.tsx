@@ -4,15 +4,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { Link } from './Link';
 
 describe('Link', () => {
-  beforeEach(() => {
-    // Mock window.location.assign to prevent navigation errors in jsdom
-    delete (window as any).location;
-    (window as any).location = {
-      ...window.location,
-      assign: vi.fn(),
-    };
-  });
-
   it('renders without crashing', () => {
     render(<Link href="https://example.com">Example</Link>);
     expect(screen.getByRole('link')).toBeInTheDocument();
