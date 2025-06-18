@@ -18,10 +18,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
+          cache: 'npm'
 
       - name: 📦 Install dependencies
         run: npm ci
+
+      - name: 🧹 Check code format with Prettier
+        run: npm run format:check
 
       - name: 🧪 Run tests (Vitest)
         run: npm run test
