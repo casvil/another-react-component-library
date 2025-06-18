@@ -1,6 +1,5 @@
 applypatch-msg 
 commit-msg 
-h 
 husky.sh 
 post-applypatch 
 post-checkout 
