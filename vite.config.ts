@@ -11,11 +11,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   plugins: [react(), tailwindcss(), cssInjectedByJsPlugin()],
   build: {
+    emptyOutDir: false,
     lib: {
-      entry: resolve(__dirname, "lib/main.ts"),
-      name: "another-react-component-library",
-      // the proper extensions will be added
-      fileName: "another-react-component-library",
+      entry: resolve(__dirname, "lib/index.ts"),
+      name: "AnotherReactComponentLibrary",
+      fileName: (format) => (format === "es" ? "index.js" : "index.cjs"),
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

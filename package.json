@@ -7,17 +7,18 @@
     "url": "https://github.com/casvil/another-react-component-library.git"
   },
   "homepage": "https://github.com/casvil/another-react-component-library#readme",
-  "description": "A customizable React 19 component library build with Vite, Tailwind CSS v4 and TypeScript.",
+  "description": "A customizable React 19 component library built with Vite, Tailwind CSS v4 and TypeScript.",
   "type": "module",
   "files": [
     "dist"
   ],
-  "main": "./dist/another-react-component-library.umd.cjs",
-  "module": "./dist/another-react-component-library.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/another-react-component-library.js",
-      "require": "./dist/another-react-component-library.umd.cjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "scripts": {
@@ -28,12 +29,14 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
     "clsx": "^2.1.1",
     "lucide-react": "^0.515.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.10"
   },
   "devDependencies": {
