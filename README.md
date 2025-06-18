@@ -6,16 +6,21 @@
 
 ---
 
-## 🧠 Why Another?
+### 🧪 Explore Components Live
 
-Because it’s not just _another_ component library — it’s yours:
-
-- Built with ❤️ using **React 19**, **TypeScript**, **Tailwind CSS v4**
-- **Lightning-fast** dev experience via **Vite**
-- **Interactive docs** powered by **Storybook v9**
-- **Fully testable** with **Vitest** & **Testing Library**
+👉 [Storybook Demo](https://casvil.github.io/another-react-component-library/)
 
 ---
+
+## 🧠 Why Another?
+
+- 🧠 Built with **React 19**, **TypeScript 5**, **Tailwind CSS v4**
+- ⚡️ Lightning-fast dev experience with **Vite**
+- 📚 Interactive docs via **Storybook v9**
+- 🧪 Fully testable with **Vitest** & **Testing Library**
+- ♿️ Accessible components
+- ⚙️ Tree-shakable and ESM-ready
+- 🔄 Continuous Integration via **GitHub Actions**
 
 ## 🚀 Quickstart
 
@@ -33,14 +38,6 @@ import { Button } from "another-react-component-library";
 function App() {
   return <Button onClick={() => alert("Boom!")}>Launch</Button>;
 }
-```
-
-### 🌐 Dev & Docs
-
-```bash
-npm run storybook     # live component docs
-npm run build         # build the library
-npm run test          # run all tests
 ```
 
 ---
@@ -77,9 +74,7 @@ npm run test          # run all tests
 
 Have an idea or want to improve a component? PRs welcome!
 
-> We’re component-driven, open-source powered, and obsessed with DX.
-
----
+> We’re component-driven, open-source powered, and obsessed with developer experience.
 
 ## 🪪 License
 
