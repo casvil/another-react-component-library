@@ -1,7 +1,7 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 
-import { Label } from "../Label/Label";
+import { Label } from '../Label/Label';
 
 export interface ProgressBarProps {
   value: number; // 0 to 100
@@ -25,7 +25,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   const safeValue = Math.min(100, Math.max(0, value)); // clamp between 0 and 100
 
   return (
-    <div className={clsx("w-full", className)}>
+    <div className={clsx('w-full', className)}>
       {label && <Label className={labelClassName}>{label}</Label>}
       <div
         role="progressbar"
@@ -36,8 +36,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
       >
         <div
           className={clsx(
-            "h-full bg-indigo-600 transition-all duration-300 ease-in-out",
-            barClassName
+            'h-full bg-indigo-600 transition-all duration-300 ease-in-out',
+            barClassName,
           )}
           style={{ width: `${safeValue}%` }}
         />

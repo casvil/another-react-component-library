@@ -1,40 +1,40 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Radio } from "./Radio";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Radio } from './Radio';
 
 const meta = {
-  title: "atoms/Radio",
+  title: 'atoms/Radio',
   component: Radio,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
-    label: "Option A",
+    label: 'Option A',
   },
   argTypes: {
     label: {
-      control: "text",
-      description: "Label for the radio input",
+      control: 'text',
+      description: 'Label for the radio input',
     },
     disabled: {
-      control: "boolean",
-      description: "Disable the radio input",
+      control: 'boolean',
+      description: 'Disable the radio input',
     },
     checked: {
-      control: "boolean",
-      description: "Controlled checked state",
+      control: 'boolean',
+      description: 'Controlled checked state',
     },
     defaultChecked: {
-      control: "boolean",
-      description: "Default checked state (uncontrolled)",
+      control: 'boolean',
+      description: 'Default checked state (uncontrolled)',
     },
     name: {
-      control: "text",
-      description: "Group name for radio inputs",
+      control: 'text',
+      description: 'Group name for radio inputs',
     },
     value: {
-      control: "text",
-      description: "Value submitted when the radio is selected",
+      control: 'text',
+      description: 'Value submitted when the radio is selected',
     },
   },
 } satisfies Meta<typeof Radio>;
@@ -60,23 +60,23 @@ export const Disabled: Story = {
 
 export const WithCustomNameAndValue: Story = {
   args: {
-    name: "favoriteColor",
-    value: "blue",
-    label: "Blue",
+    name: 'favoriteColor',
+    value: 'blue',
+    label: 'Blue',
   },
 };
 
 export const NoLabel: Story = {
   args: {
     label: undefined,
-    "aria-label": "Radio without visible label",
+    'aria-label': 'Radio without visible label',
   },
 };
 
 export const CustomStyled: Story = {
   args: {
-    label: "Custom",
-    wrapperClassName: "bg-yellow-100 p-2 rounded",
-    labelClassName: "text-purple-500",
+    label: 'Custom',
+    wrapperClassName: 'bg-yellow-100 p-2 rounded',
+    labelClassName: 'text-purple-500',
   },
 };

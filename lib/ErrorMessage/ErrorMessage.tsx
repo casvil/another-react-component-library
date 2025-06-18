@@ -1,5 +1,5 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 
 export interface ErrorMessageProps
   extends React.HTMLAttributes<HTMLParagraphElement> {
@@ -25,7 +25,7 @@ export const ErrorMessage = ({
     <p
       id={id}
       role="alert"
-      className={clsx("text-xs text-red-600", className)}
+      className={clsx('text-xs text-red-600', className)}
       {...props}
     >
       {children}

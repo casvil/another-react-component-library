@@ -1,14 +1,14 @@
-import { forwardRef, TextareaHTMLAttributes, useId } from "react";
-import clsx from "clsx";
+import { forwardRef, TextareaHTMLAttributes, useId } from 'react';
+import clsx from 'clsx';
 
-import { Label } from "../Label/Label";
+import { Label } from '../Label/Label';
 
 export interface TextAreaProps
-  extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> {
+  extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'> {
   className?: string;
   label?: string;
   labelClassName?: string;
-  labelPosition?: "above" | "beside";
+  labelPosition?: 'above' | 'beside';
   wrapperClassName?: string;
 }
 
@@ -22,22 +22,22 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (
     {
       label,
-      labelPosition = "above",
+      labelPosition = 'above',
       wrapperClassName,
       labelClassName,
       id,
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const autoId = useId();
     const textareaId = id ?? autoId;
 
-    const flexDirection = labelPosition === "beside" ? "flex-row" : "flex-col";
+    const flexDirection = labelPosition === 'beside' ? 'flex-row' : 'flex-col';
 
     return (
-      <div className={clsx("flex gap-2", flexDirection, wrapperClassName)}>
+      <div className={clsx('flex gap-2', flexDirection, wrapperClassName)}>
         {label && (
           <Label htmlFor={textareaId} className={labelClassName}>
             {label}
@@ -47,12 +47,12 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           id={textareaId}
           ref={ref}
           className={clsx(
-            "resize-none rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500",
-            className
+            'resize-none rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500',
+            className,
           )}
           {...props}
         />
       </div>
     );
-  }
+  },
 );

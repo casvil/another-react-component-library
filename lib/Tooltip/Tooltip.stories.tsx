@@ -1,27 +1,27 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { X } from "lucide-react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { X } from 'lucide-react';
 
-import { Tooltip, TooltipProps } from "./Tooltip";
-import { Button } from "../Button/Button";
-import { IconButton } from "../IconButton/IconButton";
+import { Tooltip, TooltipProps } from './Tooltip';
+import { Button } from '../Button/Button';
+import { IconButton } from '../IconButton/IconButton';
 
 const meta = {
-  title: "atoms/Tooltip",
+  title: 'atoms/Tooltip',
   component: Tooltip,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     position: {
-      control: "select",
-      options: ["top", "bottom", "left", "right"],
+      control: 'select',
+      options: ['top', 'bottom', 'left', 'right'],
     },
     delay: {
-      control: { type: "number", min: 0, max: 2000, step: 50 },
+      control: { type: 'number', min: 0, max: 2000, step: 50 },
     },
     className: {
-      control: "text",
+      control: 'text',
     },
   },
 } satisfies Meta<typeof Tooltip>;
@@ -32,10 +32,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    id: "tooltip-1",
-    content: "This is a tooltip",
+    id: 'tooltip-1',
+    content: 'This is a tooltip',
     children: <Button label="Hover me"></Button>,
-    position: "top",
+    position: 'top',
     delay: 150,
   },
 };
@@ -43,9 +43,9 @@ export const Default: Story = {
 export const Positions: Story = {
   args: {
     children: <Button label="Position"></Button>,
-    content: "Tooltip",
-    id: "tooltip-positions",
-    position: "top",
+    content: 'Tooltip',
+    id: 'tooltip-positions',
+    position: 'top',
   },
   render: (args) => (
     <div className="flex gap-8 items-center justify-center">
@@ -87,20 +87,20 @@ export const Positions: Story = {
 
 export const CustomDelay: Story = {
   args: {
-    id: "tooltip-delay",
-    content: "Tooltip with 1 second delay",
+    id: 'tooltip-delay',
+    content: 'Tooltip with 1 second delay',
     children: <IconButton icon={<X />} aria-label="close" />,
     delay: 1000,
-    position: "top",
+    position: 'top',
   },
 };
 
 export const WithCustomStyles: Story = {
   args: {
-    id: "tooltip-custom",
-    content: "Styled tooltip",
+    id: 'tooltip-custom',
+    content: 'Styled tooltip',
     children: <Button label="Hover me"></Button>,
-    className: "bg-indigo-600 text-white px-3 py-2 rounded-lg shadow-xl",
-    position: "top",
+    className: 'bg-indigo-600 text-white px-3 py-2 rounded-lg shadow-xl',
+    position: 'top',
   },
 };

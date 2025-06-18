@@ -1,25 +1,25 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { ProgressBar } from "./ProgressBar";
-import { withFullWidthRoot } from "../../.storybook/decorators/withFullWidthRoot";
+import { ProgressBar } from './ProgressBar';
+import { withFullWidthRoot } from '../../.storybook/decorators/withFullWidthRoot';
 
 const meta = {
-  title: "atoms/ProgressBar",
+  title: 'atoms/ProgressBar',
   component: ProgressBar,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
   args: {
     value: 50,
-    label: "Loading progress",
+    label: 'Loading progress',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
-    value: { control: { type: "range", min: 0, max: 100, step: 1 } },
-    label: { control: "text" },
-    className: { control: "text" },
-    barClassName: { control: "text" },
-    labelClassName: { control: "text" },
+    value: { control: { type: 'range', min: 0, max: 100, step: 1 } },
+    label: { control: 'text' },
+    className: { control: 'text' },
+    barClassName: { control: 'text' },
+    labelClassName: { control: 'text' },
   },
   decorators: [withFullWidthRoot],
 } satisfies Meta<typeof ProgressBar>;
@@ -33,14 +33,14 @@ export const Default: Story = {};
 export const FullProgress: Story = {
   args: {
     value: 100,
-    label: "Complete",
+    label: 'Complete',
   },
 };
 
 export const EmptyProgress: Story = {
   args: {
     value: 0,
-    label: "Not started",
+    label: 'Not started',
   },
 };
 
@@ -54,9 +54,9 @@ export const NoLabel: Story = {
 export const CustomColors: Story = {
   args: {
     value: 75,
-    label: "Custom styled",
-    className: "px-2 py-2 bg-gray-800 rounded-md",
-    barClassName: "bg-green-500",
-    labelClassName: "text-white font-semibold",
+    label: 'Custom styled',
+    className: 'px-2 py-2 bg-gray-800 rounded-md',
+    barClassName: 'bg-green-500',
+    labelClassName: 'text-white font-semibold',
   },
 };

@@ -1,26 +1,26 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { HelperText } from "./HelperText";
+import { HelperText } from './HelperText';
 
 const meta = {
-  title: "atoms/HelperText",
+  title: 'atoms/HelperText',
   component: HelperText,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
-    id: "email-helper",
-    children: "We’ll never share your email.",
+    id: 'email-helper',
+    children: 'We’ll never share your email.',
   },
   argTypes: {
     id: {
-      control: "text",
-      description: "The ID that matches aria-describedby.",
+      control: 'text',
+      description: 'The ID that matches aria-describedby.',
     },
     children: {
-      control: "text",
-      description: "Helper text to guide the user.",
+      control: 'text',
+      description: 'Helper text to guide the user.',
     },
   },
 } satisfies Meta<typeof HelperText>;
@@ -34,13 +34,13 @@ export const Default: Story = {};
 export const LongHelperText: Story = {
   args: {
     children:
-      "This information is used to send you notifications and password resets.",
+      'This information is used to send you notifications and password resets.',
   },
 };
 
 export const WithCustomStyles: Story = {
   args: {
-    children: "Custom colored helper text",
-    className: "text-red-600 italic",
+    children: 'Custom colored helper text',
+    className: 'text-red-600 italic',
   },
 };

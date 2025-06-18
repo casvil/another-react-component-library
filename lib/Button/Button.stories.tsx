@@ -1,27 +1,27 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
 
-import { Button, ButtonProps } from "./Button";
+import { Button, ButtonProps } from './Button';
 
 const meta = {
-  title: "atoms/Button",
+  title: 'atoms/Button',
   component: Button,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: "select",
-      options: ["primary", "secondary", "tertiary"],
+      control: 'select',
+      options: ['primary', 'secondary', 'tertiary'],
     },
     size: {
-      control: "select",
-      options: ["sm", "md", "lg"],
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
     },
     iconPosition: {
-      control: "radio",
-      options: ["left", "right"],
+      control: 'radio',
+      options: ['left', 'right'],
     },
   },
 } satisfies Meta<typeof Button>;
@@ -32,53 +32,53 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    label: "Primary Button",
-    variant: "primary",
-    size: "md",
+    label: 'Primary Button',
+    variant: 'primary',
+    size: 'md',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    label: "Secondary Button",
-    variant: "secondary",
-    size: "md",
+    label: 'Secondary Button',
+    variant: 'secondary',
+    size: 'md',
   },
 };
 
 export const Tertiary: Story = {
   args: {
-    label: "Tertiary Button",
-    variant: "tertiary",
-    size: "md",
+    label: 'Tertiary Button',
+    variant: 'tertiary',
+    size: 'md',
   },
 };
 
 export const WithRightIcon: Story = {
   args: {
-    label: "Next Step",
-    variant: "primary",
-    size: "md",
+    label: 'Next Step',
+    variant: 'primary',
+    size: 'md',
     icon: <ArrowRight />,
-    iconPosition: "right",
+    iconPosition: 'right',
   },
 };
 
 export const WithLeftIcon: Story = {
   args: {
-    label: "Back",
-    variant: "secondary",
-    size: "md",
+    label: 'Back',
+    variant: 'secondary',
+    size: 'md',
     icon: <ArrowLeft size={16} />,
-    iconPosition: "left",
+    iconPosition: 'left',
   },
 };
 
 export const Disabled: Story = {
   args: {
-    label: "Disabled",
-    variant: "primary",
-    size: "md",
+    label: 'Disabled',
+    variant: 'primary',
+    size: 'md',
     disabled: true,
   },
 };

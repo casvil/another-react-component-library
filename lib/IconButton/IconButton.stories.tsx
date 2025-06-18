@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { X } from "lucide-react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { X } from 'lucide-react';
 
-import { IconButton, IconButtonProps } from "./IconButton";
+import { IconButton, IconButtonProps } from './IconButton';
 
 const meta = {
-  title: "atoms/IconButton",
+  title: 'atoms/IconButton',
   component: IconButton,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: "select",
-      options: ["primary", "secondary", "tertiary"],
+      control: 'select',
+      options: ['primary', 'secondary', 'tertiary'],
     },
     size: {
-      control: "select",
-      options: ["sm", "md", "lg"],
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
     },
   },
 } satisfies Meta<typeof IconButton>;
@@ -29,36 +29,36 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     icon: <X />,
-    "aria-label": "Primary Icon Button",
-    variant: "primary",
-    size: "md",
+    'aria-label': 'Primary Icon Button',
+    variant: 'primary',
+    size: 'md',
   },
 };
 
 export const Secondary: Story = {
   args: {
     icon: <X />,
-    "aria-label": "Secondary Icon Button",
-    variant: "secondary",
-    size: "md",
+    'aria-label': 'Secondary Icon Button',
+    variant: 'secondary',
+    size: 'md',
   },
 };
 
 export const Tertiary: Story = {
   args: {
     icon: <X />,
-    "aria-label": "Tertiary Icon Button",
-    variant: "tertiary",
-    size: "md",
+    'aria-label': 'Tertiary Icon Button',
+    variant: 'tertiary',
+    size: 'md',
   },
 };
 
 export const Disabled: Story = {
   args: {
     icon: <X />,
-    "aria-label": "Disabled Icon Button",
-    variant: "primary",
-    size: "md",
+    'aria-label': 'Disabled Icon Button',
+    variant: 'primary',
+    size: 'md',
     disabled: true,
   },
 };

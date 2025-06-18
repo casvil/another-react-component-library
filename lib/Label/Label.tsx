@@ -1,5 +1,5 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 
 export interface LabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement> {
@@ -23,7 +23,7 @@ export const Label = ({
   return (
     <label
       htmlFor={htmlFor}
-      className={clsx("text-sm font-medium text-gray-700", className)}
+      className={clsx('text-sm font-medium text-gray-700', className)}
       {...props}
     >
       {children}
