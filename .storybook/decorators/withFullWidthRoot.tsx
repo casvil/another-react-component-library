@@ -1,17 +1,17 @@
-import { useEffect } from "react";
-import type { Decorator } from "@storybook/react";
+import { useEffect } from 'react';
+import type { Decorator } from '@storybook/react';
 
 /**
  * Sets `width: 100%` on the #storybook-root element for a specific story.
  */
 export const withFullWidthRoot: Decorator = (Story) => {
   useEffect(() => {
-    const root = document.getElementById("storybook-root");
+    const root = document.getElementById('storybook-root');
 
-    if (root) root.style.width = "100%";
+    if (root) root.style.width = '100%';
 
     return () => {
-      if (root) root.style.width = "";
+      if (root) root.style.width = '';
     };
   }, []);
 

@@ -1,19 +1,19 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { MessageCircleWarning, User } from "lucide-react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { MessageCircleWarning, User } from 'lucide-react';
 
-import { InputField } from "./InputField";
-import { Icon } from "../Icon/Icon";
+import { InputField } from './InputField';
+import { Icon } from '../Icon/Icon';
 
 const meta = {
-  title: "molecules/InputField",
+  title: 'molecules/InputField',
   component: InputField,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
-    label: "Email",
-    placeholder: "Enter your email",
+    label: 'Email',
+    placeholder: 'Enter your email',
   },
 } satisfies Meta<typeof InputField>;
 
@@ -37,28 +37,28 @@ export const Disabled: Story = {
 
 export const WithError: Story = {
   args: {
-    label: "Username",
-    placeholder: "Enter your username",
+    label: 'Username',
+    placeholder: 'Enter your username',
     icon: <Icon icon={<MessageCircleWarning />} size="sm" />,
-    iconPosition: "left",
-    error: "This field is required",
+    iconPosition: 'left',
+    error: 'This field is required',
   },
 };
 
 export const WithLeftIcon: Story = {
   args: {
-    label: "Username",
-    placeholder: "Enter your username",
+    label: 'Username',
+    placeholder: 'Enter your username',
     icon: <Icon icon={<User />} size="sm" />,
-    iconPosition: "left",
+    iconPosition: 'left',
   },
 };
 
 export const WithRightIcon: Story = {
   args: {
-    label: "Username",
-    placeholder: "Enter your username",
+    label: 'Username',
+    placeholder: 'Enter your username',
     icon: <Icon icon={<User />} size="sm" />,
-    iconPosition: "right",
+    iconPosition: 'right',
   },
 };

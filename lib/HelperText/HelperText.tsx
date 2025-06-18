@@ -1,5 +1,5 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 
 export interface HelperTextProps
   extends React.HTMLAttributes<HTMLParagraphElement> {
@@ -25,7 +25,7 @@ export const HelperText = ({
     <p
       id={id}
       role="note"
-      className={clsx("text-xs text-gray-500", className)}
+      className={clsx('text-xs text-gray-500', className)}
       {...props}
     >
       {children}

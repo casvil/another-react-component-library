@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { TextArea } from "./TextArea";
-import { withFullWidthRoot } from "../../.storybook/decorators/withFullWidthRoot";
+import { TextArea } from './TextArea';
+import { withFullWidthRoot } from '../../.storybook/decorators/withFullWidthRoot';
 
 const meta = {
-  title: "molecules/TextArea",
+  title: 'molecules/TextArea',
   component: TextArea,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
   args: {
-    label: "Description",
-    placeholder: "Type here...",
+    label: 'Description',
+    placeholder: 'Type here...',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     labelPosition: {
-      control: { type: "radio" },
-      options: ["above", "beside"],
+      control: { type: 'radio' },
+      options: ['above', 'beside'],
     },
   },
 } satisfies Meta<typeof TextArea>;
@@ -30,15 +30,15 @@ export const Default: Story = {};
 
 export const LabelBeside: Story = {
   args: {
-    labelPosition: "beside",
+    labelPosition: 'beside',
   },
 };
 
 export const CustomStylesFullWidth: Story = {
   args: {
-    className: "border-red-500",
-    labelClassName: "text-indigo-700 font-semibold",
-    wrapperClassName: "bg-yellow-100 p-4 rounded",
+    className: 'border-red-500',
+    labelClassName: 'text-indigo-700 font-semibold',
+    wrapperClassName: 'bg-yellow-100 p-4 rounded',
   },
   decorators: [withFullWidthRoot],
 };

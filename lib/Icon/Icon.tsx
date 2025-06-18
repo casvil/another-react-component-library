@@ -1,12 +1,12 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 
 export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   icon: React.ReactElement;
   size?: number | string;
   color?: string;
   className?: string;
-  "aria-label"?: string;
+  'aria-label'?: string;
 }
 
 /**
@@ -16,20 +16,20 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
 export const Icon = ({
   icon,
   size = 24,
-  color = "currentColor",
+  color = 'currentColor',
   className,
-  "aria-label": ariaLabel,
+  'aria-label': ariaLabel,
   ...props
 }: IconProps) => {
   const numericSize =
-    typeof size === "string" ? parseInt(size, 10) || 24 : size;
+    typeof size === 'string' ? parseInt(size, 10) || 24 : size;
 
   return (
     <span
-      role={ariaLabel ? "img" : undefined}
+      role={ariaLabel ? 'img' : undefined}
       aria-label={ariaLabel}
       aria-hidden={ariaLabel ? undefined : true}
-      className={clsx("inline-flex items-center justify-center", className)}
+      className={clsx('inline-flex items-center justify-center', className)}
       style={{
         width: numericSize,
         height: numericSize,
@@ -41,7 +41,7 @@ export const Icon = ({
       {React.cloneElement(icon as React.ReactElement<any>, {
         size: numericSize,
         color,
-        focusable: "false", // prevent SVG from receiving keyboard focus
+        focusable: 'false', // prevent SVG from receiving keyboard focus
       })}
     </span>
   );

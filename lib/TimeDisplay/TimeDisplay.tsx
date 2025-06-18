@@ -1,5 +1,5 @@
-import { forwardRef } from "react";
-import clsx from "clsx";
+import { forwardRef } from 'react';
+import clsx from 'clsx';
 
 export interface TimeDisplayProps {
   time: Date | string | number;
@@ -14,21 +14,21 @@ export interface TimeDisplayProps {
  * Accepts a Date, string, or timestamp as time input.
  */
 export const TimeDisplay = forwardRef<HTMLTimeElement, TimeDisplayProps>(
-  ({ bordered = false, className, format = "HH:mm:ss", time }, ref) => {
+  ({ bordered = false, className, format = 'HH:mm:ss', time }, ref) => {
     // Convert input time to Date
     const date =
-      typeof time === "string" || typeof time === "number"
+      typeof time === 'string' || typeof time === 'number'
         ? new Date(time)
         : time;
 
     // Pad helper
-    const pad = (n: number) => n.toString().padStart(2, "0");
+    const pad = (n: number) => n.toString().padStart(2, '0');
 
     // Basic formatter supporting only HH, mm, ss tokens
     const formatted = format
-      .replace("HH", pad(date.getHours()))
-      .replace("mm", pad(date.getMinutes()))
-      .replace("ss", pad(date.getSeconds()));
+      .replace('HH', pad(date.getHours()))
+      .replace('mm', pad(date.getMinutes()))
+      .replace('ss', pad(date.getSeconds()));
 
     return (
       <time
@@ -36,15 +36,15 @@ export const TimeDisplay = forwardRef<HTMLTimeElement, TimeDisplayProps>(
         aria-label={`Time is ${formatted}`}
         dateTime={date.toISOString()}
         className={clsx(
-          "inline-block font-mono",
-          bordered && "border border-black-300 rounded-md px-2 py-1",
-          className
+          'inline-block font-mono',
+          bordered && 'border border-black-300 rounded-md px-2 py-1',
+          className,
         )}
       >
         {formatted}
       </time>
     );
-  }
+  },
 );
 
-TimeDisplay.displayName = "TimeDisplay";
+TimeDisplay.displayName = 'TimeDisplay';

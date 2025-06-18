@@ -1,37 +1,37 @@
-import { describe, it, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { describe, it, expect } from 'vitest';
+import { render } from '@testing-library/react';
 
-import { Badge } from "./Badge";
+import { Badge } from './Badge';
 
-describe("Badge", () => {
-  it("renders without crashing", () => {
+describe('Badge', () => {
+  it('renders without crashing', () => {
     const { getByRole } = render(<Badge>Default</Badge>);
-    expect(getByRole("status", { name: /default/i })).toBeInTheDocument();
+    expect(getByRole('status', { name: /default/i })).toBeInTheDocument();
   });
 
-  it("applies default variant and size", () => {
+  it('applies default variant and size', () => {
     const { getByRole } = render(<Badge>Default</Badge>);
-    const badge = getByRole("status", { name: /default/i });
+    const badge = getByRole('status', { name: /default/i });
 
-    expect(badge.className).toContain("bg-gray-100");
-    expect(badge.className).toContain("text-gray-800");
-    expect(badge.className).toContain("text-sm");
+    expect(badge.className).toContain('bg-gray-100');
+    expect(badge.className).toContain('text-gray-800');
+    expect(badge.className).toContain('text-sm');
   });
 
-  it("renders all variant styles", () => {
+  it('renders all variant styles', () => {
     const variants = {
-      default: ["bg-gray-100", "text-gray-800"],
-      success: ["bg-green-100", "text-green-800"],
-      error: ["bg-red-100", "text-red-800"],
-      warning: ["bg-yellow-100", "text-yellow-800"],
-      info: ["bg-blue-100", "text-blue-800"],
+      default: ['bg-gray-100', 'text-gray-800'],
+      success: ['bg-green-100', 'text-green-800'],
+      error: ['bg-red-100', 'text-red-800'],
+      warning: ['bg-yellow-100', 'text-yellow-800'],
+      info: ['bg-blue-100', 'text-blue-800'],
     };
 
     Object.entries(variants).forEach(([variant, classes]) => {
       const { getByRole, unmount } = render(
-        <Badge variant={variant as any}>{variant}</Badge>
+        <Badge variant={variant as any}>{variant}</Badge>,
       );
-      const badge = getByRole("status", { name: new RegExp(variant, "i") });
+      const badge = getByRole('status', { name: new RegExp(variant, 'i') });
 
       classes.forEach((cls) => {
         expect(badge.className).toContain(cls);
@@ -41,18 +41,18 @@ describe("Badge", () => {
     });
   });
 
-  it("renders all sizes", () => {
+  it('renders all sizes', () => {
     const sizes = {
-      sm: "text-xs",
-      md: "text-sm",
-      lg: "text-base",
+      sm: 'text-xs',
+      md: 'text-sm',
+      lg: 'text-base',
     };
 
     Object.entries(sizes).forEach(([size, cls]) => {
       const { getByRole, unmount } = render(
-        <Badge size={size as any}>{size}</Badge>
+        <Badge size={size as any}>{size}</Badge>,
       );
-      const badge = getByRole("status", { name: new RegExp(size, "i") });
+      const badge = getByRole('status', { name: new RegExp(size, 'i') });
 
       expect(badge.className).toContain(cls);
 
@@ -60,20 +60,20 @@ describe("Badge", () => {
     });
   });
 
-  it("allows custom className to be merged", () => {
+  it('allows custom className to be merged', () => {
     const { getByRole } = render(
-      <Badge className="custom-class">Styled</Badge>
+      <Badge className="custom-class">Styled</Badge>,
     );
-    const badge = getByRole("status", { name: /styled/i });
+    const badge = getByRole('status', { name: /styled/i });
 
-    expect(badge.className).toContain("custom-class");
+    expect(badge.className).toContain('custom-class');
   });
 
-  it("renders with the default aria attributes when no variant provided", () => {
+  it('renders with the default aria attributes when no variant provided', () => {
     const { getByRole } = render(<Badge>default</Badge>);
-    const badge = getByRole("status", { name: /default/i });
+    const badge = getByRole('status', { name: /default/i });
 
-    expect(badge).toHaveAttribute("role", "status");
-    expect(badge).toHaveAttribute("aria-live", "polite");
+    expect(badge).toHaveAttribute('role', 'status');
+    expect(badge).toHaveAttribute('aria-live', 'polite');
   });
 });

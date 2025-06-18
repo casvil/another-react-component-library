@@ -1,18 +1,18 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { Clock } from "./Clock";
+import { Clock } from './Clock';
 
 const meta = {
-  title: "molecules/Clock",
+  title: 'molecules/Clock',
   component: Clock,
-  tags: ["autodocs"],
-  parameters: { layout: "centered" },
+  tags: ['autodocs'],
+  parameters: { layout: 'centered' },
   argTypes: {
     format: {
-      control: "select",
-      options: ["HH:mm:ss", "HH:mm", "mm:ss"],
+      control: 'select',
+      options: ['HH:mm:ss', 'HH:mm', 'mm:ss'],
     },
-    bordered: { control: "boolean" },
+    bordered: { control: 'boolean' },
     className: { control: false },
   },
 } satisfies Meta<typeof Clock>;
@@ -22,28 +22,28 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    format: "HH:mm:ss",
+    format: 'HH:mm:ss',
     bordered: false,
   },
 };
 
 export const Bordered: Story = {
   args: {
-    format: "HH:mm:ss",
+    format: 'HH:mm:ss',
     bordered: true,
   },
 };
 
 export const HoursAndMinutes: Story = {
   args: {
-    format: "HH:mm",
+    format: 'HH:mm',
     bordered: false,
   },
 };
 
 export const MinutesAndSeconds: Story = {
   args: {
-    format: "mm:ss",
+    format: 'mm:ss',
     bordered: false,
   },
 };
@@ -54,7 +54,7 @@ export const CustomStyleDigital7Font = {
   ),
   args: {
     time: new Date(),
-    format: "mm:ss",
+    format: 'mm:ss',
     bordered: true,
   },
 };

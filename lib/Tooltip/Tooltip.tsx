@@ -1,5 +1,5 @@
-import React, { useState, ReactNode, useId } from "react";
-import clsx from "clsx";
+import React, { useState, ReactNode, useId } from 'react';
+import clsx from 'clsx';
 
 export interface TooltipProps {
   children: ReactNode;
@@ -7,7 +7,7 @@ export interface TooltipProps {
   className?: string;
   delay?: number;
   id: string;
-  position?: "top" | "bottom" | "left" | "right";
+  position?: 'top' | 'bottom' | 'left' | 'right';
 }
 
 /**
@@ -21,7 +21,7 @@ export const Tooltip = ({
   className,
   delay = 150,
   id,
-  position = "top",
+  position = 'top',
 }: TooltipProps) => {
   const [visible, setVisible] = useState(false);
 
@@ -37,10 +37,10 @@ export const Tooltip = ({
   };
 
   const positionClasses = {
-    top: "bottom-full mb-2 left-1/2 transform -translate-x-1/2",
-    bottom: "top-full mt-2 left-1/2 transform -translate-x-1/2",
-    left: "right-full mr-2 top-1/2 transform -translate-y-1/2",
-    right: "left-full ml-2 top-1/2 transform -translate-y-1/2",
+    top: 'bottom-full mb-2 left-1/2 transform -translate-x-1/2',
+    bottom: 'top-full mt-2 left-1/2 transform -translate-x-1/2',
+    left: 'right-full mr-2 top-1/2 transform -translate-y-1/2',
+    right: 'left-full ml-2 top-1/2 transform -translate-y-1/2',
   };
 
   return (
@@ -55,17 +55,17 @@ export const Tooltip = ({
         React.cloneElement(
           children as React.ReactElement<React.HTMLAttributes<HTMLElement>>,
           {
-            "aria-describedby": visible ? id : undefined,
-          }
+            'aria-describedby': visible ? id : undefined,
+          },
         )}
       {visible && (
         <div
           id={id}
           role="tooltip"
           className={clsx(
-            "absolute z-10 px-2 py-1 rounded bg-gray-800 text-white text-xs whitespace-nowrap shadow-lg",
+            'absolute z-10 px-2 py-1 rounded bg-gray-800 text-white text-xs whitespace-nowrap shadow-lg',
             positionClasses[position],
-            className
+            className,
           )}
         >
           {content}

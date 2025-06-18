@@ -1,12 +1,12 @@
-import React, { ButtonHTMLAttributes, forwardRef } from "react";
-import clsx from "clsx";
+import React, { ButtonHTMLAttributes, forwardRef } from 'react';
+import clsx from 'clsx';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "tertiary";
-  size?: "sm" | "md" | "lg";
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'sm' | 'md' | 'lg';
   label: string;
   icon?: React.ReactNode;
-  iconPosition?: "left" | "right";
+  iconPosition?: 'left' | 'right';
 }
 
 /**
@@ -17,33 +17,33 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      variant = "primary",
-      size = "md",
+      variant = 'primary',
+      size = 'md',
       label,
       icon,
-      iconPosition = "left",
+      iconPosition = 'left',
       className,
       disabled = false,
       ...props
     },
-    ref
+    ref,
   ) => {
     const base =
-      "inline-flex items-center justify-center font-semibold rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
+      'inline-flex items-center justify-center font-semibold rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer';
 
     const variants = {
       primary:
-        "bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500",
+        'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500',
       secondary:
-        "bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-400",
+        'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-400',
       tertiary:
-        "bg-transparent text-gray-800 hover:bg-gray-100 focus:ring-gray-300 border border-gray-300",
+        'bg-transparent text-gray-800 hover:bg-gray-100 focus:ring-gray-300 border border-gray-300',
     };
 
     const sizes = {
-      sm: "text-sm px-3 py-1.5",
-      md: "text-base px-4 py-2",
-      lg: "text-lg px-5 py-3",
+      sm: 'text-sm px-3 py-1.5',
+      md: 'text-base px-4 py-2',
+      lg: 'text-lg px-5 py-3',
     };
 
     return (
@@ -54,14 +54,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         {...props}
       >
-        {icon && iconPosition === "left" && (
+        {icon && iconPosition === 'left' && (
           <span className="mr-2">{icon}</span>
         )}
         {label}
-        {icon && iconPosition === "right" && (
+        {icon && iconPosition === 'right' && (
           <span className="ml-2">{icon}</span>
         )}
       </button>
     );
-  }
+  },
 );

@@ -1,21 +1,21 @@
-import React from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import React from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 
-import { Avatar } from "./Avatar";
+import { Avatar } from './Avatar';
 
 const meta: Meta<typeof Avatar> = {
-  title: "Atoms/Avatar",
+  title: 'Atoms/Avatar',
   component: Avatar,
-  parameters: { layout: "centered" },
-  tags: ["autodocs"],
+  parameters: { layout: 'centered' },
+  tags: ['autodocs'],
   argTypes: {
-    src: { control: "text" },
-    name: { control: "text" },
-    alt: { control: "text" },
-    className: { control: "text" },
+    src: { control: 'text' },
+    name: { control: 'text' },
+    alt: { control: 'text' },
+    className: { control: 'text' },
     size: {
-      control: "select",
-      options: ["sm", "md", "lg"],
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
     },
   },
 } satisfies Meta<typeof Avatar>;
@@ -26,72 +26,72 @@ type Story = StoryObj<typeof meta>;
 
 export const Image: Story = {
   args: {
-    src: "https://randomuser.me/api/portraits/women/44.jpg",
-    alt: "User avatar",
-    size: "sm",
+    src: 'https://randomuser.me/api/portraits/women/44.jpg',
+    alt: 'User avatar',
+    size: 'sm',
   },
 };
 
 export const ImageMd: Story = {
   args: {
-    src: "https://randomuser.me/api/portraits/women/44.jpg",
-    alt: "User avatar",
+    src: 'https://randomuser.me/api/portraits/women/44.jpg',
+    alt: 'User avatar',
   },
 };
 
 export const ImageLg: Story = {
   args: {
-    src: "https://randomuser.me/api/portraits/women/44.jpg",
-    alt: "User avatar",
-    size: "lg",
+    src: 'https://randomuser.me/api/portraits/women/44.jpg',
+    alt: 'User avatar',
+    size: 'lg',
   },
 };
 
 export const ImageMdWithBorder: Story = {
   args: {
-    src: "https://randomuser.me/api/portraits/women/44.jpg",
-    alt: "User avatar",
-    border: "border-1 border-black-500",
+    src: 'https://randomuser.me/api/portraits/women/44.jpg',
+    alt: 'User avatar',
+    border: 'border-1 border-black-500',
   },
 };
 
 export const SingleNameInitialMd: Story = {
   args: {
-    name: "Cher",
-    size: "md",
+    name: 'Cher',
+    size: 'md',
   },
 };
 
 export const InitialsSm: Story = {
   args: {
-    name: "John Smith",
-    size: "sm",
+    name: 'John Smith',
+    size: 'sm',
   },
 };
 
 export const InitialsMd: Story = {
   args: {
-    name: "Jane Doe",
+    name: 'Jane Doe',
   },
 };
 
 export const InitialsLg: Story = {
   args: {
-    name: "Alice Wonderland",
-    size: "lg",
+    name: 'Alice Wonderland',
+    size: 'lg',
   },
 };
 
 export const WithBorder: Story = {
   args: {
-    name: "Alice Wonderland",
-    border: "border-2 border-black-500",
+    name: 'Alice Wonderland',
+    border: 'border-2 border-black-500',
   },
 };
 
 export const CustomStyleAvatar: Story = {
   args: {
-    name: "Custom Style",
-    className: "bg-purple-300 text-purple-900",
+    name: 'Custom Style',
+    className: 'bg-purple-300 text-purple-900',
   },
 };

@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Spinner } from "./Spinner";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Spinner } from './Spinner';
 
 const meta = {
-  title: "atoms/Spinner",
+  title: 'atoms/Spinner',
   component: Spinner,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof Spinner>;
 
@@ -21,26 +21,26 @@ export const Default: Story = {
 
 export const Small: Story = {
   args: {
-    size: "sm",
+    size: 'sm',
   },
 };
 
 export const Medium: Story = {
   args: {
-    size: "md",
+    size: 'md',
   },
 };
 
 export const Large: Story = {
   args: {
-    size: "lg",
+    size: 'lg',
   },
 };
 
 export const CustomStyles: Story = {
   args: {
-    size: "lg",
-    className: "bg-yellow-50 p-2 rounded-full border",
-    iconClassName: "text-yellow-500",
+    size: 'lg',
+    className: 'bg-yellow-50 p-2 rounded-full border',
+    iconClassName: 'text-yellow-500',
   },
 };

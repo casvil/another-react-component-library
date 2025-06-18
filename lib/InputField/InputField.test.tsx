@@ -1,76 +1,76 @@
-import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { Search } from "lucide-react";
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { Search } from 'lucide-react';
 
-import { InputField } from "./InputField";
+import { InputField } from './InputField';
 
-describe("InputField", () => {
-  it("renders without crashing", () => {
+describe('InputField', () => {
+  it('renders without crashing', () => {
     render(<InputField label="Test" />);
-    expect(screen.getByLabelText("Test")).toBeInTheDocument();
+    expect(screen.getByLabelText('Test')).toBeInTheDocument();
   });
 
-  it("renders label, input, and helperText", () => {
+  it('renders label, input, and helperText', () => {
     render(
       <InputField
         label="Email"
         placeholder="you@example.com"
         helperText="Helper text"
         data-testid="inputfield"
-      />
+      />,
     );
 
-    expect(screen.getByLabelText("Email")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("you@example.com")).toBeInTheDocument();
-    expect(screen.getByText("Helper text")).toBeInTheDocument();
+    expect(screen.getByLabelText('Email')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('you@example.com')).toBeInTheDocument();
+    expect(screen.getByText('Helper text')).toBeInTheDocument();
   });
 
-  it("renders error message and aria attributes", () => {
+  it('renders error message and aria attributes', () => {
     render(<InputField label="Email" error="Required" />);
-    const input = screen.getByLabelText("Email");
-    expect(screen.getByText("Required")).toBeInTheDocument();
-    expect(input).toHaveAttribute("aria-invalid", "true");
-    expect(input).toHaveAttribute("aria-describedby");
+    const input = screen.getByLabelText('Email');
+    expect(screen.getByText('Required')).toBeInTheDocument();
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+    expect(input).toHaveAttribute('aria-describedby');
   });
 
-  it("does not render helperText if error is present", () => {
+  it('does not render helperText if error is present', () => {
     render(
       <InputField
         label="Email"
         error="Error"
         helperText="Helper text"
         data-testid="inputfield"
-      />
+      />,
     );
 
-    expect(screen.queryByText("Helper text")).not.toBeInTheDocument();
-    expect(screen.getByText("Error")).toBeInTheDocument();
+    expect(screen.queryByText('Helper text')).not.toBeInTheDocument();
+    expect(screen.getByText('Error')).toBeInTheDocument();
   });
 
-  it("accepts and forwards className to input", () => {
+  it('accepts and forwards className to input', () => {
     render(<InputField label="Email" className="w-64" />);
-    expect(screen.getByLabelText("Email")).toHaveClass("w-64");
+    expect(screen.getByLabelText('Email')).toHaveClass('w-64');
   });
 
-  it("supports disabled input", () => {
+  it('supports disabled input', () => {
     render(<InputField label="Email" disabled />);
-    expect(screen.getByLabelText("Email")).toBeDisabled();
+    expect(screen.getByLabelText('Email')).toBeDisabled();
   });
 
-  it("renders icon if provided", () => {
+  it('renders icon if provided', () => {
     render(
       <InputField
         label="Search"
         icon={<Search data-testid="icon" />}
         placeholder="Search..."
-      />
+      />,
     );
-    expect(screen.getByTestId("icon")).toBeInTheDocument();
+    expect(screen.getByTestId('icon')).toBeInTheDocument();
   });
 
-  it("removes input padding when no icon is provided", () => {
+  it('removes input padding when no icon is provided', () => {
     render(<InputField label="Search" placeholder="Type..." />);
-    const input = screen.getByLabelText("Search");
-    expect(input.className.includes("pl-10")).toBe(false);
+    const input = screen.getByLabelText('Search');
+    expect(input.className.includes('pl-10')).toBe(false);
   });
 });

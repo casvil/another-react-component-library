@@ -1,10 +1,10 @@
-import { forwardRef, InputHTMLAttributes, useId } from "react";
-import clsx from "clsx";
+import { forwardRef, InputHTMLAttributes, useId } from 'react';
+import clsx from 'clsx';
 
-import { Label } from "../Label/Label";
+import { Label } from '../Label/Label';
 
 export interface CheckboxProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   label?: string;
   indeterminate?: boolean;
   className?: string; // for the <input>
@@ -30,16 +30,16 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       disabled,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const checkboxId = id || useId();
 
     return (
       <div
         className={clsx(
-          "inline-flex items-center space-x-2",
-          disabled && "opacity-50 cursor-not-allowed",
-          wrapperClassName
+          'inline-flex items-center space-x-2',
+          disabled && 'opacity-50 cursor-not-allowed',
+          wrapperClassName,
         )}
       >
         <input
@@ -48,10 +48,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           type="checkbox"
           checked={checked}
           disabled={disabled}
-          aria-checked={indeterminate ? "mixed" : checked}
+          aria-checked={indeterminate ? 'mixed' : checked}
           className={clsx(
-            "form-checkbox h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500",
-            className
+            'form-checkbox h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500',
+            className,
           )}
           {...rest}
         />
@@ -62,5 +62,5 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         )}
       </div>
     );
-  }
+  },
 );

@@ -1,11 +1,11 @@
-import React from "react";
-import clsx from "clsx";
-import { Badge, BadgeProps } from "../Badge/Badge";
-import { Avatar, AvatarProps } from "../Avatar/Avatar";
+import React from 'react';
+import clsx from 'clsx';
+import { Badge, BadgeProps } from '../Badge/Badge';
+import { Avatar, AvatarProps } from '../Avatar/Avatar';
 
 export interface BadgeAvatarProps {
   avatarProps: AvatarProps;
-  badgeProps?: Omit<BadgeProps, "children" | "aria-label">;
+  badgeProps?: Omit<BadgeProps, 'children' | 'aria-label'>;
   children?: React.ReactNode;
   className?: string;
   textClassName?: string;
@@ -24,7 +24,7 @@ export const BadgeAvatar: React.FC<BadgeAvatarProps> = ({
 }) => {
   // Merge avatarProps with default size
   const mergedAvatarProps = {
-    size: "sm" as "sm" | "md" | "lg",
+    size: 'sm' as 'sm' | 'md' | 'lg',
     ...avatarProps,
   };
 
@@ -32,21 +32,21 @@ export const BadgeAvatar: React.FC<BadgeAvatarProps> = ({
     <Badge
       {...badgeProps}
       className={clsx(
-        "inline-flex items-center space-x-1 rounded-full",
+        'inline-flex items-center space-x-1 rounded-full',
         className,
-        badgeProps?.className
+        badgeProps?.className,
       )}
       aria-label={
-        badgeProps?.["aria-label"] ||
+        badgeProps?.['aria-label'] ||
         String(children) ||
         mergedAvatarProps.alt ||
         mergedAvatarProps.name ||
-        "User avatar"
+        'User avatar'
       }
     >
       <Avatar
         {...mergedAvatarProps}
-        className={clsx("rounded-full", mergedAvatarProps.className)}
+        className={clsx('rounded-full', mergedAvatarProps.className)}
       />
       {children && <span className={textClassName}>{children}</span>}
     </Badge>

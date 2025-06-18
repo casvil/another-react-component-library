@@ -1,8 +1,8 @@
-import { useEffect, useState, forwardRef } from "react";
+import { useEffect, useState, forwardRef } from 'react';
 
-import { TimeDisplay, TimeDisplayProps } from "../TimeDisplay/TimeDisplay";
+import { TimeDisplay, TimeDisplayProps } from '../TimeDisplay/TimeDisplay';
 
-export interface ClockProps extends Omit<TimeDisplayProps, "time"> {}
+export interface ClockProps extends Omit<TimeDisplayProps, 'time'> {}
 
 /**
  * Clock molecule component.
@@ -27,5 +27,5 @@ export const Clock = forwardRef<HTMLTimeElement, ClockProps>(
         bordered={bordered}
       />
     );
-  }
+  },
 );

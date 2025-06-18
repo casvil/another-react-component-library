@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Checkbox } from "./Checkbox";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Checkbox } from './Checkbox';
 
 const meta = {
-  title: "molecules/Checkbox",
+  title: 'molecules/Checkbox',
   component: Checkbox,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
   args: {
-    label: "Accept terms",
+    label: 'Accept terms',
   },
 } satisfies Meta<typeof Checkbox>;
 
@@ -42,15 +42,15 @@ export const Indeterminate: Story = {
   args: {
     checked: false,
     indeterminate: true,
-    label: "Partially selected",
+    label: 'Partially selected',
   },
 };
 
 export const WithCustomStyles: Story = {
   args: {
-    label: "Custom styled checkbox",
-    className: "text-green-600 border-green-600",
-    labelClassName: "text-green-700 font-semibold",
-    wrapperClassName: "bg-green-50 px-4 py-2 rounded",
+    label: 'Custom styled checkbox',
+    className: 'text-green-600 border-green-600',
+    labelClassName: 'text-green-700 font-semibold',
+    wrapperClassName: 'bg-green-50 px-4 py-2 rounded',
   },
 };
