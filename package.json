@@ -29,7 +29,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",

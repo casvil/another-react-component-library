@@ -1,0 +1,15 @@
+applypatch-msg 
+commit-msg 
+h 
+husky.sh 
+post-applypatch 
+post-checkout 
+post-commit 
+post-merge 
+post-rewrite 
+pre-applypatch 
+pre-auto-gc 
+pre-merge-commit 
+pre-push 
+pre-rebase 
+prepare-commit-msg

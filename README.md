@@ -31,7 +31,7 @@ Interactive playground for every component. Try props, test styles, and preview 
 - ⚙️ Tree-shakable and ESM-ready
 - 🔄 Continuous Integration via **GitHub Actions**
 
-## 🚀 Quickstart
+## ✨ Quickstart
 
 ### 📦 Install
 
@@ -39,7 +39,7 @@ Interactive playground for every component. Try props, test styles, and preview 
 npm i another-react-component-library
 ```
 
-### 🧪 Use it!
+### 🚀 Quick Example
 
 ```typescript
 import { Button } from "another-react-component-library";
