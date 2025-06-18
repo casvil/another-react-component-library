@@ -60,11 +60,13 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       className,
     );
 
-    // Prevent clicks if disabled
     function handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
       if (disabled) {
         event.preventDefault();
         return;
+      }
+      if (process.env.NODE_ENV === 'test') {
+        event.preventDefault(); // prevent jsdom navigation error during tests
       }
       onClick?.(event);
     }
