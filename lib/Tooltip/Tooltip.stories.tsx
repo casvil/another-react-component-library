@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { X } from 'lucide-react';
 
-import { Tooltip, TooltipProps } from './Tooltip';
+import { Tooltip } from './Tooltip';
 import { Button } from '../Button/Button';
 import { IconButton } from '../IconButton/IconButton';
 

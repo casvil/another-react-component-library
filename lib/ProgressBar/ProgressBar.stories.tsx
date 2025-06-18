@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { ProgressBar } from './ProgressBar';
-import { withFullWidthRoot } from '../../.storybook/decorators/withFullWidthRoot';
+import { WithFullWidthRoot } from '../../.storybook/decorators/WithFullWidthRoot';
 
 const meta = {
   title: 'atoms/ProgressBar',
@@ -21,7 +21,7 @@ const meta = {
     barClassName: { control: 'text' },
     labelClassName: { control: 'text' },
   },
-  decorators: [withFullWidthRoot],
+  decorators: [WithFullWidthRoot],
 } satisfies Meta<typeof ProgressBar>;
 
 export default meta;

@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { TextArea } from './TextArea';
-import { withFullWidthRoot } from '../../.storybook/decorators/withFullWidthRoot';
+import { WithFullWidthRoot } from '../../.storybook/decorators/WithFullWidthRoot';
 
 const meta = {
   title: 'molecules/TextArea',
@@ -40,5 +40,5 @@ export const CustomStylesFullWidth: Story = {
     labelClassName: 'text-indigo-700 font-semibold',
     wrapperClassName: 'bg-yellow-100 p-4 rounded',
   },
-  decorators: [withFullWidthRoot],
+  decorators: [WithFullWidthRoot],
 };

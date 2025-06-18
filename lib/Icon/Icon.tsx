@@ -1,8 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
+import type { LucideIcon } from 'lucide-react';
 
 export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
-  icon: React.ReactElement;
+  icon: LucideIcon; // icon component type, e.g. Home, ArrowUp, etc.
   size?: number | string;
   color?: string;
   className?: string;
@@ -11,10 +12,10 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 /**
  * Icon molecule component.
- * Renders any React icon with configurable size, color, and accessibility.
+ * Renders any Lucide icon component with configurable size, color, and accessibility.
  */
 export const Icon = ({
-  icon,
+  icon: IconComponent,
   size = 24,
   color = 'currentColor',
   className,
@@ -30,19 +31,10 @@ export const Icon = ({
       aria-label={ariaLabel}
       aria-hidden={ariaLabel ? undefined : true}
       className={clsx('inline-flex items-center justify-center', className)}
-      style={{
-        width: numericSize,
-        height: numericSize,
-        color,
-        lineHeight: 0,
-      }}
+      style={{ width: numericSize, height: numericSize, color, lineHeight: 0 }}
       {...props}
     >
-      {React.cloneElement(icon as React.ReactElement<any>, {
-        size: numericSize,
-        color,
-        focusable: 'false', // prevent SVG from receiving keyboard focus
-      })}
+      <IconComponent size={numericSize} color={color} focusable="false" />
     </span>
   );
 };
