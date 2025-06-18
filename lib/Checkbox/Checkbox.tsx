@@ -32,7 +32,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     },
     ref,
   ) => {
-    const checkboxId = id || useId();
+    const generatedId = useId();
+    const checkboxId = id || generatedId;
 
     return (
       <div

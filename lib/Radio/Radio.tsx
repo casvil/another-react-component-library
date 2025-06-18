@@ -22,7 +22,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     { id, label, className, labelClassName, wrapperClassName, ...props },
     ref,
   ) => {
-    const radioId = id || useId();
+    const generatedId = useId();
+    const radioId = id || generatedId;
 
     const radioElement = (
       <input

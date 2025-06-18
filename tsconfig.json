@@ -11,5 +11,5 @@
     "moduleResolution": "bundler",
     "jsx": "react-jsx"
   },
-  "include": ["lib/index.ts"]
+  "include": ["lib/index.ts", "lib/@types"]
 }

@@ -1,4 +1,3 @@
-/// <reference path="./@types/lucide.d.ts" />
 export { Avatar } from './Avatar/Avatar';
 export { Badge } from './Badge/Badge';
 export { BadgeAvatar } from './BadgeAvatar/BadgeAvatar';

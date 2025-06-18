@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
 import { Input } from '../Input/Input';
@@ -26,7 +25,8 @@ export const InputField = ({
   className,
   ...props
 }: InputFieldProps) => {
-  const inputId = id || React.useId();
+  const generatedId = React.useId();
+  const inputId = id || generatedId;
   const describedBy = [
     helperText ? `${inputId}-helper` : null,
     error ? `${inputId}-error` : null,

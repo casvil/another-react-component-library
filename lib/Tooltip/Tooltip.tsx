@@ -1,4 +1,4 @@
-import React, { useState, ReactNode, useId } from 'react';
+import React, { useState, ReactNode } from 'react';
 import clsx from 'clsx';
 
 export interface TooltipProps {
