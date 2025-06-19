@@ -121,7 +121,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               placeholder={placeholder}
               readOnly
               disabled={disabled}
-              className={clsx('pr-10', inputClassName)}
+              className={clsx('pr-10 cursor-pointer', inputClassName)}
               ref={inputRef}
               onChange={() => {}}
             />
