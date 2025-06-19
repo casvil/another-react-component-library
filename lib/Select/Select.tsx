@@ -4,6 +4,7 @@ import React, {
   useEffect,
   forwardRef,
   useLayoutEffect,
+  useId,
 } from 'react';
 import clsx from 'clsx';
 import { Input } from '../Input/Input';
@@ -25,6 +26,11 @@ export interface SelectProps
   dropdownClassName?: string;
 }
 
+/**
+ * Select molecule component.
+ * Supports controlled and uncontrolled modes with keyboard accessibility.
+ * Displays a styled dropdown with smooth open/close animations.
+ */
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
   (
     {
@@ -42,8 +48,9 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     },
     ref,
   ) => {
-    const isControlled = value !== undefined;
+    const id = useId();
 
+    const isControlled = value !== undefined;
     const [internalValue, setInternalValue] = useState(defaultValue ?? '');
     const selected = isControlled ? value! : internalValue;
 
@@ -99,7 +106,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         className={clsx('w-64', className)}
         {...props}
       >
-        {label && <Label htmlFor="select-input">{label}</Label>}
+        {label && <Label htmlFor={id}>{label}</Label>}
 
         <div className="relative w-full">
           <div
@@ -120,7 +127,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
             aria-expanded={isOpen}
           >
             <Input
-              id="select-input"
+              id={id}
               icon={<Icon icon={ChevronDown} aria-label="Toggle dropdown" />}
               iconPosition="right"
               value={selectedLabel}
@@ -136,7 +143,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           {isOpen && !disabled && (
             <ul
               role="listbox"
-              aria-labelledby="select-input"
+              aria-labelledby={id}
               className={clsx(
                 'absolute z-10 mt-1 max-h-60 overflow-auto rounded-md border border-gray-300 bg-white shadow-lg focus:outline-none',
                 dropdownClassName,
