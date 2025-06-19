@@ -6,11 +6,12 @@ import React, {
   useLayoutEffect,
   useId,
 } from 'react';
+import { ChevronDown } from 'lucide-react';
 import clsx from 'clsx';
+
 import { Input } from '../Input/Input';
 import { Icon } from '../Icon/Icon';
 import { Label } from '../Label/Label';
-import { ChevronDown } from 'lucide-react';
 
 export interface SelectProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
