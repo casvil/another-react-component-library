@@ -1,0 +1,28 @@
+import { forwardRef, ImgHTMLAttributes } from 'react';
+import clsx from 'clsx';
+
+export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+  alt: string;
+  className?: string;
+}
+
+/**
+ * Accessible and customizable image component.
+ * Supports Tailwind utility classes and forwards refs for advanced usage.
+ * Ensures proper alt text and role for better a11y compliance.
+ */
+export const Image = forwardRef<HTMLImageElement, ImageProps>(
+  ({ alt, className, ...props }, ref) => {
+    return (
+      <img
+        ref={ref}
+        role="img"
+        alt={alt}
+        className={clsx('object-cover', className ? className : 'rounded-xl')}
+        {...props}
+      />
+    );
+  },
+);
+
+Image.displayName = 'Image';
