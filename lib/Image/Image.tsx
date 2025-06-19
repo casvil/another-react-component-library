@@ -12,12 +12,12 @@ export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
  * Ensures proper alt text and role for better a11y compliance.
  */
 export const Image = forwardRef<HTMLImageElement, ImageProps>(
-  ({ alt, className, ...props }, ref) => {
+  ({ alt, className = 'rounded-xl', ...props }, ref) => {
     return (
       <img
         ref={ref}
         alt={alt}
-        className={clsx('object-cover', className ? className : 'rounded-xl')}
+        className={clsx('object-cover', className)}
         {...props}
       />
     );
