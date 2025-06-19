@@ -16,7 +16,6 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
     return (
       <img
         ref={ref}
-        role="img"
         alt={alt}
         className={clsx('object-cover', className ? className : 'rounded-xl')}
         {...props}
