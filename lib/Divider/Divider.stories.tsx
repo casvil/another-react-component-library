@@ -1,8 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Divider } from './Divider';
 import { Label } from '../Label/Label';
-import { WithFullWidthRoot } from '../../.storybook/decorators/WithFullWidthRoot';
 
 const meta = {
   title: 'atoms/Divider',
