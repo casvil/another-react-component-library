@@ -8,6 +8,7 @@ export { ErrorMessage } from './ErrorMessage/ErrorMessage';
 export { HelperText } from './HelperText/HelperText';
 export { Icon } from './Icon/Icon';
 export { IconButton } from './IconButton/IconButton';
+export { Image } from './Image/Image';
 export { Input } from './Input/Input';
 export { InputField } from './InputField/InputField';
 export { Label } from './Label/Label';
