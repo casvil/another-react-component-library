@@ -1,6 +1,13 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Select } from './Select';
+
+const options = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'cherry', label: 'Cherry' },
+];
 
 const meta = {
   title: 'molecules/Select',
@@ -11,11 +18,7 @@ const meta = {
   tags: ['autodocs'],
   args: {
     label: 'Choose a fruit',
-    options: [
-      { value: 'apple', label: 'Apple' },
-      { value: 'banana', label: 'Banana' },
-      { value: 'orange', label: 'Orange' },
-    ],
+    options,
     placeholder: 'Select a fruit',
   },
 } satisfies Meta<typeof Select>;
@@ -26,9 +29,24 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const WithDefaultValue: Story = {
+export const Uncontrolled: Story = {
   args: {
-    defaultValue: 'banana',
+    defaultValue: 'apple',
+  },
+};
+
+export const Controlled: Story = {
+  render: () => {
+    const [value, setValue] = useState('apple');
+    return (
+      <Select
+        options={options}
+        value={value}
+        onChange={setValue}
+        label="Controlled Select"
+        placeholder="Pick a fruit"
+      />
+    );
   },
 };
 

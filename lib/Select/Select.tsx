@@ -16,6 +16,7 @@ export interface SelectProps
   label?: string;
   options: { value: string; label: string }[];
   defaultValue?: string;
+  value?: string; // controlled value
   onChange?: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
@@ -30,6 +31,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       label,
       options,
       defaultValue,
+      value,
       onChange,
       placeholder = 'Select an option',
       disabled = false,
@@ -40,16 +42,22 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     },
     ref,
   ) => {
+    const isControlled = value !== undefined;
+
+    const [internalValue, setInternalValue] = useState(defaultValue ?? '');
+    const selected = isControlled ? value! : internalValue;
+
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState<string>(defaultValue || '');
     const [inputWidth, setInputWidth] = useState<number>(0);
 
     const wrapperRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleSelect = (value: string) => {
-      setSelected(value);
-      if (onChange) onChange(value);
+    const handleSelect = (val: string) => {
+      if (!isControlled) {
+        setInternalValue(val);
+      }
+      if (onChange) onChange(val);
       setIsOpen(false);
     };
 
@@ -57,7 +65,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       if (!disabled) setIsOpen((prev) => !prev);
     };
 
-    // Close dropdown on outside click
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
         if (
@@ -73,7 +80,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       };
     }, []);
 
-    // Sync dropdown width with input
     useLayoutEffect(() => {
       if (inputRef.current) {
         setInputWidth(inputRef.current.offsetWidth);
@@ -123,6 +129,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               disabled={disabled}
               className={clsx('pr-10 cursor-pointer', inputClassName)}
               ref={inputRef}
+              onChange={() => {}}
             />
           </div>
 
@@ -136,22 +143,22 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               )}
               style={{ width: inputWidth }}
             >
-              {options.map(({ value, label }) => (
+              {options.map(({ value: val, label }) => (
                 <li
-                  key={value}
+                  key={val}
                   role="option"
-                  aria-selected={selected === value}
+                  aria-selected={selected === val}
                   tabIndex={0}
-                  onClick={() => handleSelect(value)}
+                  onClick={() => handleSelect(val)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
-                      handleSelect(value);
+                      handleSelect(val);
                     }
                   }}
                   className={clsx(
                     'cursor-pointer px-4 py-2',
-                    selected === value && 'bg-indigo-600 text-white',
+                    selected === val && 'bg-indigo-600 text-white',
                     'hover:bg-indigo-100',
                   )}
                 >

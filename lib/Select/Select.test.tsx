@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -58,6 +59,35 @@ describe('Select', () => {
     expect(onChange).toHaveBeenCalledWith('cherry');
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
     expect(screen.getByDisplayValue('Cherry')).toBeInTheDocument();
+  });
+
+  it('controlled: shows value and calls onChange but does not update internally', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    const ControlledSelect = () => {
+      const [value, setValue] = useState('apple');
+      return (
+        <Select
+          options={options}
+          value={value}
+          onChange={(val) => {
+            onChange(val);
+            setValue(val);
+          }}
+        />
+      );
+    };
+
+    render(<ControlledSelect />);
+    const input = screen.getByRole('textbox');
+    expect(input).toHaveValue('Apple');
+
+    await user.click(input);
+    const option = screen.getByRole('option', { name: 'Banana' });
+    await user.click(option);
+
+    expect(onChange).toHaveBeenCalledWith('banana');
+    expect(input).toHaveValue('Banana');
   });
 
   it('toggles dropdown with keyboard (Enter and Space)', async () => {
