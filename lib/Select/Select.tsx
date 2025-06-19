@@ -1,0 +1,170 @@
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  forwardRef,
+  useLayoutEffect,
+} from 'react';
+import clsx from 'clsx';
+import { Input } from '../Input/Input';
+import { Icon } from '../Icon/Icon';
+import { Label } from '../Label/Label';
+import { ChevronDown } from 'lucide-react';
+
+export interface SelectProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  label?: string;
+  options: { value: string; label: string }[];
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  className?: string;
+  inputClassName?: string;
+  dropdownClassName?: string;
+}
+
+export const Select = forwardRef<HTMLDivElement, SelectProps>(
+  (
+    {
+      label,
+      options,
+      defaultValue,
+      onChange,
+      placeholder = 'Select an option',
+      disabled = false,
+      className,
+      inputClassName,
+      dropdownClassName,
+      ...props
+    },
+    ref,
+  ) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [selected, setSelected] = useState<string>(defaultValue || '');
+    const [inputWidth, setInputWidth] = useState<number>(0);
+
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const handleSelect = (value: string) => {
+      setSelected(value);
+      if (onChange) onChange(value);
+      setIsOpen(false);
+    };
+
+    const toggleDropdown = () => {
+      if (!disabled) setIsOpen((prev) => !prev);
+    };
+
+    // Close dropdown on outside click
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (
+          wrapperRef.current &&
+          !wrapperRef.current.contains(event.target as Node)
+        ) {
+          setIsOpen(false);
+        }
+      };
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, []);
+
+    // Sync dropdown width with input
+    useLayoutEffect(() => {
+      if (inputRef.current) {
+        setInputWidth(inputRef.current.offsetWidth);
+      }
+    }, [isOpen]);
+
+    const selectedLabel =
+      options.find((opt) => opt.value === selected)?.label || '';
+
+    return (
+      <div
+        ref={(node) => {
+          wrapperRef.current = node;
+          if (typeof ref === 'function') ref(node);
+          else if (ref) ref.current = node;
+        }}
+        className={clsx('w-64', className)}
+        {...props}
+      >
+        {label && <Label htmlFor="select-input">{label}</Label>}
+
+        <div className="relative w-full">
+          <div
+            className={clsx(
+              'cursor-pointer',
+              disabled && 'opacity-60 cursor-not-allowed',
+            )}
+            onClick={toggleDropdown}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleDropdown();
+              }
+            }}
+            aria-haspopup="listbox"
+            aria-expanded={isOpen}
+          >
+            <Input
+              id="select-input"
+              icon={<Icon icon={ChevronDown} aria-label="Toggle dropdown" />}
+              iconPosition="right"
+              value={selectedLabel}
+              placeholder={placeholder}
+              readOnly
+              disabled={disabled}
+              className={clsx('pr-10', inputClassName)}
+              ref={inputRef}
+              onChange={() => {}}
+            />
+          </div>
+
+          {isOpen && !disabled && (
+            <ul
+              role="listbox"
+              aria-labelledby="select-input"
+              className={clsx(
+                'absolute z-10 mt-1 max-h-60 overflow-auto rounded-md border border-gray-300 bg-white shadow-lg focus:outline-none',
+                dropdownClassName,
+              )}
+              style={{ width: inputWidth }}
+            >
+              {options.map(({ value, label }) => (
+                <li
+                  key={value}
+                  role="option"
+                  aria-selected={selected === value}
+                  tabIndex={0}
+                  onClick={() => handleSelect(value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleSelect(value);
+                    }
+                  }}
+                  className={clsx(
+                    'cursor-pointer px-4 py-2',
+                    selected === value && 'bg-indigo-600 text-white',
+                    'hover:bg-indigo-100',
+                  )}
+                >
+                  {label}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    );
+  },
+);
+
+Select.displayName = 'Select';
