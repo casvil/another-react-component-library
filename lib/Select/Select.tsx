@@ -123,7 +123,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               disabled={disabled}
               className={clsx('pr-10 cursor-pointer', inputClassName)}
               ref={inputRef}
-              onChange={() => {}}
             />
           </div>
 
