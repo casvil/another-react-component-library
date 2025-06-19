@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/casvil/another-react-component-library.git"
   },
-  "homepage": "https://github.com/casvil/another-react-component-library#readme",
+  "homepage": "https://casvil.github.io/another-react-component-library",
   "description": "A customizable React 19 component library built with Vite, Tailwind CSS v4 and TypeScript.",
   "type": "module",
   "files": [
