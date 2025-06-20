@@ -146,4 +146,13 @@ describe('Select', () => {
     const input = screen.getByRole('textbox');
     expect(input).toBeDisabled();
   });
+
+  it('uses the provided id for accessibility', () => {
+    render(<Select id="custom-id" label="Fruit" options={options} />);
+    const input = screen.getByRole('textbox');
+    const label = screen.getByText('Fruit');
+
+    expect(input).toHaveAttribute('id', 'custom-id');
+    expect(label).toHaveAttribute('for', 'custom-id');
+  });
 });

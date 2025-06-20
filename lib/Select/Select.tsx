@@ -4,7 +4,6 @@ import React, {
   useEffect,
   forwardRef,
   useLayoutEffect,
-  useId,
 } from 'react';
 import { ChevronDown } from 'lucide-react';
 import clsx from 'clsx';
@@ -12,6 +11,7 @@ import clsx from 'clsx';
 import { Input } from '../Input/Input';
 import { Icon } from '../Icon/Icon';
 import { Label } from '../Label/Label';
+import { useStableId } from '../hooks/useStableId/useStableId';
 
 export interface SelectProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
@@ -25,6 +25,7 @@ export interface SelectProps
   className?: string;
   inputClassName?: string;
   dropdownClassName?: string;
+  id?: string;
 }
 
 /**
@@ -45,11 +46,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       className,
       inputClassName,
       dropdownClassName,
+      id,
       ...props
     },
     ref,
   ) => {
-    const id = useId();
+    const inputId = useStableId(id);
 
     const isControlled = value !== undefined;
     const [internalValue, setInternalValue] = useState(defaultValue ?? '');
@@ -107,7 +109,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         className={clsx('w-64', className)}
         {...props}
       >
-        {label && <Label htmlFor={id}>{label}</Label>}
+        {label && <Label htmlFor={inputId}>{label}</Label>}
 
         <div className="relative w-full">
           <div
@@ -128,7 +130,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
             aria-expanded={isOpen}
           >
             <Input
-              id={id}
+              id={inputId}
               icon={<Icon icon={ChevronDown} aria-label="Toggle dropdown" />}
               iconPosition="right"
               value={selectedLabel}
