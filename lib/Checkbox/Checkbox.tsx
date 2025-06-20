@@ -1,7 +1,8 @@
-import { forwardRef, InputHTMLAttributes, useId } from 'react';
+import { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
+import { useStableId } from '../hooks/useStableId/useStableId';
 
 export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -32,8 +33,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const checkboxId = id || generatedId;
+    const checkboxId = useStableId(id);
 
     return (
       <div

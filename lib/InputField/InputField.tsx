@@ -1,9 +1,8 @@
-import React from 'react';
-
 import { Label } from '../Label/Label';
 import { Input } from '../Input/Input';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { HelperText } from '../HelperText/HelperText';
+import { useStableId } from '../hooks/useStableId/useStableId';
 
 export interface InputFieldProps extends React.ComponentProps<typeof Input> {
   label?: string;
@@ -25,8 +24,8 @@ export const InputField = ({
   className,
   ...props
 }: InputFieldProps) => {
-  const generatedId = React.useId();
-  const inputId = id || generatedId;
+  const inputId = useStableId(id);
+
   const describedBy = [
     helperText ? `${inputId}-helper` : null,
     error ? `${inputId}-error` : null,

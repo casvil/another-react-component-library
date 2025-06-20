@@ -1,7 +1,8 @@
-import { forwardRef, InputHTMLAttributes, useId } from 'react';
+import { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
+import { useStableId } from '../hooks/useStableId/useStableId';
 
 export interface RadioProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -22,8 +23,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     { id, label, className, labelClassName, wrapperClassName, ...props },
     ref,
   ) => {
-    const generatedId = useId();
-    const radioId = id || generatedId;
+    const radioId = useStableId(id);
 
     const radioElement = (
       <input
