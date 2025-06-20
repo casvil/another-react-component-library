@@ -5,7 +5,7 @@ import React, {
   forwardRef,
   useLayoutEffect,
 } from 'react';
-import { ChevronDown } from 'lucide-react';
+import ChevronDown from 'lucide-react/icons/chevron-down';
 import clsx from 'clsx';
 
 import { Input } from '../Input/Input';
