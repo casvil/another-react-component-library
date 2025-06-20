@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import type { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-icon-type';
 
 export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   icon: LucideIcon; // icon component type, e.g. Home, ArrowUp, etc.
