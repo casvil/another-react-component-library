@@ -1,7 +1,8 @@
-import { forwardRef, TextareaHTMLAttributes, useId } from 'react';
+import { forwardRef, TextareaHTMLAttributes } from 'react';
 import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
+import { useStableId } from '../hooks/useStableId/useStableId';
 
 export interface TextAreaProps
   extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'> {
@@ -31,8 +32,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     },
     ref,
   ) => {
-    const autoId = useId();
-    const textareaId = id ?? autoId;
+    const textareaId = useStableId(id);
 
     const flexDirection = labelPosition === 'beside' ? 'flex-row' : 'flex-col';
 
