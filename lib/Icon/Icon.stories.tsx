@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Icon>;
 
 export const Small: Story = {
   args: {
-    icon: <AlertTriangle />,
+    icon: AlertTriangle,
     size: 16,
     'aria-label': 'Alert icon small',
   },
@@ -22,7 +22,7 @@ export const Small: Story = {
 
 export const Medium: Story = {
   args: {
-    icon: <AlertTriangle />,
+    icon: AlertTriangle,
     size: 24,
     'aria-label': 'Alert icon medium',
   },
@@ -30,7 +30,7 @@ export const Medium: Story = {
 
 export const Large: Story = {
   args: {
-    icon: <AlertTriangle />,
+    icon: AlertTriangle,
     size: 48,
     'aria-label': 'Alert icon large',
   },
