@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["dom", "esnext"],
     "types": ["node", "@testing-library/jest-dom"],
     "declaration": true,
     "declarationDir": "dist",
