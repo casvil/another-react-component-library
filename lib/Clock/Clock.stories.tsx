@@ -53,8 +53,18 @@ export const CustomStyleDigital7Font = {
     <Clock {...args} className="digital7 text-4xl border-3 px-3 py-0" />
   ),
   args: {
-    time: new Date(),
     format: 'mm:ss',
     bordered: true,
+  },
+};
+
+export const Stopped = {
+  render: (args) => (
+    <Clock {...args} className="digital7 text-4xl border-3 px-3 py-0" />
+  ),
+  args: {
+    format: 'mm:ss',
+    bordered: true,
+    stop: true,
   },
 };
