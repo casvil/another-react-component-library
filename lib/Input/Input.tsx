@@ -2,6 +2,7 @@ import React, { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 
 import type { Size } from '../@types/size';
+import { inputSizeClasses } from '../@types/size';
 
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
@@ -38,19 +39,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const sizeClasses = {
       sm: {
-        input: 'text-sm px-2 py-1',
         icon: 'text-sm',
         iconLeft: 'left-2',
         iconRight: 'right-2',
       },
       md: {
-        input: 'text-base px-3 py-2',
         icon: 'text-base',
         iconLeft: 'left-3',
         iconRight: 'right-3',
       },
       lg: {
-        input: 'text-lg px-4 py-3',
         icon: 'text-lg',
         iconLeft: 'left-4',
         iconRight: 'right-4',
@@ -61,7 +59,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const inputClass = clsx(
       'block rounded-md border shadow-sm w-full',
-      currentSize.input,
+      inputSizeClasses[size],
       hasIcon && iconPosition === 'left' && 'pl-10',
       hasIcon && iconPosition === 'right' && 'pr-10',
       'focus:outline-none focus:ring-2 focus:ring-blue-500',

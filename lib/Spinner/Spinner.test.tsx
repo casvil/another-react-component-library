@@ -1,7 +1,9 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+
 import { Spinner } from './Spinner';
+import { spinnerSizeClasses } from '../@types/size';
 
 describe('Spinner', () => {
   it('renders without crashing', () => {
@@ -25,11 +27,7 @@ describe('Spinner', () => {
       const svg = screen.getByRole('status').querySelector('svg');
       
       expect(svg).toBeInTheDocument();
-      expect(svg).toHaveClass(
-        size === 'sm' ? 'w-4 h-4' :
-        size === 'md' ? 'w-6 h-6' :
-        'w-8 h-8'
-      );
+      expect(svg).toHaveClass(spinnerSizeClasses[size]);
       
       unmount();
     });

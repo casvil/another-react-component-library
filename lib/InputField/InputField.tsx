@@ -3,6 +3,7 @@ import { Input } from '../Input/Input';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { HelperText } from '../HelperText/HelperText';
 import { useStableId } from '../hooks/useStableId/useStableId';
+
 import type { Size } from '../@types/size';
 
 export interface InputFieldProps extends React.ComponentProps<typeof Input> {

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { Label } from '../Label/Label';
 import { useStableId } from '../hooks/useStableId/useStableId';
 import type { Size } from '../@types/size';
+import { radioSizeClasses } from '../@types/size';
 
 export interface RadioProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
@@ -26,23 +27,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     ref,
   ) => {
     const radioId = useStableId(id);
-
-    const sizeClasses = {
-      sm: {
-        radio: 'h-3 w-3',
-        label: 'text-sm',
-      },
-      md: {
-        radio: 'h-4 w-4',
-        label: 'text-base',
-      },
-      lg: {
-        radio: 'h-5 w-5',
-        label: 'text-lg',
-      },
-    };
-
-    const currentSize = sizeClasses[size];
+    const currentSize = radioSizeClasses[size];
 
     const radioElement = (
       <input

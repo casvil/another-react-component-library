@@ -3,6 +3,7 @@ import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
 import type { Size } from '../@types/size';
+import { progressBarSizeClasses } from '../@types/size';
 
 export interface ProgressBarProps {
   value: number; // 0 to 100
@@ -26,23 +27,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   labelClassName,
 }) => {
   const safeValue = Math.min(100, Math.max(0, value)); // clamp between 0 and 100
-
-  const sizeClasses = {
-    sm: {
-      label: 'text-sm',
-      bar: 'h-2',
-    },
-    md: {
-      label: 'text-base',
-      bar: 'h-4',
-    },
-    lg: {
-      label: 'text-lg',
-      bar: 'h-6',
-    },
-  };
-
-  const currentSize = sizeClasses[size];
+  const currentSize = progressBarSizeClasses[size];
 
   return (
     <div className={clsx('w-full', className)}>

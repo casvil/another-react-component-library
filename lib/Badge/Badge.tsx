@@ -2,6 +2,7 @@ import { forwardRef, HTMLAttributes } from 'react';
 import clsx from 'clsx';
 
 import type { Size } from '../@types/size';
+import { badgeSizeClasses } from '../@types/size';
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: 'default' | 'success' | 'error' | 'warning' | 'info';
@@ -29,17 +30,11 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
       info: 'bg-blue-100 text-blue-800',
     };
 
-    const sizes = {
-      sm: 'text-xs px-1.5 py-1.5',
-      md: 'text-sm px-1.5 py-1.5',
-      lg: 'text-base px-1.5 py-1.5',
-    };
-
     return (
       <span
         ref={ref}
         role="status"
-        className={clsx(base, variants[variant], sizes[size], className)}
+        className={clsx(base, variants[variant], badgeSizeClasses[size], className)}
         aria-label={String(children)}
         aria-live="polite"
         {...props}

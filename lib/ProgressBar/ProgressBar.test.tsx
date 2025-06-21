@@ -3,6 +3,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import { ProgressBar } from './ProgressBar';
+import { progressBarSizeClasses } from '../@types/size';
 
 describe('ProgressBar', () => {
   it('supports all size variants', () => {
@@ -14,16 +15,8 @@ describe('ProgressBar', () => {
       const progressBar = screen.getByRole('progressbar');
       
       expect(progressBar).toBeInTheDocument();
-      expect(label).toHaveClass(
-        size === 'sm' ? 'text-sm' :
-        size === 'md' ? 'text-base' :
-        'text-lg'
-      );
-      expect(progressBar).toHaveClass(
-        size === 'sm' ? 'h-2' :
-        size === 'md' ? 'h-4' :
-        'h-6'
-      );
+      expect(label).toHaveClass(progressBarSizeClasses[size].label);
+      expect(progressBar).toHaveClass(progressBarSizeClasses[size].bar);
       
       unmount();
     });
