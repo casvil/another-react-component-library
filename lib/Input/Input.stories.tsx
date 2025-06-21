@@ -1,3 +1,4 @@
+import React from 'react';
 import { Meta, StoryObj } from '@storybook/react-vite';
 import { Search, Send } from 'lucide-react';
 
@@ -79,5 +80,26 @@ export const WithRightIcon: Story = {
     placeholder: 'Search...',
     icon: <Icon icon={<Send />} size={18} />,
     iconPosition: 'right',
+  },
+};
+
+export const Small: Story = {
+  args: {
+    size: 'sm',
+    placeholder: 'Small input',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    size: 'md',
+    placeholder: 'Medium input',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
+    placeholder: 'Large input',
   },
 };

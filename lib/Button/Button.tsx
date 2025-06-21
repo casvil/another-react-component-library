@@ -1,9 +1,11 @@
 import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import clsx from 'clsx';
 
+import type { Size } from '../@types/size';
+
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'tertiary';
-  size?: 'sm' | 'md' | 'lg';
+  size?: Size;
   label: string;
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';

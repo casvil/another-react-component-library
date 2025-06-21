@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { MessageCircleWarning, User } from 'lucide-react';
 
@@ -60,5 +61,23 @@ export const WithRightIcon: Story = {
     placeholder: 'Enter your username',
     icon: <Icon icon={<User />} size="sm" />,
     iconPosition: 'right',
+  },
+};
+
+export const Small: Story = {
+  args: {
+    size: 'sm',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    size: 'md',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
   },
 };

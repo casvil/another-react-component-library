@@ -1,9 +1,11 @@
 import { forwardRef, HTMLAttributes } from 'react';
 import clsx from 'clsx';
 
+import type { Size } from '../@types/size';
+
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: 'default' | 'success' | 'error' | 'warning' | 'info';
-  size?: 'sm' | 'md' | 'lg';
+  size?: Size;
   'aria-label'?: string;
 }
 

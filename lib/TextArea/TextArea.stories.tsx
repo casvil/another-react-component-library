@@ -42,3 +42,24 @@ export const CustomStylesFullWidth: Story = {
   },
   decorators: [WithFullWidthRoot],
 };
+
+export const Small: Story = {
+  args: {
+    size: 'sm',
+    placeholder: 'Small textarea',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    size: 'md',
+    placeholder: 'Medium textarea',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
+    placeholder: 'Large textarea',
+  },
+};

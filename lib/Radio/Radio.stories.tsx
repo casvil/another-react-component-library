@@ -36,6 +36,10 @@ const meta = {
       control: 'text',
       description: 'Value submitted when the radio is selected',
     },
+    size: {
+      control: 'text',
+      description: 'Size of the radio input',
+    },
   },
 } satisfies Meta<typeof Radio>;
 
@@ -78,5 +82,26 @@ export const CustomStyled: Story = {
     label: 'Custom',
     wrapperClassName: 'bg-yellow-100 p-2 rounded',
     labelClassName: 'text-purple-500',
+  },
+};
+
+export const Small: Story = {
+  args: {
+    size: 'sm',
+    label: 'Small radio',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    size: 'md',
+    label: 'Medium radio',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
+    label: 'Large radio',
   },
 };

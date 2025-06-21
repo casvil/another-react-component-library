@@ -2,10 +2,12 @@ import React from 'react';
 import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
+import type { Size } from '../@types/size';
 
 export interface ProgressBarProps {
   value: number; // 0 to 100
   label?: string;
+  size?: Size;
   className?: string; // outer container
   barClassName?: string; // filled progress bar
   labelClassName?: string; // label styling
@@ -18,21 +20,46 @@ export interface ProgressBarProps {
 export const ProgressBar: React.FC<ProgressBarProps> = ({
   value,
   label,
+  size = 'md',
   className,
   barClassName,
   labelClassName,
 }) => {
   const safeValue = Math.min(100, Math.max(0, value)); // clamp between 0 and 100
 
+  const sizeClasses = {
+    sm: {
+      label: 'text-sm',
+      bar: 'h-2',
+    },
+    md: {
+      label: 'text-base',
+      bar: 'h-4',
+    },
+    lg: {
+      label: 'text-lg',
+      bar: 'h-6',
+    },
+  };
+
+  const currentSize = sizeClasses[size];
+
   return (
     <div className={clsx('w-full', className)}>
-      {label && <Label className={labelClassName}>{label}</Label>}
+      {label && (
+        <Label className={clsx(currentSize.label, labelClassName)}>
+          {label}
+        </Label>
+      )}
       <div
         role="progressbar"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={safeValue}
-        className="relative w-full h-4 bg-gray-200 rounded overflow-hidden"
+        className={clsx(
+          'relative w-full bg-gray-200 rounded overflow-hidden',
+          currentSize.bar,
+        )}
       >
         <div
           className={clsx(

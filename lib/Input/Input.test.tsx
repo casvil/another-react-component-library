@@ -75,4 +75,22 @@ describe('Input', () => {
     const input = screen.getByRole('textbox', { name: 'input-field' });
     expect(input.className.includes('pl-10')).toBe(false);
   });
+
+  it('supports all size variants', () => {
+    const sizes = ['sm', 'md', 'lg'] as const;
+
+    sizes.forEach((size) => {
+      const { unmount } = render(<Input size={size} aria-label="input-field" />);
+      const input = screen.getByRole('textbox', { name: 'input-field' });
+      
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveClass(
+        size === 'sm' ? 'text-sm px-2 py-1' :
+        size === 'md' ? 'text-base px-3 py-2' :
+        'text-lg px-4 py-3'
+      );
+      
+      unmount();
+    });
+  });
 });

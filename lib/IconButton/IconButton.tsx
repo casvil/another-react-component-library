@@ -1,11 +1,13 @@
 import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import clsx from 'clsx';
 
+import type { Size } from '../@types/size';
+
 export interface IconButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode;
   'aria-label': string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: Size;
   variant?: 'primary' | 'secondary' | 'tertiary';
 }
 

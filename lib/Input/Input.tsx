@@ -1,10 +1,13 @@
-import React, { forwardRef, ReactElement } from 'react';
+import React, { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 
+import type { Size } from '../@types/size';
+
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  icon?: ReactElement;
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
+  size?: Size;
 }
 
 /**
@@ -15,7 +18,15 @@ export interface InputProps
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
-    { icon, iconPosition = 'left', className, disabled, readOnly, ...props },
+    {
+      icon,
+      iconPosition = 'left',
+      size = 'md',
+      className,
+      disabled,
+      readOnly,
+      ...props
+    },
     ref,
   ) => {
     const hasIcon = Boolean(icon);
@@ -25,8 +36,32 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled && 'opacity-60 cursor-not-allowed',
     );
 
+    const sizeClasses = {
+      sm: {
+        input: 'text-sm px-2 py-1',
+        icon: 'text-sm',
+        iconLeft: 'left-2',
+        iconRight: 'right-2',
+      },
+      md: {
+        input: 'text-base px-3 py-2',
+        icon: 'text-base',
+        iconLeft: 'left-3',
+        iconRight: 'right-3',
+      },
+      lg: {
+        input: 'text-lg px-4 py-3',
+        icon: 'text-lg',
+        iconLeft: 'left-4',
+        iconRight: 'right-4',
+      },
+    };
+
+    const currentSize = sizeClasses[size];
+
     const inputClass = clsx(
-      'block rounded-md border px-3 py-2 text-sm shadow-sm w-full',
+      'block rounded-md border shadow-sm w-full',
+      currentSize.input,
       hasIcon && iconPosition === 'left' && 'pl-10',
       hasIcon && iconPosition === 'right' && 'pr-10',
       'focus:outline-none focus:ring-2 focus:ring-blue-500',
@@ -37,7 +72,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const iconWrapperClass = clsx(
       'absolute inset-y-0 flex items-center',
-      iconPosition === 'left' ? 'left-3' : 'right-3',
+      currentSize.icon,
+      iconPosition === 'left' ? currentSize.iconLeft : currentSize.iconRight,
       disabled && 'text-gray-400',
       !disabled && 'text-gray-500',
     );

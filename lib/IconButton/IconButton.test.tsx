@@ -1,3 +1,4 @@
+import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 
@@ -38,5 +39,29 @@ describe('IconButton', () => {
     );
     const button = screen.getByRole('button', { name: /styled button/i });
     expect(button).toHaveClass('custom-class');
+  });
+
+  it('supports all size variants', () => {
+    const sizes = ['sm', 'md', 'lg'] as const;
+
+    sizes.forEach((size) => {
+      const { unmount } = render(
+        <IconButton 
+          icon={<svg data-testid="icon" />} 
+          aria-label={size} 
+          size={size} 
+        />
+      );
+      const button = screen.getByRole('button', { name: size });
+      
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass(
+        size === 'sm' ? 'p-1 w-8 h-8' :
+        size === 'md' ? 'p-2 w-10 h-10' :
+        'p-3 w-12 h-12'
+      );
+      
+      unmount();
+    });
   });
 });

@@ -1,3 +1,4 @@
+import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Spinner } from './Spinner';
@@ -16,22 +17,22 @@ describe('Spinner', () => {
     expect(screen.getByText('Loading')).toHaveClass('sr-only');
   });
 
-  it('applies small size', () => {
-    render(<Spinner size="sm" />);
-    const svg = screen.getByRole('status').querySelector('svg');
-    expect(svg).toHaveClass('w-4 h-4');
-  });
+  it('supports all size variants', () => {
+    const sizes = ['sm', 'md', 'lg'] as const;
 
-  it('applies medium size', () => {
-    render(<Spinner size="md" />);
-    const svg = screen.getByRole('status').querySelector('svg');
-    expect(svg).toHaveClass('w-6 h-6');
-  });
-
-  it('applies large size', () => {
-    render(<Spinner size="lg" />);
-    const svg = screen.getByRole('status').querySelector('svg');
-    expect(svg).toHaveClass('w-8 h-8');
+    sizes.forEach((size) => {
+      const { unmount } = render(<Spinner size={size} />);
+      const svg = screen.getByRole('status').querySelector('svg');
+      
+      expect(svg).toBeInTheDocument();
+      expect(svg).toHaveClass(
+        size === 'sm' ? 'w-4 h-4' :
+        size === 'md' ? 'w-6 h-6' :
+        'w-8 h-8'
+      );
+      
+      unmount();
+    });
   });
 
   it('applies custom wrapper className', () => {

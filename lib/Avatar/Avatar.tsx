@@ -1,11 +1,13 @@
 import { forwardRef } from 'react';
 import clsx from 'clsx';
 
+import type { Size } from '../@types/size';
+
 export interface AvatarProps {
   alt?: string;
   className?: string;
   name?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: Size;
   src?: string;
   border?: string; // Custom border classes
 }

@@ -1,4 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
+import React from 'react';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { TextArea } from './TextArea';
@@ -78,5 +79,23 @@ describe('TextArea', () => {
     );
     textarea = screen.getByRole('textbox', { name: 'Description' });
     expect(textarea).toHaveAttribute('aria-describedby', 'desc-info');
+  });
+
+  it('supports all size variants', () => {
+    const sizes = ['sm', 'md', 'lg'] as const;
+
+    sizes.forEach((size) => {
+      const { unmount } = render(<TextArea label="Test" size={size} />);
+      const textarea = screen.getByRole('textbox', { name: 'Test' });
+      
+      expect(textarea).toBeInTheDocument();
+      expect(textarea).toHaveClass(
+        size === 'sm' ? 'text-sm px-2 py-1' :
+        size === 'md' ? 'text-base px-3 py-2' :
+        'text-lg px-4 py-3'
+      );
+      
+      unmount();
+    });
   });
 });

@@ -2,13 +2,15 @@ import React from 'react';
 import clsx from 'clsx';
 import { Badge, BadgeProps } from '../Badge/Badge';
 import { Avatar, AvatarProps } from '../Avatar/Avatar';
+import type { Size } from '../@types/size';
 
 export interface BadgeAvatarProps {
-  avatarProps: AvatarProps;
-  badgeProps?: Omit<BadgeProps, 'children' | 'aria-label'>;
+  avatarProps?: Omit<AvatarProps, 'size'>;
+  badgeProps?: Omit<BadgeProps, 'children' | 'aria-label' | 'size'>;
   children?: React.ReactNode;
   className?: string;
   textClassName?: string;
+  size?: Size;
 }
 
 /**
@@ -16,21 +18,28 @@ export interface BadgeAvatarProps {
  * Puts Avatar inside the Badge, alongside optional children content (text or elements).
  */
 export const BadgeAvatar: React.FC<BadgeAvatarProps> = ({
-  avatarProps,
-  badgeProps,
+  avatarProps = {},
+  badgeProps = {},
   children,
   className,
   textClassName,
+  size = 'md',
 }) => {
-  // Merge avatarProps with default size
+  // Merge avatarProps with size
   const mergedAvatarProps = {
-    size: 'sm' as 'sm' | 'md' | 'lg',
+    size,
     ...avatarProps,
+  };
+
+  // Merge badgeProps with size
+  const mergedBadgeProps = {
+    size,
+    ...badgeProps,
   };
 
   return (
     <Badge
-      {...badgeProps}
+      {...mergedBadgeProps}
       className={clsx(
         'inline-flex items-center space-x-1 rounded-full',
         className,

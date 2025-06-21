@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Select } from './Select';
@@ -62,5 +62,26 @@ export const WithCustomStyles: Story = {
     className: 'p-6 bg-gray-100 rounded-xl',
     inputClassName: 'border-indigo-500 text-indigo-700',
     dropdownClassName: 'bg-indigo-50 border-indigo-200',
+  },
+};
+
+export const Small: Story = {
+  args: {
+    size: 'sm',
+    placeholder: 'Small select',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    size: 'md',
+    placeholder: 'Medium select',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
+    placeholder: 'Large select',
   },
 };
