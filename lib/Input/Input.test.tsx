@@ -81,12 +81,14 @@ describe('Input', () => {
     const sizes = ['sm', 'md', 'lg'] as const;
 
     sizes.forEach((size) => {
-      const { unmount } = render(<Input size={size} aria-label="input-field" />);
+      const { unmount } = render(
+        <Input size={size} aria-label="input-field" />,
+      );
       const input = screen.getByRole('textbox', { name: 'input-field' });
-      
+
       expect(input).toBeInTheDocument();
       expect(input).toHaveClass(inputSizeClasses[size]);
-      
+
       unmount();
     });
   });

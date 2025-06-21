@@ -68,23 +68,27 @@ describe('BadgeAvatar', () => {
       const { unmount } = render(
         <BadgeAvatar avatarProps={{ name: 'Test User' }} size={size}>
           Test User
-        </BadgeAvatar>
+        </BadgeAvatar>,
       );
       const avatar = screen.getByRole('img', { name: 'Test User' });
       const badge = screen.getByRole('status');
-      
+
       expect(avatar).toBeInTheDocument();
       expect(avatar).toHaveClass(
-        size === 'sm' ? 'w-8 h-8 text-sm' :
-        size === 'md' ? 'w-12 h-12 text-base' :
-        'w-20 h-20 text-xl'
+        size === 'sm'
+          ? 'w-8 h-8 text-sm'
+          : size === 'md'
+            ? 'w-12 h-12 text-base'
+            : 'w-20 h-20 text-xl',
       );
       expect(badge).toHaveClass(
-        size === 'sm' ? 'text-xs px-1.5 py-1.5' :
-        size === 'md' ? 'text-sm px-1.5 py-1.5' :
-        'text-base px-1.5 py-1.5'
+        size === 'sm'
+          ? 'text-xs px-1.5 py-1.5'
+          : size === 'md'
+            ? 'text-sm px-1.5 py-1.5'
+            : 'text-base px-1.5 py-1.5',
       );
-      
+
       unmount();
     });
   });

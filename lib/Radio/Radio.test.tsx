@@ -1,4 +1,3 @@
-import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
@@ -13,11 +12,11 @@ describe('Radio', () => {
       const { unmount } = render(<Radio label="Test" size={size} />);
       const input = screen.getByRole('radio', { name: 'Test' });
       const label = screen.getByText('Test');
-      
+
       expect(input).toBeInTheDocument();
       expect(input).toHaveClass(radioSizeClasses[size].radio);
       expect(label).toHaveClass(radioSizeClasses[size].label);
-      
+
       unmount();
     });
   });

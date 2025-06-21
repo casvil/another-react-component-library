@@ -1,4 +1,4 @@
-import React, { forwardRef, InputHTMLAttributes } from 'react';
+import { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
@@ -23,7 +23,15 @@ export interface RadioProps
  */
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(
   (
-    { id, label, size = 'md', className, labelClassName, wrapperClassName, ...props },
+    {
+      id,
+      label,
+      size = 'md',
+      className,
+      labelClassName,
+      wrapperClassName,
+      ...props
+    },
     ref,
   ) => {
     const radioId = useStableId(id);
@@ -48,7 +56,10 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     return (
       <div className={clsx('flex items-center space-x-2', wrapperClassName)}>
         {radioElement}
-        <Label className={clsx(currentSize.label, labelClassName)} htmlFor={radioId}>
+        <Label
+          className={clsx(currentSize.label, labelClassName)}
+          htmlFor={radioId}
+        >
           {label}
         </Label>
       </div>

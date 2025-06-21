@@ -32,7 +32,11 @@ export const Spinner = ({
       {...props}
     >
       <LoaderCircle
-        className={clsx('animate-spin', spinnerSizeClasses[size], iconClassName)}
+        className={clsx(
+          'animate-spin',
+          spinnerSizeClasses[size],
+          iconClassName,
+        )}
         aria-hidden="true"
       />
       <span className="sr-only">Loading</span>

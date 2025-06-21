@@ -63,7 +63,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           {...rest}
         />
         {label && (
-          <Label className={clsx(currentSize.label, labelClassName)} htmlFor={checkboxId}>
+          <Label
+            className={clsx(currentSize.label, labelClassName)}
+            htmlFor={checkboxId}
+          >
             {label}
           </Label>
         )}

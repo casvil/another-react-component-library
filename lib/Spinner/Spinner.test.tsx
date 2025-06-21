@@ -1,4 +1,3 @@
-import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
@@ -25,10 +24,10 @@ describe('Spinner', () => {
     sizes.forEach((size) => {
       const { unmount } = render(<Spinner size={size} />);
       const svg = screen.getByRole('status').querySelector('svg');
-      
+
       expect(svg).toBeInTheDocument();
       expect(svg).toHaveClass(spinnerSizeClasses[size]);
-      
+
       unmount();
     });
   });
