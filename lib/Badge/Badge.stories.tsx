@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Badge } from './Badge';
@@ -69,3 +70,34 @@ export const CustomStyle: Story = {
     className: 'px-3 bg-purple-100 text-purple-800 border border-purple-300',
   },
 };
+
+export const Small: Story = {
+  args: {
+    children: 'Small',
+    size: 'sm',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    children: 'Medium',
+    size: 'md',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    children: 'Large',
+    size: 'lg',
+  },
+};
+
+export const AllSizes = {
+  render: () => (
+    <div className="space-x-2">
+      <Badge size="sm">Small</Badge>
+      <Badge size="md">Medium</Badge>
+      <Badge size="lg">Large</Badge>
+    </div>
+  ),
+} satisfies StoryObj<typeof meta>;
