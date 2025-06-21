@@ -20,3 +20,6 @@ export { Spinner } from './Spinner/Spinner';
 export { TextArea } from './TextArea/TextArea';
 export { TimeDisplay } from './TimeDisplay/TimeDisplay';
 export { Tooltip } from './Tooltip/Tooltip';
+
+// Types
+export type { Size } from './@types/size';
