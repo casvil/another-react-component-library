@@ -2,6 +2,7 @@ import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import clsx from 'clsx';
 
 import type { Size } from '../@types/size';
+import { buttonSizeClasses } from '../@types/size';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'tertiary';
@@ -42,17 +43,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         'bg-transparent text-gray-800 hover:bg-gray-100 focus:ring-gray-300 border border-gray-300',
     };
 
-    const sizes = {
-      sm: 'text-sm px-3 py-1.5',
-      md: 'text-base px-4 py-2',
-      lg: 'text-lg px-5 py-3',
-    };
-
     return (
       <button
         type="button"
         ref={ref}
-        className={clsx(base, variants[variant], sizes[size], className)}
+        className={clsx(base, variants[variant], buttonSizeClasses[size], className)}
         disabled={disabled}
         {...props}
       >

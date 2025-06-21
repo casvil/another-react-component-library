@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import clsx from 'clsx';
 
 import type { Size } from '../@types/size';
+import { avatarSizeClasses } from '../@types/size';
 
 export interface AvatarProps {
   alt?: string;
@@ -33,22 +34,16 @@ export const Avatar = forwardRef<
   const initials = getInitials(name);
   const ariaLabel = alt || name || 'User avatar';
 
-  const sizeClasses = {
-    sm: 'w-8 h-8 text-sm',
-    md: 'w-12 h-12 text-base',
-    lg: 'w-20 h-20 text-xl',
-  };
-
   const baseInitialsClasses = clsx(
     'inline-flex items-center justify-center rounded-full font-semibold bg-gray-200 text-gray-700 select-none',
-    sizeClasses[size],
+    avatarSizeClasses[size],
     border,
     className,
   );
 
   const baseImageClasses = clsx(
     'rounded-full',
-    sizeClasses[size],
+    avatarSizeClasses[size],
     border,
     className,
   );

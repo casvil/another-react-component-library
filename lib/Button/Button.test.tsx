@@ -4,6 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 import { Button } from './Button';
+import { buttonSizeClasses } from '../@types/size';
 
 describe('Button', () => {
   it('renders the label', () => {
@@ -37,13 +38,7 @@ describe('Button', () => {
       const button = screen.getByRole('button', { name: size });
       
       expect(button).toBeInTheDocument();
-      expect(button).toHaveClass(
-        size === 'sm'
-          ? 'text-sm px-3 py-1.5'
-          : size === 'md'
-            ? 'text-base px-4 py-2'
-            : 'text-lg px-5 py-3',
-      );
+      expect(button).toHaveClass(buttonSizeClasses[size]);
       
       unmount();
     });

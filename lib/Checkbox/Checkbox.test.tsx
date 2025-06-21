@@ -64,19 +64,15 @@ describe('Checkbox', () => {
       const { unmount } = render(<Checkbox label="Test" size={size} />);
       const input = screen.getByRole('checkbox', { name: 'Test' });
       const label = screen.getByText('Test');
-      
+
       expect(input).toBeInTheDocument();
       expect(input).toHaveClass(
-        size === 'sm' ? 'h-3 w-3' :
-        size === 'md' ? 'h-4 w-4' :
-        'h-5 w-5'
+        size === 'sm' ? 'h-3 w-3' : size === 'md' ? 'h-4 w-4' : 'h-5 w-5',
       );
       expect(label).toHaveClass(
-        size === 'sm' ? 'text-sm' :
-        size === 'md' ? 'text-base' :
-        'text-lg'
+        size === 'sm' ? 'text-sm' : size === 'md' ? 'text-base' : 'text-lg',
       );
-      
+
       unmount();
     });
   });

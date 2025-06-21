@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { Label } from '../Label/Label';
 import { useStableId } from '../hooks/useStableId/useStableId';
 import type { Size } from '../@types/size';
+import { checkboxSizeClasses } from '../@types/size';
 
 export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
@@ -37,23 +38,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     ref,
   ) => {
     const checkboxId = useStableId(id);
-
-    const sizeClasses = {
-      sm: {
-        checkbox: 'h-3 w-3',
-        label: 'text-sm',
-      },
-      md: {
-        checkbox: 'h-4 w-4',
-        label: 'text-base',
-      },
-      lg: {
-        checkbox: 'h-5 w-5',
-        label: 'text-lg',
-      },
-    };
-
-    const currentSize = sizeClasses[size];
+    const currentSize = checkboxSizeClasses[size];
 
     return (
       <div

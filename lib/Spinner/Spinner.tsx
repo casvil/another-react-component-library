@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import LoaderCircle from 'lucide-react/icons/loader-circle';
 
 import type { Size } from '../@types/size';
+import { spinnerSizeClasses } from '../@types/size';
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: Size;
@@ -22,12 +23,6 @@ export const Spinner = ({
   iconClassName,
   ...props
 }: SpinnerProps) => {
-  const sizeClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-6 h-6',
-    lg: 'w-8 h-8',
-  };
-
   return (
     <div
       role="status"
@@ -37,7 +32,7 @@ export const Spinner = ({
       {...props}
     >
       <LoaderCircle
-        className={clsx('animate-spin', sizeClasses[size], iconClassName)}
+        className={clsx('animate-spin', spinnerSizeClasses[size], iconClassName)}
         aria-hidden="true"
       />
       <span className="sr-only">Loading</span>

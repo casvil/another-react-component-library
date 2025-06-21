@@ -2,6 +2,7 @@ import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import clsx from 'clsx';
 
 import type { Size } from '../@types/size';
+import { iconButtonSizeClasses } from '../@types/size';
 
 export interface IconButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -40,17 +41,11 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         'bg-transparent text-gray-800 hover:bg-gray-100 focus:ring-gray-300 border border-gray-300',
     };
 
-    const sizes = {
-      sm: 'p-1 w-8 h-8',
-      md: 'p-2 w-10 h-10',
-      lg: 'p-3 w-12 h-12',
-    };
-
     return (
       <button
         type="button"
         ref={ref}
-        className={clsx(base, variants[variant], sizes[size], className)}
+        className={clsx(base, variants[variant], iconButtonSizeClasses[size], className)}
         disabled={disabled}
         aria-label={props['aria-label']}
         {...props}

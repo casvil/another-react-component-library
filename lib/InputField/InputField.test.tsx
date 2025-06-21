@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { Search } from 'lucide-react';
 
 import { InputField } from './InputField';
+import { inputSizeClasses } from '../@types/size';
 
 describe('InputField', () => {
   it('renders without crashing', () => {
@@ -83,11 +84,7 @@ describe('InputField', () => {
       const input = screen.getByLabelText('Test');
       
       expect(input).toBeInTheDocument();
-      expect(input).toHaveClass(
-        size === 'sm' ? 'text-sm px-2 py-1' :
-        size === 'md' ? 'text-base px-3 py-2' :
-        'text-lg px-4 py-3'
-      );
+      expect(input).toHaveClass(inputSizeClasses[size]);
       
       unmount();
     });

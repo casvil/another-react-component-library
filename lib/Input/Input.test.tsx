@@ -2,9 +2,10 @@ import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Search } from 'lucide-react';
 
 import { Input } from './Input';
-import { Search } from 'lucide-react';
+import { inputSizeClasses } from '../@types/size';
 
 describe('Input', () => {
   it('renders without crashing', () => {
@@ -84,11 +85,7 @@ describe('Input', () => {
       const input = screen.getByRole('textbox', { name: 'input-field' });
       
       expect(input).toBeInTheDocument();
-      expect(input).toHaveClass(
-        size === 'sm' ? 'text-sm px-2 py-1' :
-        size === 'md' ? 'text-base px-3 py-2' :
-        'text-lg px-4 py-3'
-      );
+      expect(input).toHaveClass(inputSizeClasses[size]);
       
       unmount();
     });
