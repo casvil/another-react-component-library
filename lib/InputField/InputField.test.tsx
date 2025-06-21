@@ -1,4 +1,3 @@
-import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Search } from 'lucide-react';
@@ -82,10 +81,10 @@ describe('InputField', () => {
     sizes.forEach((size) => {
       const { unmount } = render(<InputField label="Test" size={size} />);
       const input = screen.getByLabelText('Test');
-      
+
       expect(input).toBeInTheDocument();
       expect(input).toHaveClass(inputSizeClasses[size]);
-      
+
       unmount();
     });
   });

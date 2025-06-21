@@ -56,46 +56,67 @@ const progressBarHeights = {
 } as const;
 
 // Helper function to combine text and padding
-const combineTextAndPadding = (text: typeof textSizes, padding: Record<Size, string>) => ({
-  sm: `${text.sm} ${padding.sm}`,
-  md: `${text.md} ${padding.md}`,
-  lg: `${text.lg} ${padding.lg}`,
-} as const);
+const combineTextAndPadding = (
+  text: typeof textSizes,
+  padding: Record<Size, string>,
+) =>
+  ({
+    sm: `${text.sm} ${padding.sm}`,
+    md: `${text.md} ${padding.md}`,
+    lg: `${text.lg} ${padding.lg}`,
+  }) as const;
 
 // Helper function to combine icon button padding and size
-const combineIconButton = (padding: typeof iconButtonPadding, size: typeof iconButtonSizes) => ({
-  sm: `${padding.sm} ${size.sm}`,
-  md: `${padding.md} ${size.md}`,
-  lg: `${padding.lg} ${size.lg}`,
-} as const);
+const combineIconButton = (
+  padding: typeof iconButtonPadding,
+  size: typeof iconButtonSizes,
+) =>
+  ({
+    sm: `${padding.sm} ${size.sm}`,
+    md: `${padding.md} ${size.md}`,
+    lg: `${padding.lg} ${size.lg}`,
+  }) as const;
 
 // Helper function to combine avatar size and text
-const combineAvatar = (size: typeof avatarSizes, text: typeof textSizes) => ({
-  sm: `${size.sm} ${text.sm}`,
-  md: `${size.md} ${text.md}`,
-  lg: `${size.lg} text-xl`, // Avatar uses text-xl for lg instead of text-lg
-} as const);
+const combineAvatar = (size: typeof avatarSizes, text: typeof textSizes) =>
+  ({
+    sm: `${size.sm} ${text.sm}`,
+    md: `${size.md} ${text.md}`,
+    lg: `${size.lg} text-xl`, // Avatar uses text-xl for lg instead of text-lg
+  }) as const;
 
 // Helper function to create form control objects
-const createFormControl = (control: typeof formControlSizes, text: typeof textSizes) => ({
-  sm: { checkbox: control.sm, label: text.sm },
-  md: { checkbox: control.md, label: text.md },
-  lg: { checkbox: control.lg, label: text.lg },
-} as const);
+const createFormControl = (
+  control: typeof formControlSizes,
+  text: typeof textSizes,
+) =>
+  ({
+    sm: { checkbox: control.sm, label: text.sm },
+    md: { checkbox: control.md, label: text.md },
+    lg: { checkbox: control.lg, label: text.lg },
+  }) as const;
 
 // Helper function to create radio control objects
-const createRadioControl = (control: typeof formControlSizes, text: typeof textSizes) => ({
-  sm: { radio: control.sm, label: text.sm },
-  md: { radio: control.md, label: text.md },
-  lg: { radio: control.lg, label: text.lg },
-} as const);
+const createRadioControl = (
+  control: typeof formControlSizes,
+  text: typeof textSizes,
+) =>
+  ({
+    sm: { radio: control.sm, label: text.sm },
+    md: { radio: control.md, label: text.md },
+    lg: { radio: control.lg, label: text.lg },
+  }) as const;
 
 // Helper function to create progress bar objects
-const createProgressBar = (text: typeof textSizes, height: typeof progressBarHeights) => ({
-  sm: { label: text.sm, bar: height.sm },
-  md: { label: text.md, bar: height.md },
-  lg: { label: text.lg, bar: height.lg },
-} as const);
+const createProgressBar = (
+  text: typeof textSizes,
+  height: typeof progressBarHeights,
+) =>
+  ({
+    sm: { label: text.sm, bar: height.sm },
+    md: { label: text.md, bar: height.md },
+    lg: { label: text.lg, bar: height.lg },
+  }) as const;
 
 // Export the computed size classes
 export const sizeClasses = textSizes;
@@ -106,7 +127,10 @@ export const buttonSizeClasses = {
   lg: `${textSizes.lg} ${buttonPaddingSizes.lg}`,
 } as const;
 
-export const iconButtonSizeClasses = combineIconButton(iconButtonPadding, iconButtonSizes);
+export const iconButtonSizeClasses = combineIconButton(
+  iconButtonPadding,
+  iconButtonSizes,
+);
 
 export const spinnerSizeClasses = iconSizes;
 
@@ -120,8 +144,14 @@ export const badgeSizeClasses = {
 
 export const inputSizeClasses = combineTextAndPadding(textSizes, paddingSizes);
 
-export const checkboxSizeClasses = createFormControl(formControlSizes, textSizes);
+export const checkboxSizeClasses = createFormControl(
+  formControlSizes,
+  textSizes,
+);
 
 export const radioSizeClasses = createRadioControl(formControlSizes, textSizes);
 
-export const progressBarSizeClasses = createProgressBar(textSizes, progressBarHeights); 
+export const progressBarSizeClasses = createProgressBar(
+  textSizes,
+  progressBarHeights,
+);

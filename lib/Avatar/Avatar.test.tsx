@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { Avatar } from './Avatar';
@@ -46,14 +46,16 @@ describe('Avatar component', () => {
     sizes.forEach((size) => {
       const { unmount } = render(<Avatar name="Test User" size={size} />);
       const avatar = screen.getByRole('img');
-      
+
       expect(avatar).toBeInTheDocument();
       expect(avatar).toHaveClass(
-        size === 'sm' ? 'w-8 h-8 text-sm' :
-        size === 'md' ? 'w-12 h-12 text-base' :
-        'w-20 h-20 text-xl'
+        size === 'sm'
+          ? 'w-8 h-8 text-sm'
+          : size === 'md'
+            ? 'w-12 h-12 text-base'
+            : 'w-20 h-20 text-xl',
       );
-      
+
       unmount();
     });
   });

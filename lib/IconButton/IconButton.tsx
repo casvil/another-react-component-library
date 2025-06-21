@@ -45,7 +45,12 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       <button
         type="button"
         ref={ref}
-        className={clsx(base, variants[variant], iconButtonSizeClasses[size], className)}
+        className={clsx(
+          base,
+          variants[variant],
+          iconButtonSizeClasses[size],
+          className,
+        )}
         disabled={disabled}
         aria-label={props['aria-label']}
         {...props}

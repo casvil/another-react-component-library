@@ -36,10 +36,10 @@ describe('Button', () => {
     sizes.forEach((size) => {
       const { unmount } = render(<Button label={size} size={size} />);
       const button = screen.getByRole('button', { name: size });
-      
+
       expect(button).toBeInTheDocument();
       expect(button).toHaveClass(buttonSizeClasses[size]);
-      
+
       unmount();
     });
   });

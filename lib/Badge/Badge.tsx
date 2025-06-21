@@ -34,7 +34,12 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
       <span
         ref={ref}
         role="status"
-        className={clsx(base, variants[variant], badgeSizeClasses[size], className)}
+        className={clsx(
+          base,
+          variants[variant],
+          badgeSizeClasses[size],
+          className,
+        )}
         aria-label={String(children)}
         aria-live="polite"
         {...props}

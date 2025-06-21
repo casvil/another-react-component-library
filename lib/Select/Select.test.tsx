@@ -17,10 +17,10 @@ describe('Select', () => {
     sizes.forEach((size) => {
       const { unmount } = render(<Select options={options} size={size} />);
       const input = screen.getByRole('textbox');
-      
+
       expect(input).toBeInTheDocument();
       expect(input).toHaveClass(inputSizeClasses[size]);
-      
+
       unmount();
     });
   });
