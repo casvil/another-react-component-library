@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 
 import { Select } from './Select';
 
@@ -154,5 +155,20 @@ describe('Select', () => {
 
     expect(input).toHaveAttribute('id', 'custom-id');
     expect(label).toHaveAttribute('for', 'custom-id');
+  });
+
+  it('handles undefined value in controlled mode without crashing', () => {
+    const TestComponent = () => {
+      const [value, setValue] = useState<string | undefined>(undefined);
+      return <Select options={options} value={value} onChange={setValue} />;
+    };
+
+    // Should not throw any errors
+    expect(() => {
+      render(<TestComponent />);
+    }).not.toThrow();
+
+    // Should display placeholder when value is undefined
+    expect(screen.getByPlaceholderText('Select an option')).toBeInTheDocument();
   });
 });
