@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 
 export interface TooltipProps {
@@ -24,17 +24,28 @@ export const Tooltip = ({
   position = 'top',
 }: TooltipProps) => {
   const [visible, setVisible] = useState(false);
-
-  let timeout: NodeJS.Timeout;
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const showTooltip = () => {
-    timeout = setTimeout(() => setVisible(true), delay);
+    timeoutRef.current = setTimeout(() => setVisible(true), delay);
   };
 
   const hideTooltip = () => {
-    clearTimeout(timeout);
-    setVisible(false);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = undefined;
+    }
+    if (visible) setVisible(false);
   };
+
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const positionClasses = {
     top: 'bottom-full mb-2 left-1/2 transform -translate-x-1/2',
