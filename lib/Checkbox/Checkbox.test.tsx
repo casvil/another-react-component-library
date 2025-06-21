@@ -3,6 +3,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import { Checkbox } from './Checkbox';
+import { checkboxSizeClasses } from '../@types/size';
 
 describe('Checkbox', () => {
   it('renders with label', () => {
@@ -66,12 +67,8 @@ describe('Checkbox', () => {
       const label = screen.getByText('Test');
 
       expect(input).toBeInTheDocument();
-      expect(input).toHaveClass(
-        size === 'sm' ? 'h-3 w-3' : size === 'md' ? 'h-4 w-4' : 'h-5 w-5',
-      );
-      expect(label).toHaveClass(
-        size === 'sm' ? 'text-sm' : size === 'md' ? 'text-base' : 'text-lg',
-      );
+      expect(input).toHaveClass(checkboxSizeClasses[size].checkbox);
+      expect(label).toHaveClass(checkboxSizeClasses[size].label);
 
       unmount();
     });
