@@ -55,7 +55,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const isControlled = value !== undefined;
     const [internalValue, setInternalValue] = useState(defaultValue ?? '');
-    const selected = isControlled ? value! : internalValue;
+    const selected = isControlled && value !== undefined ? value : internalValue;
 
     const [isOpen, setIsOpen] = useState(false);
     const [inputWidth, setInputWidth] = useState<number>(0);
