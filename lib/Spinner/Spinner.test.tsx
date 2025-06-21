@@ -1,8 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-
 import { Spinner } from './Spinner';
-import { spinnerSizeClasses } from '../@types/size';
 
 describe('Spinner', () => {
   it('renders without crashing', () => {
@@ -18,18 +16,22 @@ describe('Spinner', () => {
     expect(screen.getByText('Loading')).toHaveClass('sr-only');
   });
 
-  it('supports all size variants', () => {
-    const sizes = ['sm', 'md', 'lg'] as const;
+  it('applies small size', () => {
+    render(<Spinner size="sm" />);
+    const svg = screen.getByRole('status').querySelector('svg');
+    expect(svg).toHaveClass('w-4 h-4');
+  });
 
-    sizes.forEach((size) => {
-      const { unmount } = render(<Spinner size={size} />);
-      const svg = screen.getByRole('status').querySelector('svg');
+  it('applies medium size', () => {
+    render(<Spinner size="md" />);
+    const svg = screen.getByRole('status').querySelector('svg');
+    expect(svg).toHaveClass('w-6 h-6');
+  });
 
-      expect(svg).toBeInTheDocument();
-      expect(svg).toHaveClass(spinnerSizeClasses[size]);
-
-      unmount();
-    });
+  it('applies large size', () => {
+    render(<Spinner size="lg" />);
+    const svg = screen.getByRole('status').querySelector('svg');
+    expect(svg).toHaveClass('w-8 h-8');
   });
 
   it('applies custom wrapper className', () => {
