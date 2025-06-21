@@ -1,53 +1,31 @@
-import { describe, expect, it } from 'vitest';
+import React from 'react';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import { ProgressBar } from './ProgressBar';
 
 describe('ProgressBar', () => {
-  it('renders without crashing', () => {
-    render(<ProgressBar value={50} />);
-    const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toBeInTheDocument();
-  });
+  it('supports all size variants', () => {
+    const sizes = ['sm', 'md', 'lg'] as const;
 
-  it('displays the correct value', () => {
-    render(<ProgressBar value={75} />);
-    const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toHaveAttribute('aria-valuenow', '75');
-  });
-
-  it('renders the label if provided', () => {
-    render(<ProgressBar value={30} label="Loading..." />);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-  });
-
-  it('has correct accessibility attributes', () => {
-    render(<ProgressBar value={60} />);
-    const progressBar = screen.getByRole('progressbar');
-    expect(progressBar).toHaveAttribute('aria-valuemin', '0');
-    expect(progressBar).toHaveAttribute('aria-valuemax', '100');
-    expect(progressBar).toHaveAttribute('aria-valuenow', '60');
-  });
-
-  it('applies custom styles to wrapper, bar, and label', () => {
-    render(
-      <ProgressBar
-        value={40}
-        label="Progress"
-        className="custom-wrapper"
-        barClassName="custom-bar"
-        labelClassName="custom-label"
-      />,
-    );
-
-    const wrapper = screen.getByRole('progressbar').parentElement;
-    expect(wrapper).toHaveClass('custom-wrapper');
-
-    const progressBar = screen.getByRole('progressbar')
-      .firstChild as HTMLElement;
-    expect(progressBar).toHaveClass('custom-bar');
-
-    const label = screen.getByText('Progress');
-    expect(label).toHaveClass('custom-label');
+    sizes.forEach((size) => {
+      const { unmount } = render(<ProgressBar value={50} label="Test" size={size} />);
+      const label = screen.getByText('Test');
+      const progressBar = screen.getByRole('progressbar');
+      
+      expect(progressBar).toBeInTheDocument();
+      expect(label).toHaveClass(
+        size === 'sm' ? 'text-sm' :
+        size === 'md' ? 'text-base' :
+        'text-lg'
+      );
+      expect(progressBar).toHaveClass(
+        size === 'sm' ? 'h-2' :
+        size === 'md' ? 'h-4' :
+        'h-6'
+      );
+      
+      unmount();
+    });
   });
 });

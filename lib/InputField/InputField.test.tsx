@@ -1,3 +1,4 @@
+import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Search } from 'lucide-react';
@@ -72,5 +73,23 @@ describe('InputField', () => {
     render(<InputField label="Search" placeholder="Type..." />);
     const input = screen.getByLabelText('Search');
     expect(input.className.includes('pl-10')).toBe(false);
+  });
+
+  it('supports all size variants', () => {
+    const sizes = ['sm', 'md', 'lg'] as const;
+
+    sizes.forEach((size) => {
+      const { unmount } = render(<InputField label="Test" size={size} />);
+      const input = screen.getByLabelText('Test');
+      
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveClass(
+        size === 'sm' ? 'text-sm px-2 py-1' :
+        size === 'md' ? 'text-base px-3 py-2' :
+        'text-lg px-4 py-3'
+      );
+      
+      unmount();
+    });
   });
 });

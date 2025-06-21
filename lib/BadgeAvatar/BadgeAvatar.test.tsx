@@ -1,3 +1,4 @@
+import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BadgeAvatar } from './BadgeAvatar';
@@ -60,18 +61,32 @@ describe('BadgeAvatar', () => {
     expect(text.className).toContain('text-blue-500');
   });
 
-  it.each([
-    ['sm', 'w-8 h-8'],
-    ['md', 'w-12 h-12'],
-    ['lg', 'w-20 h-20'],
-  ] as const)("renders avatar with size '%s'", (size, expectedClass) => {
-    render(
-      <BadgeAvatar avatarProps={{ name: 'Size Test', size }}>
-        Size Test
-      </BadgeAvatar>,
-    );
-    const avatar = screen.getByRole('img', { name: 'Size Test' });
-    expect(avatar.className).toContain(expectedClass);
+  it('supports all size variants', () => {
+    const sizes = ['sm', 'md', 'lg'] as const;
+
+    sizes.forEach((size) => {
+      const { unmount } = render(
+        <BadgeAvatar avatarProps={{ name: 'Test User' }} size={size}>
+          Test User
+        </BadgeAvatar>
+      );
+      const avatar = screen.getByRole('img', { name: 'Test User' });
+      const badge = screen.getByRole('status');
+      
+      expect(avatar).toBeInTheDocument();
+      expect(avatar).toHaveClass(
+        size === 'sm' ? 'w-8 h-8 text-sm' :
+        size === 'md' ? 'w-12 h-12 text-base' :
+        'w-20 h-20 text-xl'
+      );
+      expect(badge).toHaveClass(
+        size === 'sm' ? 'text-xs px-1.5 py-1.5' :
+        size === 'md' ? 'text-sm px-1.5 py-1.5' :
+        'text-base px-1.5 py-1.5'
+      );
+      
+      unmount();
+    });
   });
 
   it('has role=status on the badge for screen reader announcements', () => {

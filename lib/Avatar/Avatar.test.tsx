@@ -40,15 +40,22 @@ describe('Avatar component', () => {
     );
   });
 
-  it('applies size classes correctly', () => {
-    const { rerender } = render(<Avatar name="Alice" size="sm" />);
-    expect(screen.getByRole('img')).toHaveClass('w-8', 'h-8', 'text-sm');
+  it('supports all size variants', () => {
+    const sizes = ['sm', 'md', 'lg'] as const;
 
-    rerender(<Avatar name="Alice" size="md" />);
-    expect(screen.getByRole('img')).toHaveClass('w-12', 'h-12', 'text-base');
-
-    rerender(<Avatar name="Alice" size="lg" />);
-    expect(screen.getByRole('img')).toHaveClass('w-20', 'h-20', 'text-xl');
+    sizes.forEach((size) => {
+      const { unmount } = render(<Avatar name="Test User" size={size} />);
+      const avatar = screen.getByRole('img');
+      
+      expect(avatar).toBeInTheDocument();
+      expect(avatar).toHaveClass(
+        size === 'sm' ? 'w-8 h-8 text-sm' :
+        size === 'md' ? 'w-12 h-12 text-base' :
+        'w-20 h-20 text-xl'
+      );
+      
+      unmount();
+    });
   });
 
   it('applies custom className', () => {

@@ -3,11 +3,13 @@ import { Input } from '../Input/Input';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { HelperText } from '../HelperText/HelperText';
 import { useStableId } from '../hooks/useStableId/useStableId';
+import type { Size } from '../@types/size';
 
 export interface InputFieldProps extends React.ComponentProps<typeof Input> {
   label?: string;
   error?: string;
   helperText?: string;
+  size?: Size;
 }
 
 /**
@@ -21,6 +23,7 @@ export const InputField = ({
   label,
   error,
   helperText,
+  size = 'md',
   className,
   ...props
 }: InputFieldProps) => {
@@ -39,6 +42,7 @@ export const InputField = ({
 
       <Input
         id={inputId}
+        size={size}
         aria-invalid={!!error}
         aria-describedby={describedBy || undefined}
         className={className}

@@ -56,4 +56,28 @@ describe('Checkbox', () => {
     const wrapper = labelText.closest('div');
     expect(wrapper).toHaveClass('wrapper-style');
   });
+
+  it('supports all size variants', () => {
+    const sizes = ['sm', 'md', 'lg'] as const;
+
+    sizes.forEach((size) => {
+      const { unmount } = render(<Checkbox label="Test" size={size} />);
+      const input = screen.getByRole('checkbox', { name: 'Test' });
+      const label = screen.getByText('Test');
+      
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveClass(
+        size === 'sm' ? 'h-3 w-3' :
+        size === 'md' ? 'h-4 w-4' :
+        'h-5 w-5'
+      );
+      expect(label).toHaveClass(
+        size === 'sm' ? 'text-sm' :
+        size === 'md' ? 'text-base' :
+        'text-lg'
+      );
+      
+      unmount();
+    });
+  });
 });

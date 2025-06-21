@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox } from './Checkbox';
 
@@ -52,5 +53,26 @@ export const WithCustomStyles: Story = {
     className: 'text-green-600 border-green-600',
     labelClassName: 'text-green-700 font-semibold',
     wrapperClassName: 'bg-green-50 px-4 py-2 rounded',
+  },
+};
+
+export const Small: Story = {
+  args: {
+    size: 'sm',
+    label: 'Small checkbox',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    size: 'md',
+    label: 'Medium checkbox',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
+    label: 'Large checkbox',
   },
 };

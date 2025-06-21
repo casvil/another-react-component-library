@@ -1,16 +1,18 @@
-import { forwardRef, InputHTMLAttributes } from 'react';
+import React, { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
 import { useStableId } from '../hooks/useStableId/useStableId';
+import type { Size } from '../@types/size';
 
 export interface CheckboxProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
   label?: string;
   indeterminate?: boolean;
   className?: string; // for the <input>
   labelClassName?: string; // for the <Label>
   wrapperClassName?: string; // for the outer <div>
+  size?: Size;
 }
 
 /**
@@ -25,6 +27,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       id,
       label,
       indeterminate = false,
+      size = 'md',
       className,
       labelClassName,
       wrapperClassName,
@@ -34,6 +37,23 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     ref,
   ) => {
     const checkboxId = useStableId(id);
+
+    const sizeClasses = {
+      sm: {
+        checkbox: 'h-3 w-3',
+        label: 'text-sm',
+      },
+      md: {
+        checkbox: 'h-4 w-4',
+        label: 'text-base',
+      },
+      lg: {
+        checkbox: 'h-5 w-5',
+        label: 'text-lg',
+      },
+    };
+
+    const currentSize = sizeClasses[size];
 
     return (
       <div
@@ -51,13 +71,14 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           disabled={disabled}
           aria-checked={indeterminate ? 'mixed' : checked}
           className={clsx(
-            'form-checkbox h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500',
+            'form-checkbox text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500',
+            currentSize.checkbox,
             className,
           )}
           {...rest}
         />
         {label && (
-          <Label className={labelClassName} htmlFor={checkboxId}>
+          <Label className={clsx(currentSize.label, labelClassName)} htmlFor={checkboxId}>
             {label}
           </Label>
         )}

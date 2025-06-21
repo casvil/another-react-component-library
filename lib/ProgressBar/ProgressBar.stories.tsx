@@ -60,3 +60,24 @@ export const CustomColors: Story = {
     labelClassName: 'text-white font-semibold',
   },
 };
+
+export const Small: Story = {
+  args: {
+    size: 'sm',
+    label: 'Small progress bar',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    size: 'md',
+    label: 'Medium progress bar',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
+    label: 'Large progress bar',
+  },
+};

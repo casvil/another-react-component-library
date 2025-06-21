@@ -2,8 +2,10 @@ import React from 'react';
 import clsx from 'clsx';
 import LoaderCircle from 'lucide-react/icons/loader-circle';
 
+import type { Size } from '../@types/size';
+
 export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: 'sm' | 'md' | 'lg';
+  size?: Size;
   iconClassName?: string;
 }
 

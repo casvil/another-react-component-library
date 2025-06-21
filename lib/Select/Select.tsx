@@ -12,16 +12,23 @@ import { Input } from '../Input/Input';
 import { Icon } from '../Icon/Icon';
 import { Label } from '../Label/Label';
 import { useStableId } from '../hooks/useStableId/useStableId';
+import type { Size } from '../@types/size';
+
+export interface SelectOption {
+  value: string;
+  label: string;
+}
 
 export interface SelectProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   label?: string;
-  options: { value: string; label: string }[];
+  options: SelectOption[];
   defaultValue?: string;
   value?: string; // controlled value
   onChange?: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
+  size?: Size;
   className?: string;
   inputClassName?: string;
   dropdownClassName?: string;
@@ -43,6 +50,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       onChange,
       placeholder = 'Select an option',
       disabled = false,
+      size = 'md',
       className,
       inputClassName,
       dropdownClassName,
@@ -100,6 +108,23 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const selectedLabel =
       options.find((opt) => opt.value === selected)?.label || '';
 
+    const sizeClasses = {
+      sm: {
+        label: 'text-sm',
+        dropdownItem: 'px-3 py-1.5 text-sm',
+      },
+      md: {
+        label: 'text-base',
+        dropdownItem: 'px-4 py-2 text-base',
+      },
+      lg: {
+        label: 'text-lg',
+        dropdownItem: 'px-4 py-3 text-lg',
+      },
+    };
+
+    const currentSize = sizeClasses[size];
+
     return (
       <div
         ref={(node) => {
@@ -110,7 +135,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         className={clsx('w-64', className)}
         {...props}
       >
-        {label && <Label htmlFor={inputId}>{label}</Label>}
+        {label && (
+          <Label htmlFor={inputId} className={currentSize.label}>
+            {label}
+          </Label>
+        )}
 
         <div className="relative w-full">
           <div
@@ -132,6 +161,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           >
             <Input
               id={inputId}
+              size={size}
               icon={<Icon icon={ChevronDown} aria-label="Toggle dropdown" />}
               iconPosition="right"
               value={selectedLabel}
@@ -168,7 +198,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
                     }
                   }}
                   className={clsx(
-                    'cursor-pointer px-4 py-2',
+                    'cursor-pointer',
+                    currentSize.dropdownItem,
                     selected === val && 'bg-indigo-600 text-white',
                     'hover:bg-indigo-100',
                   )}

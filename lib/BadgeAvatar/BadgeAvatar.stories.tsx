@@ -19,19 +19,41 @@ type Story = StoryObj<typeof meta>;
 
 export const SmallAvatar: Story = {
   args: {
-    avatarProps: { size: 'sm', name: 'Alice Johnson' },
+    avatarProps: { name: 'Alice Johnson' },
   },
 };
 
 export const MediumAvatar: Story = {
   args: {
-    avatarProps: { size: 'md', name: 'Bob Smith' },
+    avatarProps: { name: 'Bob Smith' },
   },
 };
 
 export const LargeAvatar: Story = {
   args: {
-    avatarProps: { size: 'lg', name: 'Carol Lee' },
+    avatarProps: { name: 'Carol Lee' },
+    textClassName: 'text-3xl',
+  },
+};
+
+export const Small: Story = {
+  args: {
+    size: 'sm',
+    avatarProps: { name: 'Alice Johnson' },
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    size: 'md',
+    avatarProps: { name: 'Bob Smith' },
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
+    avatarProps: { name: 'Carol Lee' },
     textClassName: 'text-3xl',
   },
 };
