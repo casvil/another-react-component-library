@@ -23,3 +23,15 @@ export { Tooltip } from './Tooltip/Tooltip';
 
 // Types
 export type { Size } from './@types/size';
+export {
+  sizeClasses,
+  buttonSizeClasses,
+  iconButtonSizeClasses,
+  spinnerSizeClasses,
+  avatarSizeClasses,
+  badgeSizeClasses,
+  inputSizeClasses,
+  checkboxSizeClasses,
+  radioSizeClasses,
+  progressBarSizeClasses,
+} from './@types/size';
