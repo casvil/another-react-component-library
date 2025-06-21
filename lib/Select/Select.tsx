@@ -108,108 +108,83 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const selectedLabel =
       options.find((opt) => opt.value === selected)?.label || '';
 
-    const sizeClasses = {
-      sm: {
-        label: 'text-sm',
-        dropdownItem: 'px-3 py-1.5 text-sm',
-      },
-      md: {
-        label: 'text-base',
-        dropdownItem: 'px-4 py-2 text-base',
-      },
-      lg: {
-        label: 'text-lg',
-        dropdownItem: 'px-4 py-3 text-lg',
-      },
-    };
-
-    const currentSize = sizeClasses[size];
-
     return (
-      <div
-        ref={(node) => {
-          wrapperRef.current = node;
-          if (typeof ref === 'function') ref(node);
-          else if (ref) ref.current = node;
-        }}
-        className={clsx('w-64', className)}
-        {...props}
-      >
-        {label && (
-          <Label htmlFor={inputId} className={currentSize.label}>
-            {label}
-          </Label>
-        )}
+      <div ref={wrapperRef} className={clsx('relative', className)} {...props}>
+        {label && <Label htmlFor={inputId}>{label}</Label>}
+        <div
+          ref={ref}
+          role="button"
+          tabIndex={disabled ? -1 : 0}
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
+          aria-label={label || 'Select option'}
+          className={clsx(
+            'cursor-pointer',
+            disabled && 'opacity-60 cursor-not-allowed',
+          )}
+          onClick={toggleDropdown}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggleDropdown();
+            }
+          }}
+        >
+          <Input
+            ref={inputRef}
+            id={inputId}
+            value={selectedLabel}
+            placeholder={placeholder}
+            readOnly
+            disabled={disabled}
+            size={size}
+            className={clsx('cursor-pointer', inputClassName)}
+            icon={
+              <Icon
+                icon={ChevronDown}
+                size={16}
+                className={clsx(
+                  'transition-transform duration-200',
+                  isOpen && 'rotate-180',
+                )}
+              />
+            }
+            iconPosition="right"
+          />
+        </div>
 
-        <div className="relative w-full">
+        {isOpen && (
           <div
             className={clsx(
-              'cursor-pointer',
-              disabled && 'opacity-60 cursor-not-allowed',
+              'absolute z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto',
+              dropdownClassName,
             )}
-            onClick={toggleDropdown}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleDropdown();
-              }
-            }}
-            aria-haspopup="listbox"
-            aria-expanded={isOpen}
+            style={{ width: inputWidth }}
+            role="listbox"
           >
-            <Input
-              id={inputId}
-              size={size}
-              icon={<Icon icon={ChevronDown} aria-label="Toggle dropdown" />}
-              iconPosition="right"
-              value={selectedLabel}
-              placeholder={placeholder}
-              readOnly
-              disabled={disabled}
-              className={clsx('pr-10 cursor-pointer', inputClassName)}
-              ref={inputRef}
-              onChange={() => {}}
-            />
+            {options.map((option) => (
+              <div
+                key={option.value}
+                role="option"
+                aria-selected={option.value === selected}
+                className={clsx(
+                  'px-3 py-2 cursor-pointer hover:bg-gray-100 focus:bg-gray-100 focus:outline-none',
+                  option.value === selected && 'bg-indigo-50 text-indigo-900',
+                )}
+                onClick={() => handleSelect(option.value)}
+                onKeyDown={(e) => {
+                  if (e.key === ' ') {
+                    e.preventDefault();
+                    handleSelect(option.value);
+                  }
+                }}
+                tabIndex={0}
+              >
+                {option.label}
+              </div>
+            ))}
           </div>
-
-          {isOpen && !disabled && (
-            <ul
-              role="listbox"
-              aria-labelledby={id}
-              className={clsx(
-                'absolute z-10 mt-1 max-h-60 overflow-auto rounded-md border border-gray-300 bg-white shadow-lg focus:outline-none',
-                dropdownClassName,
-              )}
-              style={{ width: inputWidth }}
-            >
-              {options.map(({ value: val, label }) => (
-                <li
-                  key={val}
-                  role="option"
-                  aria-selected={selected === val}
-                  tabIndex={0}
-                  onClick={() => handleSelect(val)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      handleSelect(val);
-                    }
-                  }}
-                  className={clsx(
-                    'cursor-pointer',
-                    currentSize.dropdownItem,
-                    selected === val && 'bg-indigo-600 text-white',
-                    'hover:bg-indigo-100',
-                  )}
-                >
-                  {label}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        )}
       </div>
     );
   },
