@@ -3,6 +3,7 @@ export { Badge } from './atoms/Badge/Badge';
 export { BadgeAvatar } from './molecules/BadgeAvatar/BadgeAvatar';
 export { Button } from './atoms/Button/Button';
 export { Checkbox } from './atoms/Checkbox/Checkbox';
+export { CheckboxGroup } from './molecules/CheckboxGroup/CheckboxGroup';
 export { Clock } from './molecules/Clock/Clock';
 export { Divider } from './atoms/Divider/Divider';
 export { ErrorMessage } from './atoms/ErrorMessage/ErrorMessage';
