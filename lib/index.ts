@@ -3,6 +3,7 @@ export { Badge } from './Badge/Badge';
 export { BadgeAvatar } from './BadgeAvatar/BadgeAvatar';
 export { Button } from './Button/Button';
 export { Checkbox } from './Checkbox/Checkbox';
+export { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 export { Clock } from './Clock/Clock';
 export { Divider } from './Divider/Divider';
 export { ErrorMessage } from './ErrorMessage/ErrorMessage';
