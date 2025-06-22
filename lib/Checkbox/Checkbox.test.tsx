@@ -1,6 +1,7 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { Checkbox } from './Checkbox';
 import { checkboxSizeClasses } from '../@types/size';
@@ -72,5 +73,37 @@ describe('Checkbox', () => {
 
       unmount();
     });
+  });
+
+  it('supports uncontrolled (defaultChecked) usage', async () => {
+    const user = userEvent.setup();
+    render(<Checkbox label="Uncontrolled" defaultChecked />);
+    const input = screen.getByRole('checkbox', {
+      name: 'Uncontrolled',
+    }) as HTMLInputElement;
+    expect(input.checked).toBe(true);
+    await user.click(input);
+    expect(input.checked).toBe(false);
+  });
+
+  it('supports controlled (checked) usage', async () => {
+    const user = userEvent.setup();
+    const Controlled = () => {
+      const [checked, setChecked] = React.useState(false);
+      return (
+        <Checkbox
+          label="Controlled"
+          checked={checked}
+          onChange={(e) => setChecked(e.target.checked)}
+        />
+      );
+    };
+    render(<Controlled />);
+    const input = screen.getByRole('checkbox', {
+      name: 'Controlled',
+    }) as HTMLInputElement;
+    expect(input.checked).toBe(false);
+    await user.click(input);
+    expect(input.checked).toBe(true);
   });
 });
