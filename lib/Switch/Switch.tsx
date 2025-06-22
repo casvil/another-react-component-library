@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { Label } from '../Label/Label';
 import { useStableId } from '../hooks/useStableId/useStableId';
 import type { Size } from '../@types/size';
+import { switchSizeClasses, textSizeClasses } from '../@types/size';
 
 export interface SwitchProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
@@ -14,34 +15,6 @@ export interface SwitchProps
   size?: Size;
   description?: string;
 }
-
-// Move size configurations outside component to prevent recalculation
-const switchSizes = {
-  sm: {
-    track: 'w-9 h-5',
-    thumb: 'w-4 h-4',
-    thumbTranslate: 'translate-x-4.5',
-    thumbUnchecked: 'translate-x-0.5',
-  },
-  md: {
-    track: 'w-11 h-6',
-    thumb: 'w-5 h-5',
-    thumbTranslate: 'translate-x-5.5',
-    thumbUnchecked: 'translate-x-0.5',
-  },
-  lg: {
-    track: 'w-14 h-7',
-    thumb: 'w-6 h-6',
-    thumbTranslate: 'translate-x-7.5',
-    thumbUnchecked: 'translate-x-0.5',
-  },
-} as const;
-
-const labelSizes = {
-  sm: 'text-sm',
-  md: 'text-base',
-  lg: 'text-lg',
-} as const;
 
 /**
  * Switch atom component.
@@ -100,8 +73,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     }, [isControlled, onChange]);
 
     // Memoize current size and label size to prevent recalculation
-    const currentSize = useMemo(() => switchSizes[size], [size]);
-    const currentLabelSize = useMemo(() => labelSizes[size], [size]);
+    const currentSize = useMemo(() => switchSizeClasses[size], [size]);
+    const currentLabelSize = useMemo(() => textSizeClasses[size], [size]);
 
     return (
       <div
