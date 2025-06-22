@@ -4,6 +4,7 @@ import React, {
   useEffect,
   forwardRef,
   useLayoutEffect,
+  useMemo,
 } from 'react';
 import ChevronDown from 'lucide-react/icons/chevron-down';
 import clsx from 'clsx';
@@ -105,8 +106,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       }
     }, [isOpen]);
 
-    const selectedLabel =
-      options.find((opt) => opt.value === selected)?.label || '';
+    // Memoize selectedLabel for performance
+    const selectedLabel = useMemo(
+      () => options.find((opt) => opt.value === selected)?.label || '',
+      [options, selected],
+    );
 
     return (
       <div ref={wrapperRef} className={clsx('relative', className)} {...props}>
