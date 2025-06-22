@@ -17,6 +17,7 @@ export { ProgressBar } from './ProgressBar/ProgressBar';
 export { Radio } from './Radio/Radio';
 export { Select } from './Select/Select';
 export { Spinner } from './Spinner/Spinner';
+export { Switch } from './Switch/Switch';
 export { TextArea } from './TextArea/TextArea';
 export { TimeDisplay } from './TimeDisplay/TimeDisplay';
 export { Tooltip } from './Tooltip/Tooltip';
