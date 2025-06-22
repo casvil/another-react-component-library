@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 
 import { Select } from './Select';
 
@@ -154,5 +155,44 @@ describe('Select', () => {
 
     expect(input).toHaveAttribute('id', 'custom-id');
     expect(label).toHaveAttribute('for', 'custom-id');
+  });
+
+  it('updates selectedLabel correctly in controlled usage', async () => {
+    const user = userEvent.setup();
+    const Controlled = () => {
+      const [value, setValue] = React.useState('apple');
+      return (
+        <Select
+          options={options}
+          value={value}
+          onChange={setValue}
+          label="Controlled Select"
+        />
+      );
+    };
+    render(<Controlled />);
+    const input = screen.getByRole('textbox');
+    expect(input).toHaveValue('Apple');
+    await user.click(input);
+    const option = screen.getByRole('option', { name: 'Banana' });
+    await user.click(option);
+    expect(input).toHaveValue('Banana');
+  });
+
+  it('updates selectedLabel correctly in uncontrolled usage', async () => {
+    const user = userEvent.setup();
+    render(
+      <Select
+        options={options}
+        defaultValue="banana"
+        label="Uncontrolled Select"
+      />,
+    );
+    const input = screen.getByRole('textbox');
+    expect(input).toHaveValue('Banana');
+    await user.click(input);
+    const option = screen.getByRole('option', { name: 'Apple' });
+    await user.click(option);
+    expect(input).toHaveValue('Apple');
   });
 });
