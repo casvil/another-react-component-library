@@ -67,14 +67,78 @@ function App() {
 
 ## 🛠️ Inside the Box
 
+<details>
+<summary>⚛️ atoms/ — Basic building blocks</summary>
+
+```plaintext
+├── atoms/
+│   ├── Avatar/              # User profile image
+│   ├── Badge/               # Status indicator
+│   ├── Button/              # Interactive button
+│   ├── Checkbox/            # Checkbox input
+│   ├── Divider/             # Visual separator
+│   ├── ErrorMessage/        # Error display
+│   ├── HelperText/          # Form helper text
+│   ├── Icon/                # Icon component
+│   ├── IconButton/          # Button with icon
+│   ├── Image/               # Accessible image
+│   ├── Input/               # Basic input
+│   ├── Label/               # Form label
+│   ├── Link/                # Navigation link
+│   ├── ProgressBar/         # Progress indicator
+│   ├── Radio/               # Radio input
+│   ├── Spinner/             # Loading spinner
+│   ├── Switch/              # Toggle switch
+│   ├── TextArea/            # Multi-line input
+│   ├── TimeDisplay/         # Time formatter
+│   └── Tooltip/             # Tooltip element
+```
+
+</details>
+
+<details> 
+<summary>🧬 molecules/ — Composed components</summary>
+
+```plaintext
+├── molecules/
+│   ├── BadgeAvatar/ # Avatar with badge overlay
+│   ├── CheckboxGroup/ # Group of checkboxes
+│   ├── Clock/ # Live-updating time
+│   ├── InputField/ # Input with label and validation
+│   └── Select/ # Dropdown select
+```
+
+</details>
+
+---
+
 ```
 📦 another-react-component-library
-├── lib/               # Your components
-├── .storybook/        # Storybook config
-├── dist/              # Compiled output
-├── vitest.setup.ts    # Test setup
-├── vite.config.ts     # Vite config
-└── tsconfig.*.json    # TypeScript configs
+├── lib/                     # All UI components and supporting files
+│   ├── @types/              # Custom type declarations
+│   ├── assets/              # Static assets like images or SVGs
+│   ├── atoms/               # Atomic components (basic building blocks)
+│   ├── molecules/           # Composed components (built from atoms)
+│   ├── hooks/               # Custom React hooks
+│   ├── index.ts             # Library entry point
+│   ├── index.css            # Global styles
+│   └── vite-env.d.ts        # Vite environment types
+├── .storybook/              # Storybook configuration
+├── vitest.setup.ts          # Vitest test environment
+├── vite.config.ts           # Vite bundler config
+├── vitest.config.ts         # Vitest configuration
+├── vitest.shims.d.ts        # Type shim for tests
+├── tsconfig.json            # Base TS config
+├── tsconfig.app.json        # TS config for app build
+├── tsconfig.node.json       # TS config for node tools
+├── .gitignore               # Git ignored files
+├── .prettierrc              # Code formatter config
+├── eslint.config.js         # Linter configuration
+├── lefthook.yml             # Git hooks (via Lefthook)
+├── lint-staged.config.js    # Pre-commit linting
+├── package.json             # Project manifest
+├── package-lock.json        # Dependency lockfile
+└── README.md                # Project overview
 ```
 
 ---
