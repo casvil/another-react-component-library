@@ -171,4 +171,25 @@ describe('Switch', () => {
     expect(input).toHaveAttribute('data-testid', 'custom-switch');
     expect(input).toHaveAttribute('aria-label', 'Custom switch');
   });
+
+  it('applies correct translate-x class for checked and unchecked states for all sizes', () => {
+    const sizes = [
+      { size: 'sm', unchecked: 'translate-x-0.5', checked: 'translate-x-4.5' },
+      { size: 'md', unchecked: 'translate-x-0.5', checked: 'translate-x-5.5' },
+      { size: 'lg', unchecked: 'translate-x-0.5', checked: 'translate-x-7.5' },
+    ];
+    const { rerender } = render(<Switch size="sm" checked={false} />);
+    sizes.forEach(({ size, unchecked, checked }) => {
+      rerender(<Switch size={size} checked={false} />);
+      const track = screen.getByRole('switch').nextElementSibling;
+      const thumb = track.querySelector('span');
+      expect(thumb).toHaveClass(unchecked);
+
+      rerender(<Switch size={size} checked={true} />);
+      const thumbChecked = screen
+        .getByRole('switch')
+        .nextElementSibling.querySelector('span');
+      expect(thumbChecked).toHaveClass(checked);
+    });
+  });
 });
