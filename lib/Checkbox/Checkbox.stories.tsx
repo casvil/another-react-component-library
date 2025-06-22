@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox } from './Checkbox';
 
 const meta = {
-  title: 'molecules/Checkbox',
+  title: 'atoms/Checkbox',
   component: Checkbox,
   parameters: {
     layout: 'centered',
