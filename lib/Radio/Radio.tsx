@@ -1,5 +1,6 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
+import React from 'react';
 
 import { Label } from '../Label/Label';
 import { useStableId } from '../hooks/useStableId/useStableId';
@@ -15,6 +16,8 @@ export interface RadioProps
   labelClassName?: string; // aplies to Label
   'aria-describedby'?: string;
   size?: Size;
+  checked?: boolean;
+  defaultChecked?: boolean;
 }
 
 /**
@@ -24,30 +27,46 @@ export interface RadioProps
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(
   (
     {
+      checked,
+      defaultChecked,
       id,
       label,
       size = 'md',
       className,
       labelClassName,
       wrapperClassName,
-      ...props
+      ...rest
     },
     ref,
   ) => {
     const radioId = useStableId(id);
     const currentSize = radioSizeClasses[size];
 
+    // Controlled/uncontrolled
+    const isControlled = checked !== undefined;
+    const [internalChecked, setInternalChecked] = React.useState(
+      defaultChecked ?? false,
+    );
+    const inputChecked = isControlled ? checked : internalChecked;
+
+    const handleChange = (e) => {
+      if (!isControlled) setInternalChecked(e.target.checked);
+      if (rest.onChange) rest.onChange(e);
+    };
+
     const radioElement = (
       <input
         id={radioId}
         type="radio"
         ref={ref}
+        checked={inputChecked}
+        onChange={handleChange}
         className={clsx(
           'text-indigo-600 focus:ring-2 focus:ring-indigo-500 border-gray-300 rounded-full',
           currentSize.radio,
           className,
         )}
-        {...props}
+        {...rest}
       />
     );
 
@@ -66,3 +85,5 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     );
   },
 );
+
+Radio.displayName = 'Radio';

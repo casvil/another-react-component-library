@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 
 import { Radio } from './Radio';
 
@@ -76,5 +77,38 @@ describe('Radio', () => {
     render(<Radio aria-label="Accept Terms" />);
     const input = screen.getByRole('radio');
     expect(input).toHaveAttribute('aria-label', 'Accept Terms');
+  });
+
+  it('supports uncontrolled (defaultChecked) usage', async () => {
+    const user = userEvent.setup();
+    render(<Radio label="Uncontrolled" defaultChecked name="group1" />);
+    const input = screen.getByRole('radio', {
+      name: 'Uncontrolled',
+    }) as HTMLInputElement;
+    expect(input.checked).toBe(true);
+    await user.click(input);
+    expect(input.checked).toBe(true); // radio stays checked unless another in group is selected
+  });
+
+  it('supports controlled (checked) usage', async () => {
+    const user = userEvent.setup();
+    const Controlled = () => {
+      const [checked, setChecked] = React.useState(false);
+      return (
+        <Radio
+          label="Controlled"
+          checked={checked}
+          onChange={(e) => setChecked(e.target.checked)}
+          name="group2"
+        />
+      );
+    };
+    render(<Controlled />);
+    const input = screen.getByRole('radio', {
+      name: 'Controlled',
+    }) as HTMLInputElement;
+    expect(input.checked).toBe(false);
+    await user.click(input);
+    expect(input.checked).toBe(true);
   });
 });
