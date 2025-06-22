@@ -20,7 +20,7 @@ const switchSizes = {
   sm: {
     track: 'w-9 h-5',
     thumb: 'w-4 h-4',
-    thumbTranslate: 'translate-x-5.5',
+    thumbTranslate: 'translate-x-4.5',
     thumbUnchecked: 'translate-x-0.5',
   },
   md: {
@@ -33,7 +33,7 @@ const switchSizes = {
     track: 'w-14 h-7',
     thumb: 'w-6 h-6',
     thumbTranslate: 'translate-x-7.5',
-    thumbUnchecked: 'translate-x-1',
+    thumbUnchecked: 'translate-x-0.5',
   },
 } as const;
 

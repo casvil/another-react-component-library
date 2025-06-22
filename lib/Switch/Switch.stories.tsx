@@ -91,3 +91,13 @@ export const CustomStyles: Story = {
     wrapperClassName: "p-4 bg-indigo-50 rounded-lg",
   },
 };
+
+export const AllSizes: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Switch label="Small" size="sm" />
+      <Switch label="Medium" size="md" />
+      <Switch label="Large" size="lg" />
+    </div>
+  ),
+};
