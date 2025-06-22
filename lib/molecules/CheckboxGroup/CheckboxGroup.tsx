@@ -1,8 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Label } from '../Label/Label';
-import { Checkbox, CheckboxProps } from '../Checkbox/Checkbox';
-import { useStableId } from '../hooks/useStableId/useStableId';
+import { Label } from '../../atoms/Label/Label';
+import { Checkbox } from '../../atoms/Checkbox/Checkbox';
+import type { CheckboxProps } from '../../atoms/Checkbox/Checkbox';
+import { useStableId } from '../../hooks/useStableId/useStableId';
 
 export interface CheckboxGroupOption {
   label: string;
