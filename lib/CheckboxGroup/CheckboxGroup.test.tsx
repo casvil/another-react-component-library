@@ -82,7 +82,9 @@ describe('CheckboxGroup', () => {
     const { rerender } = render(
       <CheckboxGroup label="Vertical" options={options} direction="vertical" />,
     );
-    expect(screen.getByRole('group').firstChild).toHaveClass('flex-col');
+    const group = screen.getByRole('group');
+    const checkboxContainer = group.querySelector('.flex');
+    expect(checkboxContainer).toHaveClass('flex-col');
     rerender(
       <CheckboxGroup
         label="Horizontal"
@@ -90,7 +92,8 @@ describe('CheckboxGroup', () => {
         direction="horizontal"
       />,
     );
-    expect(screen.getByRole('group').firstChild).toHaveClass('flex-row');
+    const checkboxContainer2 = screen.getByRole('group').querySelector('.flex');
+    expect(checkboxContainer2).toHaveClass('flex-row');
   });
 
   it('disables individual options', () => {
