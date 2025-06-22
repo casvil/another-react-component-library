@@ -65,10 +65,10 @@ describe('Switch', () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
     render(<Switch onChange={handleChange} />);
-    
+
     const switchInput = screen.getByRole('switch');
     await user.click(switchInput);
-    
+
     expect(handleChange).toHaveBeenCalledTimes(1);
   });
 
@@ -76,10 +76,10 @@ describe('Switch', () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
     render(<Switch disabled onChange={handleChange} />);
-    
+
     const switchInput = screen.getByRole('switch');
     await user.click(switchInput);
-    
+
     expect(handleChange).not.toHaveBeenCalled();
   });
 
@@ -93,7 +93,7 @@ describe('Switch', () => {
     render(<Switch label="Test" />);
     const input = screen.getByRole('switch');
     const label = screen.getByText('Test');
-    
+
     expect(input.id).toBeDefined();
     expect(label.getAttribute('for')).toBe(input.id);
   });
@@ -102,23 +102,21 @@ describe('Switch', () => {
     render(<Switch id="custom-id" label="Test" />);
     const input = screen.getByRole('switch');
     const label = screen.getByText('Test');
-    
+
     expect(input.id).toBe('custom-id');
     expect(label.getAttribute('for')).toBe('custom-id');
   });
 
   it('associates description with input', () => {
     render(
-      <Switch
-        id="test-switch"
-        label="Test"
-        description="Test description"
-      />,
+      <Switch id="test-switch" label="Test" description="Test description" />,
     );
     const input = screen.getByRole('switch');
     const description = screen.getByText('Test description');
-    
-    expect(input.getAttribute('aria-describedby')).toBe('test-switch-description');
+
+    expect(input.getAttribute('aria-describedby')).toBe(
+      'test-switch-description',
+    );
     expect(description.id).toBe('test-switch-description');
   });
 
@@ -166,13 +164,11 @@ describe('Switch', () => {
     expect(description).toHaveClass('text-base');
   });
 
-  
-
   it('spreads additional props to input', () => {
     render(<Switch data-testid="custom-switch" aria-label="Custom switch" />);
     const input = screen.getByRole('switch');
-    
+
     expect(input).toHaveAttribute('data-testid', 'custom-switch');
     expect(input).toHaveAttribute('aria-label', 'Custom switch');
   });
-}); 
+});

@@ -1,4 +1,12 @@
-import React, { forwardRef, InputHTMLAttributes, useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import React, {
+  forwardRef,
+  InputHTMLAttributes,
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react';
 import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
@@ -18,7 +26,7 @@ export interface SwitchProps
 
 /**
  * Switch atom component.
- * Renders a toggle switch input with an optional label using the custom Label component.
+ * Renders a toggle switch input with an optional label using a Label component.
  * Supports controlled state, custom styling, and accessibility features.
  */
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
@@ -41,13 +49,15 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     const switchId = useStableId(id);
     const descriptionId = `${switchId}-description`;
     const inputRef = useRef<HTMLInputElement>(null);
-    const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false);
+    const [internalChecked, setInternalChecked] = useState(
+      defaultChecked ?? false,
+    );
 
     // Determine if component is controlled or uncontrolled
     const isControlled = checked !== undefined;
     const inputChecked = isControlled ? checked : undefined;
     const inputDefaultChecked = isControlled ? undefined : defaultChecked;
-    
+
     // For visual state, use checked if provided, otherwise use internal state
     const visualChecked = isControlled ? checked : internalChecked;
 
@@ -62,15 +72,18 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     const { onChange, ...inputProps } = rest;
 
     // Handle uncontrolled changes with useCallback to prevent unnecessary re-renders
-    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!isControlled) {
-        setInternalChecked(e.target.checked);
-      }
-      // Call the original onChange if provided
-      if (onChange) {
-        onChange(e);
-      }
-    }, [isControlled, onChange]);
+    const handleChange = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!isControlled) {
+          setInternalChecked(e.target.checked);
+        }
+        // Call the original onChange if provided
+        if (onChange) {
+          onChange(e);
+        }
+      },
+      [isControlled, onChange],
+    );
 
     // Memoize current size and label size to prevent recalculation
     const currentSize = useMemo(() => switchSizeClasses[size], [size]);
@@ -115,8 +128,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
               'relative inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-in-out focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2',
               currentSize.track,
               visualChecked
-              ? clsx('bg-indigo-600', !disabled && 'hover:bg-indigo-700')
-              : clsx('bg-gray-200', !disabled && 'hover:bg-gray-300'),
+                ? clsx('bg-indigo-600', !disabled && 'hover:bg-indigo-700')
+                : clsx('bg-gray-200', !disabled && 'hover:bg-gray-300'),
               disabled && 'cursor-not-allowed',
             )}
           >
@@ -124,7 +137,9 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
               className={clsx(
                 'inline-block transform rounded-full bg-white shadow-lg transition-transform duration-200 ease-in-out',
                 currentSize.thumb,
-                visualChecked ? currentSize.thumbTranslate : currentSize.thumbUnchecked,
+                visualChecked
+                  ? currentSize.thumbTranslate
+                  : currentSize.thumbUnchecked,
               )}
             />
           </label>
@@ -148,7 +163,11 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
                 id={descriptionId}
                 className={clsx(
                   'text-gray-500',
-                  size === 'sm' ? 'text-xs' : size === 'md' ? 'text-sm' : 'text-base',
+                  size === 'sm'
+                    ? 'text-xs'
+                    : size === 'md'
+                      ? 'text-sm'
+                      : 'text-base',
                 )}
               >
                 {description}
@@ -159,4 +178,4 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       </div>
     );
   },
-); 
+);

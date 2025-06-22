@@ -99,7 +99,10 @@ const combineIconButton = (
   }) as const;
 
 // Helper function to combine avatar size and text
-const combineAvatar = (size: typeof avatarSizeClassesRaw, text: typeof textSizeClasses) =>
+const combineAvatar = (
+  size: typeof avatarSizeClassesRaw,
+  text: typeof textSizeClasses,
+) =>
   ({
     sm: `${size.sm} ${text.sm}`,
     md: `${size.md} ${text.md}`,
@@ -155,7 +158,10 @@ export const iconButtonSizeClasses = combineIconButton(
 
 export const spinnerSizeClasses = iconSizeClasses;
 
-export const avatarSizeClasses = combineAvatar(avatarSizeClassesRaw, textSizeClasses);
+export const avatarSizeClasses = combineAvatar(
+  avatarSizeClassesRaw,
+  textSizeClasses,
+);
 
 export const badgeSizeClasses = {
   sm: 'text-xs px-1.5 py-1.5',
@@ -163,14 +169,20 @@ export const badgeSizeClasses = {
   lg: 'text-base px-1.5 py-1.5',
 } as const;
 
-export const inputSizeClasses = combineTextAndPadding(textSizeClasses, paddingSizeClasses);
+export const inputSizeClasses = combineTextAndPadding(
+  textSizeClasses,
+  paddingSizeClasses,
+);
 
 export const checkboxSizeClasses = createFormControl(
   formControlSizeClasses,
   textSizeClasses,
 );
 
-export const radioSizeClasses = createRadioControl(formControlSizeClasses, textSizeClasses);
+export const radioSizeClasses = createRadioControl(
+  formControlSizeClasses,
+  textSizeClasses,
+);
 
 export const progressBarSizeClasses = createProgressBar(
   textSizeClasses,
