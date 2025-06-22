@@ -32,3 +32,5 @@ export const HelperText = ({
     </p>
   );
 };
+
+HelperText.displayName = 'HelperText';

@@ -58,3 +58,5 @@ export const InputField = ({
     </div>
   );
 };
+
+InputField.displayName = 'InputField';
