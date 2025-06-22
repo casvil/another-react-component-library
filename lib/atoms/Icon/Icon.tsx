@@ -11,7 +11,7 @@ export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 /**
- * Icon molecule component.
+ * Icon atom component.
  * Renders any Lucide icon component with configurable size, color, and accessibility.
  */
 export const Icon = ({

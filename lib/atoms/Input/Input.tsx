@@ -12,7 +12,7 @@ export interface InputProps
 }
 
 /**
- * Input molecule component.
+ * Input atom component.
  * Renders a styled input with optional icon on left or right.
  * Support for disabled and read-only states.
  * Uses Tailwind CSS for styling and supports all native input attributes.
