@@ -1,6 +1,8 @@
 import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import { CheckboxGroup } from './CheckboxGroup';
 
 const options = [
@@ -20,7 +22,7 @@ describe('CheckboxGroup', () => {
 
   it('supports uncontrolled usage', async () => {
     const user = userEvent.setup();
-    render(<CheckboxGroup options={options} defaultValue={["1"]} />);
+    render(<CheckboxGroup options={options} defaultValue={['1']} />);
     const cb1 = screen.getByLabelText('Option 1') as HTMLInputElement;
     const cb2 = screen.getByLabelText('Option 2') as HTMLInputElement;
     expect(cb1.checked).toBe(true);
@@ -36,8 +38,10 @@ describe('CheckboxGroup', () => {
   it('supports controlled usage', async () => {
     const user = userEvent.setup();
     const Controlled = () => {
-      const [value, setValue] = React.useState(["1"]);
-      return <CheckboxGroup options={options} value={value} onChange={setValue} />;
+      const [value, setValue] = React.useState(['1']);
+      return (
+        <CheckboxGroup options={options} value={value} onChange={setValue} />
+      );
     };
     render(<Controlled />);
     const cb1 = screen.getByLabelText('Option 1') as HTMLInputElement;
@@ -54,7 +58,7 @@ describe('CheckboxGroup', () => {
 
   it('calls onChange with correct values', async () => {
     const user = userEvent.setup();
-    const handleChange = jest.fn();
+    const handleChange = vi.fn();
     render(<CheckboxGroup options={options} onChange={handleChange} />);
     const cb1 = screen.getByLabelText('Option 1');
     await user.click(cb1);
@@ -68,7 +72,7 @@ describe('CheckboxGroup', () => {
         options={options}
         className="custom-group"
         labelClassName="custom-label"
-      />
+      />,
     );
     expect(screen.getByText('Styled Group')).toHaveClass('custom-label');
     expect(screen.getByRole('group')).toHaveClass('custom-group');
@@ -76,10 +80,16 @@ describe('CheckboxGroup', () => {
 
   it('renders vertical and horizontal directions', () => {
     const { rerender } = render(
-      <CheckboxGroup label="Vertical" options={options} direction="vertical" />
+      <CheckboxGroup label="Vertical" options={options} direction="vertical" />,
     );
     expect(screen.getByRole('group').firstChild).toHaveClass('flex-col');
-    rerender(<CheckboxGroup label="Horizontal" options={options} direction="horizontal" />);
+    rerender(
+      <CheckboxGroup
+        label="Horizontal"
+        options={options}
+        direction="horizontal"
+      />,
+    );
     expect(screen.getByRole('group').firstChild).toHaveClass('flex-row');
   });
 
@@ -94,4 +104,4 @@ describe('CheckboxGroup', () => {
     expect(group).toBeInTheDocument();
     expect(screen.getByText('A11y Group')).toBeInTheDocument();
   });
-}); 
+});
