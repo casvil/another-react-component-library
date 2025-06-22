@@ -43,3 +43,5 @@ export const Spinner = ({
     </div>
   );
 };
+
+Spinner.displayName = 'Spinner';
