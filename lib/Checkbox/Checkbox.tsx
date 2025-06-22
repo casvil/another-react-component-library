@@ -25,6 +25,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
       checked,
+      defaultChecked,
       id,
       label,
       indeterminate = false,
@@ -40,6 +41,18 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const checkboxId = useStableId(id);
     const currentSize = checkboxSizeClasses[size];
 
+    // Controlled/uncontrolled
+    const isControlled = checked !== undefined;
+    const [internalChecked, setInternalChecked] = React.useState(
+      defaultChecked ?? false,
+    );
+    const inputChecked = isControlled ? checked : internalChecked;
+
+    const handleChange = (e) => {
+      if (!isControlled) setInternalChecked(e.target.checked);
+      if (rest.onChange) rest.onChange(e);
+    };
+
     return (
       <div
         className={clsx(
@@ -52,14 +65,15 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           ref={ref}
           id={checkboxId}
           type="checkbox"
-          checked={checked}
+          checked={inputChecked}
           disabled={disabled}
-          aria-checked={indeterminate ? 'mixed' : checked}
+          aria-checked={indeterminate ? 'mixed' : inputChecked}
           className={clsx(
             'form-checkbox text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500',
             currentSize.checkbox,
             className,
           )}
+          onChange={handleChange}
           {...rest}
         />
         {label && (
@@ -74,3 +88,5 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     );
   },
 );
+
+Checkbox.displayName = 'Checkbox';
