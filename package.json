@@ -22,14 +22,15 @@
     }
   },
   "scripts": {
-    "test": "vitest",
+    "build-storybook": "storybook build",
     "build": "tsc -b && vite build",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
