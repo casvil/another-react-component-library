@@ -25,6 +25,7 @@ Interactive playground for every component. Try props, test styles, and preview 
 
 - 🧠 Built with **React 19**, **TypeScript 5**, **Tailwind CSS v4**
 - ⚡️ Lightning-fast dev experience with **Vite**
+- ✨ Zero-config styles with automatic CSS—no setup needed
 - 📚 Interactive docs via **Storybook v9**
 - 🧪 Fully testable with **Vitest** & **Testing Library**
 - ♿️ Accessible components
@@ -45,7 +46,7 @@ npm i another-react-component-library
 import { Button } from "another-react-component-library";
 
 function App() {
-  return <Button onClick={() => alert("Boom!")}>Launch</Button>;
+  return <Button label="Launch" onClick={() => alert("Boom!")} />;
 }
 ```
 
@@ -147,8 +148,6 @@ function App() {
 
 Have an idea or want to improve a component? PRs welcome!
 
-> We’re component-driven, open-source powered, and obsessed with developer experience.
-
 ## 🪪 License
 
-[MIT](./LICENSE) — use, remix, or fork away!
+[MIT](./LICENSE)
