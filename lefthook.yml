@@ -1,5 +1,7 @@
 pre-commit:
+  parallel: true
   commands:
     lint:
       run: npm run lint {staged_files} --fix
-      stage_fixed: true
+    format:
+      run: npm run format
