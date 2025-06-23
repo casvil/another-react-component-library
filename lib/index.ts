@@ -1,3 +1,5 @@
+import './index.css';
+
 export { Avatar } from './atoms/Avatar/Avatar';
 export { Badge } from './atoms/Badge/Badge';
 export { BadgeAvatar } from './molecules/BadgeAvatar/BadgeAvatar';
@@ -23,7 +25,6 @@ export { TextArea } from './atoms/TextArea/TextArea';
 export { TimeDisplay } from './atoms/TimeDisplay/TimeDisplay';
 export { Tooltip } from './atoms/Tooltip/Tooltip';
 
-// Types
 export type { Size } from './@types/size';
 export {
   sizeClasses,
