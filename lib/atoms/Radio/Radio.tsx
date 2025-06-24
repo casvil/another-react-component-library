@@ -44,10 +44,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     const radioId = useStableId(id);
     const currentSize = radioSizeClasses[size];
 
-    // ✅ FIXED: Simplified control pattern - let browser handle radio groups
     const isControlled = checked !== undefined;
-    
-    // ✅ FIXED: Proper TypeScript typing
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (rest.onChange) rest.onChange(e);
     };
@@ -57,8 +55,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
         id={radioId}
         type="radio"
         ref={ref}
-        checked={isControlled ? checked : undefined} // ✅ Let browser handle uncontrolled
-        defaultChecked={!isControlled ? defaultChecked : undefined} // ✅ Only set when uncontrolled
+        checked={isControlled ? checked : undefined} // Let browser handle uncontrolled
+        defaultChecked={!isControlled ? defaultChecked : undefined} // Only set when uncontrolled
         onChange={handleChange}
         value={value}
         className={clsx(
