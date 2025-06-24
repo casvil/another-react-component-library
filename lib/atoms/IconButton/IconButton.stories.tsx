@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { X } from 'lucide-react';
 
@@ -28,7 +29,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    icon: <X />,
+    icon: X,
     'aria-label': 'Primary Icon Button',
     variant: 'primary',
     size: 'md',
@@ -37,7 +38,7 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
-    icon: <X />,
+    icon: X,
     'aria-label': 'Secondary Icon Button',
     variant: 'secondary',
     size: 'md',
@@ -46,7 +47,7 @@ export const Secondary: Story = {
 
 export const Tertiary: Story = {
   args: {
-    icon: <X />,
+    icon: X,
     'aria-label': 'Tertiary Icon Button',
     variant: 'tertiary',
     size: 'md',
@@ -55,7 +56,7 @@ export const Tertiary: Story = {
 
 export const Disabled: Story = {
   args: {
-    icon: <X />,
+    icon: X,
     'aria-label': 'Disabled Icon Button',
     variant: 'primary',
     size: 'md',
@@ -66,9 +67,9 @@ export const Disabled: Story = {
 export const AllSizes = {
   render: () => (
     <div className="space-x-2">
-      <IconButton icon={<X />} aria-label="Small" size="sm" />
-      <IconButton icon={<X />} aria-label="Medium" size="md" />
-      <IconButton icon={<X />} aria-label="Large" size="lg" />
+      <IconButton icon={X} aria-label="Small" size="sm" />
+      <IconButton icon={X} aria-label="Medium" size="md" />
+      <IconButton icon={X} aria-label="Large" size="lg" />
     </div>
   ),
 } satisfies StoryObj<IconButtonProps>;

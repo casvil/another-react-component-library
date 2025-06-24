@@ -1,10 +1,23 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import type { LucideIcon } from 'lucide-icon-type';
 
 import { Button } from './Button';
 import { buttonSizeClasses } from '../../@types/size';
+
+// Mock icon components for testing
+const MockArrowLeft: LucideIcon = (props) => (
+  <svg data-testid="icon-left" {...props}>
+    <path d="M19 12H5M12 19l-7-7 7-7" />
+  </svg>
+);
+
+const MockArrowRight: LucideIcon = (props) => (
+  <svg data-testid="icon-right" {...props}>
+    <path d="M5 12h14M12 5l7 7-7 7" />
+  </svg>
+);
 
 describe('Button', () => {
   it('renders the label', () => {
@@ -48,7 +61,7 @@ describe('Button', () => {
     render(
       <Button
         label="Back"
-        icon={<ArrowLeft data-testid="icon-left" />}
+        icon={MockArrowLeft}
         iconPosition="left"
       />,
     );
@@ -64,7 +77,7 @@ describe('Button', () => {
     render(
       <Button
         label="Next"
-        icon={<ArrowRight data-testid="icon-right" />}
+        icon={MockArrowRight}
         iconPosition="right"
       />,
     );
@@ -74,6 +87,23 @@ describe('Button', () => {
     expect(icon).toBeInTheDocument();
     expect(icon.parentElement).toHaveClass('ml-2');
     expect(button).toContainElement(icon);
+  });
+
+  it('renders icon with correct size based on button size', () => {
+    const sizes = [
+      { size: 'sm' as const, expectedSize: 16 },
+      { size: 'md' as const, expectedSize: 20 },
+      { size: 'lg' as const, expectedSize: 24 },
+    ];
+
+    sizes.forEach(({ size, expectedSize }) => {
+      const { unmount } = render(
+        <Button label={size} icon={MockArrowLeft} size={size} />,
+      );
+      const icon = screen.getByTestId('icon-left');
+      expect(icon).toHaveAttribute('size', expectedSize.toString());
+      unmount();
+    });
   });
 
   it('calls onClick handler when clicked', () => {

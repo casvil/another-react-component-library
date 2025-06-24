@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 
@@ -59,7 +60,7 @@ export const WithRightIcon: Story = {
     label: 'Next Step',
     variant: 'primary',
     size: 'md',
-    icon: <ArrowRight />,
+    icon: ArrowRight,
     iconPosition: 'right',
   },
 };
@@ -69,7 +70,7 @@ export const WithLeftIcon: Story = {
     label: 'Back',
     variant: 'secondary',
     size: 'md',
-    icon: <ArrowLeft size={16} />,
+    icon: ArrowLeft,
     iconPosition: 'left',
   },
 };
