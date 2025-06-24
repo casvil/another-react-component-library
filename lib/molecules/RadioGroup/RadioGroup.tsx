@@ -85,6 +85,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
             checked={selected === option.value}
             onChange={handleChange(option.value)}
             name={groupName}
+            value={option.value}
             disabled={option.disabled}
             {...radioProps}
           />
