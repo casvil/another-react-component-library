@@ -10,7 +10,6 @@ import ChevronDown from 'lucide-react/icons/chevron-down';
 import clsx from 'clsx';
 
 import { Input } from '../../atoms/Input/Input';
-import { Icon } from '../../atoms/Icon/Icon';
 import { Label } from '../../atoms/Label/Label';
 import { useStableId } from '../../hooks/useStableId/useStableId';
 import type { Size } from '../../@types/size';
@@ -143,16 +142,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
             disabled={disabled}
             size={size}
             className={clsx('cursor-pointer', inputClassName)}
-            icon={
-              <Icon
-                icon={ChevronDown}
-                size={16}
-                className={clsx(
-                  'transition-transform duration-200',
-                  isOpen && 'rotate-180',
-                )}
-              />
-            }
+            icon={ChevronDown}
+            iconClassName={clsx(
+              'transition-transform duration-200',
+              isOpen && 'rotate-180',
+            )}
             iconPosition="right"
           />
         </div>
