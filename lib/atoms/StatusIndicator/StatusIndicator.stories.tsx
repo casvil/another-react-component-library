@@ -107,4 +107,4 @@ export const AllStatuses: Story = {
       </div>
     </div>
   ),
-}; 
+};

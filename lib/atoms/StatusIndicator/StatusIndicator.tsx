@@ -48,38 +48,36 @@ const textSizeClasses = {
  * Displays user status with a colored dot and optional label.
  * Supports online, offline, away, and busy states.
  */
-export const StatusIndicator = forwardRef<HTMLSpanElement, StatusIndicatorProps>(
-  ({ status, size = 'md', showLabel = false, className, ...props }, ref) => {
-    const config = statusConfig[status];
+export const StatusIndicator = forwardRef<
+  HTMLSpanElement,
+  StatusIndicatorProps
+>(({ status, size = 'md', showLabel = false, className, ...props }, ref) => {
+  const config = statusConfig[status];
 
-    const dotClass = clsx(
-      'rounded-full border-2 border-white',
-      config.color,
-      sizeClasses[size],
-    );
+  const dotClass = clsx(
+    'rounded-full border-2 border-white',
+    config.color,
+    sizeClasses[size],
+  );
 
-    const containerClass = clsx(
-      'inline-flex items-center gap-1.5',
-      className,
-    );
+  const containerClass = clsx('inline-flex items-center gap-1.5', className);
 
-    return (
-      <span
-        ref={ref}
-        className={containerClass}
-        aria-label={config.label}
-        role="status"
-        {...props}
-      >
-        <span className={dotClass} aria-hidden="true" />
-        {showLabel && (
-          <span className={clsx('text-gray-700', textSizeClasses[size])}>
-            {config.label}
-          </span>
-        )}
-      </span>
-    );
-  },
-);
+  return (
+    <span
+      ref={ref}
+      className={containerClass}
+      aria-label={config.label}
+      role="status"
+      {...props}
+    >
+      <span className={dotClass} aria-hidden="true" />
+      {showLabel && (
+        <span className={clsx('text-gray-700', textSizeClasses[size])}>
+          {config.label}
+        </span>
+      )}
+    </span>
+  );
+});
 
-StatusIndicator.displayName = 'StatusIndicator'; 
+StatusIndicator.displayName = 'StatusIndicator';
