@@ -14,7 +14,7 @@ export interface RadioGroupOption {
 export interface RadioGroupProps {
   label?: string;
   options: RadioGroupOption[];
-  value?: string; // controlled - single value for radio
+  value?: string; // controlled
   defaultValue?: string; // uncontrolled
   onChange?: (value: string) => void;
   name?: string;
@@ -32,7 +32,6 @@ export interface RadioGroupProps {
  * Composed by Label + multiple Radio components.
  * Aria and a11y compliant (uses role="radiogroup" and proper labeling). Uses Tailwind CSS for styling.
  * Supports controlled and uncontrolled usage. Supports custom styles via className prop.
- * Only allows single selection.
  */
 export const RadioGroup: React.FC<RadioGroupProps> = ({
   label,
@@ -95,4 +94,4 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   );
 };
 
-RadioGroup.displayName = 'RadioGroup'; 
+RadioGroup.displayName = 'RadioGroup';

@@ -57,13 +57,7 @@ export const WithDefaultValue: Story = {
 export const Controlled: Story = {
   render: (args) => {
     const [value, setValue] = React.useState(args.value);
-    return (
-      <RadioGroup
-        {...args}
-        value={value}
-        onChange={setValue}
-      />
-    );
+    return <RadioGroup {...args} value={value} onChange={setValue} />;
   },
   args: {
     value: 'green',
