@@ -54,21 +54,21 @@ describe('Input', () => {
   });
 
   it('renders icon on the left by default', () => {
-    render(
-      <Input icon={<Search data-testid="icon" />} aria-label="input-field" />,
-    );
-    expect(screen.getByTestId('icon')).toBeInTheDocument();
+    render(<Input icon={Search} aria-label="input-field" />);
+    const iconContainer = screen
+      .getByRole('textbox', { name: 'input-field' })
+      .parentElement?.querySelector('span');
+    expect(iconContainer).toBeInTheDocument();
   });
 
   it('renders icon on the right when iconPosition is right', () => {
     render(
-      <Input
-        icon={<Search data-testid="icon" />}
-        iconPosition="right"
-        aria-label="input-field"
-      />,
+      <Input icon={Search} iconPosition="right" aria-label="input-field" />,
     );
-    expect(screen.getByTestId('icon')).toBeInTheDocument();
+    const iconContainer = screen
+      .getByRole('textbox', { name: 'input-field' })
+      .parentElement?.querySelector('span');
+    expect(iconContainer).toBeInTheDocument();
   });
 
   it('removes left padding when no icon is passed', () => {

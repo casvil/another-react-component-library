@@ -1,13 +1,20 @@
 import React, { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
+import type { LucideIcon } from 'lucide-icon-type';
 
 import type { Size } from '../../@types/size';
-import { inputSizeClasses } from '../../@types/size';
+import {
+  inputSizeClasses,
+  iconSizeValues,
+  inputIconSizeClasses,
+} from '../../@types/size';
 
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  icon?: React.ReactNode;
+  icon?: LucideIcon;
   iconPosition?: 'left' | 'right';
+  iconClassName?: string;
+  iconAriaLabel?: string;
   size?: Size;
   inputClassName?: string;
   className?: string;
@@ -24,6 +31,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       icon,
       iconPosition = 'left',
+      iconClassName,
+      iconAriaLabel,
       size = 'md',
       className,
       inputClassName,
@@ -41,25 +50,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       className,
     );
 
-    const sizeClasses = {
-      sm: {
-        icon: 'text-sm',
-        iconLeft: 'left-2',
-        iconRight: 'right-2',
-      },
-      md: {
-        icon: 'text-base',
-        iconLeft: 'left-3',
-        iconRight: 'right-3',
-      },
-      lg: {
-        icon: 'text-lg',
-        iconLeft: 'left-4',
-        iconRight: 'right-4',
-      },
-    };
-
-    const currentSize = sizeClasses[size];
+    const currentSize = inputIconSizeClasses[size];
 
     const inputClass = clsx(
       'block rounded-md border shadow-sm w-full',
@@ -80,25 +71,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       !disabled && 'text-gray-500',
     );
 
-    const hasAccessibilityAttributes = (element: React.ReactElement) => {
-      const props = element.props as Record<string, unknown>;
-      const type = element.type as { displayName?: string };
-
-      return (
-        props['aria-label'] || props.role || type.displayName === 'Spinner'
-      );
-    };
-
     return (
       <div className={containerClass}>
-        {hasIcon && (
+        {hasIcon && icon && (
           <span
             className={iconWrapperClass}
-            aria-hidden={
-              !(React.isValidElement(icon) && hasAccessibilityAttributes(icon))
-            }
+            aria-hidden={!iconAriaLabel}
+            aria-label={iconAriaLabel}
           >
-            {icon}
+            {React.createElement(icon, {
+              size: iconSizeValues[size],
+              className: iconClassName,
+            })}
           </span>
         )}
         <input
