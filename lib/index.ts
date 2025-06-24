@@ -23,9 +23,12 @@ export { RadioGroup } from './molecules/RadioGroup/RadioGroup';
 export { Search } from './molecules/Search/Search';
 export { Select } from './molecules/Select/Select';
 export { Spinner } from './atoms/Spinner/Spinner';
+export { StatusIndicator } from './atoms/StatusIndicator/StatusIndicator';
 export { Switch } from './atoms/Switch/Switch';
 export { TextArea } from './atoms/TextArea/TextArea';
 export { TimeDisplay } from './atoms/TimeDisplay/TimeDisplay';
+export { Username } from './atoms/Username/Username';
+export { UserPreview } from './molecules/UserPreview/UserPreview';
 export { Tooltip } from './atoms/Tooltip/Tooltip';
 
 export type { Size } from './@types/size';
