@@ -32,7 +32,6 @@ export const iconSizeValues = {
   lg: 24,
 } as const;
 
-// Icon positioning classes for Input component
 const inputIconPositionClasses = {
   sm: {
     iconLeft: 'left-2',
@@ -171,20 +170,20 @@ const createInputIconPosition = (
   iconPosition: typeof inputIconPositionClasses,
 ) =>
   ({
-    sm: { 
-      icon: text.sm, 
-      iconLeft: iconPosition.sm.iconLeft, 
-      iconRight: iconPosition.sm.iconRight 
+    sm: {
+      icon: text.sm,
+      iconLeft: iconPosition.sm.iconLeft,
+      iconRight: iconPosition.sm.iconRight,
     },
-    md: { 
-      icon: text.md, 
-      iconLeft: iconPosition.md.iconLeft, 
-      iconRight: iconPosition.md.iconRight 
+    md: {
+      icon: text.md,
+      iconLeft: iconPosition.md.iconLeft,
+      iconRight: iconPosition.md.iconRight,
     },
-    lg: { 
-      icon: text.lg, 
-      iconLeft: iconPosition.lg.iconLeft, 
-      iconRight: iconPosition.lg.iconRight 
+    lg: {
+      icon: text.lg,
+      iconLeft: iconPosition.lg.iconLeft,
+      iconRight: iconPosition.lg.iconRight,
     },
   }) as const;
 
