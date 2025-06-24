@@ -136,7 +136,6 @@ function App() {
 ├── .prettierrc              # Code formatter config
 ├── eslint.config.js         # Linter configuration
 ├── lefthook.yml             # Git hooks (via Lefthook)
-├── lint-staged.config.js    # Pre-commit linting
 ├── package.json             # Project manifest
 ├── package-lock.json        # Dependency lockfile
 └── README.md                # Project overview
