@@ -1,0 +1,6 @@
+import{j as e}from"./jsx-runtime-D_zvdyIk.js";import{c as a}from"./clsx-B-dksMZM.js";import{c as o}from"./createLucideIcon-BJXeuKHM.js";import{f as t}from"./size-7yIMnH0j.js";/**
+ * @license lucide-react v0.515.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const c=[["path",{d:"M21 12a9 9 0 1 1-6.219-8.56",key:"13zald"}]],d=o("loader-circle",c),s=({size:i="md",className:n,iconClassName:r,...l})=>e.jsxs("div",{role:"status","aria-live":"polite","aria-label":"Loading",className:a("inline-flex items-center",n),...l,children:[e.jsx(d,{className:a("animate-spin",t[i],r),"aria-hidden":"true"}),e.jsx("span",{className:"sr-only",children:"Loading"})]});s.displayName="Spinner";s.__docgenInfo={description:'Spinner atom component.\n\nRenders a spinning loader icon using Lucide\'s `LoaderCircle`.\nAccepts size, wrapper styling via `className`, and icon color via `iconClassName`.\nAccessible via `role="status"` and visually hidden text.',methods:[],displayName:"Spinner",props:{size:{required:!1,tsType:{name:"union",raw:"'sm' | 'md' | 'lg'",elements:[{name:"literal",value:"'sm'"},{name:"literal",value:"'md'"},{name:"literal",value:"'lg'"}]},description:"",defaultValue:{value:"'md'",computed:!1}},iconClassName:{required:!1,tsType:{name:"string"},description:""}}};export{s as S};
