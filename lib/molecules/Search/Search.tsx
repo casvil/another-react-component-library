@@ -5,7 +5,7 @@ import type { InputProps } from '../../atoms/Input/Input';
 import { Icon } from '../../atoms/Icon/Icon';
 import { Spinner } from '../../atoms/Spinner/Spinner';
 
-import { SearchIcon } from 'lucide-react';
+import SearchIcon from 'lucide-react/icons/search';
 
 export interface SearchProps extends Omit<InputProps, 'icon' | 'iconPosition'> {
   loading?: boolean;
