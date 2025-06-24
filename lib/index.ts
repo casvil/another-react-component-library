@@ -16,6 +16,7 @@ export { Image } from './atoms/Image/Image';
 export { Input } from './atoms/Input/Input';
 export { InputField } from './molecules/InputField/InputField';
 export { Label } from './atoms/Label/Label';
+export { Link } from './atoms/Link/Link';
 export { ProgressBar } from './atoms/ProgressBar/ProgressBar';
 export { Radio } from './atoms/Radio/Radio';
 export { RadioGroup } from './molecules/RadioGroup/RadioGroup';
