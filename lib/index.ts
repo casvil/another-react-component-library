@@ -43,4 +43,7 @@ export {
   checkboxSizeClasses,
   radioSizeClasses,
   progressBarSizeClasses,
+  userPreviewSizeClasses,
+  statusIndicatorComponentSizeClasses,
+  usernameComponentSizeClasses,
 } from './@types/size';

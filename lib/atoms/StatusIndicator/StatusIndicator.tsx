@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
 import type { Size } from '../../@types/size';
+import { statusIndicatorComponentSizeClasses } from '../../@types/size';
 
 export type StatusType = 'online' | 'offline' | 'away' | 'busy';
 
@@ -31,18 +32,6 @@ const statusConfig = {
   },
 } as const;
 
-const sizeClasses = {
-  sm: 'w-2 h-2',
-  md: 'w-3 h-3',
-  lg: 'w-4 h-4',
-} as const;
-
-const textSizeClasses = {
-  sm: 'text-xs',
-  md: 'text-sm',
-  lg: 'text-base',
-} as const;
-
 /**
  * StatusIndicator atom component.
  * Displays user status with a colored dot and optional label.
@@ -57,10 +46,10 @@ export const StatusIndicator = forwardRef<
   const dotClass = clsx(
     'rounded-full border-2 border-white',
     config.color,
-    sizeClasses[size],
+    statusIndicatorComponentSizeClasses.dot[size],
   );
 
-  const containerClass = clsx('inline-flex items-center gap-1.5', className);
+  const containerClass = clsx(statusIndicatorComponentSizeClasses.container, className);
 
   return (
     <span
@@ -72,7 +61,7 @@ export const StatusIndicator = forwardRef<
     >
       <span className={dotClass} aria-hidden="true" />
       {showLabel && (
-        <span className={clsx('text-gray-700', textSizeClasses[size])}>
+        <span className={clsx('text-gray-700', statusIndicatorComponentSizeClasses.text[size])}>
           {config.label}
         </span>
       )}
