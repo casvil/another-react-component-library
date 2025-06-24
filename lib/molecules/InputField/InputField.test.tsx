@@ -1,3 +1,4 @@
+import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Search } from 'lucide-react';
@@ -59,14 +60,10 @@ describe('InputField', () => {
   });
 
   it('renders icon if provided', () => {
-    render(
-      <InputField
-        label="Search"
-        icon={<Search data-testid="icon" />}
-        placeholder="Search..."
-      />,
-    );
-    expect(screen.getByTestId('icon')).toBeInTheDocument();
+    render(<InputField label="Search" icon={Search} placeholder="Search..." />);
+    // The icon should be rendered inside the input
+    const input = screen.getByLabelText('Search');
+    expect(input.parentElement?.querySelector('svg')).toBeInTheDocument();
   });
 
   it('removes input padding when no icon is provided', () => {
