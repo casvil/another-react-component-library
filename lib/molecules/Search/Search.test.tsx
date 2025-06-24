@@ -68,7 +68,8 @@ describe('Search', () => {
 
   it('applies custom className', () => {
     render(<Search className="custom-class" placeholder={placeholder} />);
-    const inputWrapper = screen.getByPlaceholderText(placeholder).parentElement;
-    expect(inputWrapper).toHaveClass('custom-class');
+    const searchWrapper =
+      screen.getByPlaceholderText(placeholder).parentElement?.parentElement;
+    expect(searchWrapper).toHaveClass('custom-class');
   });
 });
