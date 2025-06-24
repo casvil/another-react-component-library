@@ -18,6 +18,7 @@ export { InputField } from './molecules/InputField/InputField';
 export { Label } from './atoms/Label/Label';
 export { ProgressBar } from './atoms/ProgressBar/ProgressBar';
 export { Radio } from './atoms/Radio/Radio';
+export { RadioGroup } from './molecules/RadioGroup/RadioGroup';
 export { Search } from './molecules/Search/Search';
 export { Select } from './molecules/Select/Select';
 export { Spinner } from './atoms/Spinner/Spinner';
