@@ -10,6 +10,7 @@ export interface InputProps
   iconPosition?: 'left' | 'right';
   size?: Size;
   inputClassName?: string;
+  className?: string;
 }
 
 /**
