@@ -1,9 +1,7 @@
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react-vite';
 import { Search, Send } from 'lucide-react';
 
 import { Input } from './Input';
-import { Icon } from '../Icon/Icon';
 
 const meta: Meta<typeof Input> = {
   title: 'atoms/Input',
@@ -70,7 +68,7 @@ export const Invalid: Story = {
 export const WithLeftIcon: Story = {
   args: {
     placeholder: 'Search...',
-    icon: <Icon icon={Search} size={18} />,
+    icon: Search,
     iconPosition: 'left',
   },
 };
@@ -78,7 +76,7 @@ export const WithLeftIcon: Story = {
 export const WithRightIcon: Story = {
   args: {
     placeholder: 'Search...',
-    icon: <Icon icon={Send} size={18} />,
+    icon: Send,
     iconPosition: 'right',
   },
 };

@@ -25,6 +25,29 @@ const iconSizeClasses = {
   lg: 'w-8 h-8',
 } as const;
 
+// Icon size values for Lucide icons (numeric values for size prop)
+export const iconSizeValues = {
+  sm: 16,
+  md: 20,
+  lg: 24,
+} as const;
+
+// Icon positioning classes for Input component
+const inputIconPositionClasses = {
+  sm: {
+    iconLeft: 'left-2',
+    iconRight: 'right-2',
+  },
+  md: {
+    iconLeft: 'left-3',
+    iconRight: 'right-3',
+  },
+  lg: {
+    iconLeft: 'left-4',
+    iconRight: 'right-4',
+  },
+} as const;
+
 const avatarSizeClassesRaw = {
   sm: 'w-8 h-8',
   md: 'w-12 h-12',
@@ -142,6 +165,29 @@ const createProgressBar = (
     lg: { label: text.lg, bar: height.lg },
   }) as const;
 
+// Helper function to create input icon positioning objects
+const createInputIconPosition = (
+  text: typeof textSizeClasses,
+  iconPosition: typeof inputIconPositionClasses,
+) =>
+  ({
+    sm: { 
+      icon: text.sm, 
+      iconLeft: iconPosition.sm.iconLeft, 
+      iconRight: iconPosition.sm.iconRight 
+    },
+    md: { 
+      icon: text.md, 
+      iconLeft: iconPosition.md.iconLeft, 
+      iconRight: iconPosition.md.iconRight 
+    },
+    lg: { 
+      icon: text.lg, 
+      iconLeft: iconPosition.lg.iconLeft, 
+      iconRight: iconPosition.lg.iconRight 
+    },
+  }) as const;
+
 // Export the computed size classes
 export const sizeClasses = textSizeClasses;
 
@@ -187,4 +233,9 @@ export const radioSizeClasses = createRadioControl(
 export const progressBarSizeClasses = createProgressBar(
   textSizeClasses,
   progressBarHeightSizeClasses,
+);
+
+export const inputIconSizeClasses = createInputIconPosition(
+  textSizeClasses,
+  inputIconPositionClasses,
 );
