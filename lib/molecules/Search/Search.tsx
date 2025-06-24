@@ -2,12 +2,12 @@ import React from 'react';
 
 import { Input } from '../../atoms/Input/Input';
 import type { InputProps } from '../../atoms/Input/Input';
-import { Icon } from '../../atoms/Icon/Icon';
 import { Spinner } from '../../atoms/Spinner/Spinner';
 
 import SearchIcon from 'lucide-react/icons/search';
 
-export interface SearchProps extends Omit<InputProps, 'icon' | 'iconPosition'> {
+export interface SearchProps
+  extends Omit<InputProps, 'icon' | 'iconPosition' | 'iconClassName'> {
   loading?: boolean;
   iconPosition?: 'left' | 'right';
   className?: string;
@@ -19,22 +19,31 @@ export interface SearchProps extends Omit<InputProps, 'icon' | 'iconPosition'> {
  * Shows a search icon and an optional loading spinner.
  */
 export const Search = React.forwardRef<HTMLInputElement, SearchProps>(
-  ({ loading = false, iconPosition = 'left', disabled, ...props }, ref) => {
-    const icon = loading ? (
-      <Spinner size="sm" className="mr-1" />
-    ) : (
-      <Icon icon={SearchIcon} size={18} aria-label="Search" />
-    );
-
+  (
+    { loading = false, iconPosition = 'left', disabled, className, ...props },
+    ref,
+  ) => {
     return (
-      <Input
-        ref={ref}
-        icon={icon}
-        iconPosition={iconPosition}
-        disabled={disabled || loading}
-        aria-busy={loading}
-        {...props}
-      />
+      <div className={`relative ${className || ''}`}>
+        <Input
+          ref={ref}
+          icon={SearchIcon}
+          iconAriaLabel="Search"
+          iconPosition={iconPosition}
+          disabled={disabled || loading}
+          aria-busy={loading}
+          {...props}
+        />
+        {loading && (
+          <div
+            className={`absolute inset-y-0 flex items-center ${
+              iconPosition === 'left' ? 'left-3' : 'right-3'
+            }`}
+          >
+            <Spinner size="sm" />
+          </div>
+        )}
+      </div>
     );
   },
 );
