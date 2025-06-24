@@ -1,14 +1,16 @@
 import React from 'react';
 
-import { Input, InputProps } from '../../atoms/Input/Input';
-// import { Icon } from '../../atoms/Icon/Icon';
-// import { Spinner } from '../../atoms/Spinner/Spinner';
+import { Input } from '../../atoms/Input/Input';
+import type { InputProps } from '../../atoms/Input/Input';
+import { Icon } from '../../atoms/Icon/Icon';
+import { Spinner } from '../../atoms/Spinner/Spinner';
 
-// import { SearchIcon } from 'lucide-react';
+import { SearchIcon } from 'lucide-react';
 
 export interface SearchProps extends Omit<InputProps, 'icon' | 'iconPosition'> {
   loading?: boolean;
   iconPosition?: 'left' | 'right';
+  className?: string;
 }
 
 /**
@@ -18,16 +20,16 @@ export interface SearchProps extends Omit<InputProps, 'icon' | 'iconPosition'> {
  */
 export const Search = React.forwardRef<HTMLInputElement, SearchProps>(
   ({ loading = false, iconPosition = 'left', disabled, ...props }, ref) => {
-    // const icon = loading ? (
-    //   <Spinner size="sm" className="mr-1" />
-    // ) : (
-    //   <Icon icon={SearchIcon} size={18} aria-label="Search" />
-    // );
+    const icon = loading ? (
+      <Spinner size="sm" className="mr-1" />
+    ) : (
+      <Icon icon={SearchIcon} size={18} aria-label="Search" />
+    );
 
     return (
       <Input
         ref={ref}
-        // icon={icon}
+        icon={icon}
         iconPosition={iconPosition}
         disabled={disabled || loading}
         aria-busy={loading}

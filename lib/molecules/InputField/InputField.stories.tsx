@@ -40,7 +40,7 @@ export const WithError: Story = {
   args: {
     label: 'Username',
     placeholder: 'Enter your username',
-    icon: <Icon icon={<MessageCircleWarning />} size="sm" />,
+    icon: <Icon icon={MessageCircleWarning} size="sm" />,
     iconPosition: 'left',
     error: 'This field is required',
   },
@@ -50,7 +50,7 @@ export const WithLeftIcon: Story = {
   args: {
     label: 'Username',
     placeholder: 'Enter your username',
-    icon: <Icon icon={<User />} size="sm" />,
+    icon: <Icon icon={User} size="sm" />,
     iconPosition: 'left',
   },
 };
@@ -59,7 +59,7 @@ export const WithRightIcon: Story = {
   args: {
     label: 'Username',
     placeholder: 'Enter your username',
-    icon: <Icon icon={<User />} size="sm" />,
+    icon: <Icon icon={User} size="sm" />,
     iconPosition: 'right',
   },
 };

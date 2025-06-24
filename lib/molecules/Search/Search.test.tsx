@@ -17,7 +17,7 @@ describe('Search', () => {
 
   it('renders loading spinner when loading', () => {
     render(<Search loading placeholder={placeholder} />);
-    // Should render the spinner (role=status)
+    // Should render the spinner with role="status"
     expect(screen.getByRole('status')).toBeInTheDocument();
     // Input should be disabled when loading
     expect(screen.getByPlaceholderText(placeholder)).toBeDisabled();

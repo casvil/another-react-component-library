@@ -9,6 +9,7 @@ export interface InputProps
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
   size?: Size;
+  inputClassName?: string;
 }
 
 /**
@@ -24,6 +25,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       iconPosition = 'left',
       size = 'md',
       className,
+      inputClassName,
       disabled,
       readOnly,
       ...props
@@ -35,6 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const containerClass = clsx(
       'relative flex items-center',
       disabled && 'opacity-60 cursor-not-allowed',
+      className,
     );
 
     const sizeClasses = {
@@ -65,7 +68,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       'focus:outline-none focus:ring-2 focus:ring-blue-500',
       disabled && 'bg-gray-100 cursor-not-allowed',
       readOnly && 'bg-gray-50 text-gray-500',
-      className,
+      inputClassName,
     );
 
     const iconWrapperClass = clsx(
@@ -76,10 +79,24 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       !disabled && 'text-gray-500',
     );
 
+    const hasAccessibilityAttributes = (element: React.ReactElement) => {
+      const props = element.props as Record<string, unknown>;
+      const type = element.type as { displayName?: string };
+
+      return (
+        props['aria-label'] || props.role || type.displayName === 'Spinner'
+      );
+    };
+
     return (
       <div className={containerClass}>
         {hasIcon && (
-          <span className={iconWrapperClass} aria-hidden="true">
+          <span
+            className={iconWrapperClass}
+            aria-hidden={
+              !(React.isValidElement(icon) && hasAccessibilityAttributes(icon))
+            }
+          >
             {icon}
           </span>
         )}

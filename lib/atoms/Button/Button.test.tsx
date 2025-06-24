@@ -58,13 +58,7 @@ describe('Button', () => {
   });
 
   it('renders left icon', () => {
-    render(
-      <Button
-        label="Back"
-        icon={MockArrowLeft}
-        iconPosition="left"
-      />,
-    );
+    render(<Button label="Back" icon={MockArrowLeft} iconPosition="left" />);
     const icon = screen.getByTestId('icon-left');
     const button = screen.getByRole('button', { name: /back/i });
 
@@ -74,13 +68,7 @@ describe('Button', () => {
   });
 
   it('renders right icon', () => {
-    render(
-      <Button
-        label="Next"
-        icon={MockArrowRight}
-        iconPosition="right"
-      />,
-    );
+    render(<Button label="Next" icon={MockArrowRight} iconPosition="right" />);
     const icon = screen.getByTestId('icon-right');
     const button = screen.getByRole('button', { name: /next/i });
 
