@@ -1,12 +1,13 @@
 import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import clsx from 'clsx';
+import type { LucideIcon } from 'lucide-icon-type';
 
 import type { Size } from '../../@types/size';
 import { iconButtonSizeClasses } from '../../@types/size';
 
 export interface IconButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: React.ReactNode;
+  icon: LucideIcon;
   'aria-label': string;
   size?: Size;
   variant?: 'primary' | 'secondary' | 'tertiary';
@@ -20,7 +21,7 @@ export interface IconButtonProps
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (
     {
-      icon,
+      icon: IconComponent,
       size = 'md',
       variant = 'primary',
       className,
@@ -41,6 +42,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         'bg-transparent text-gray-800 hover:bg-gray-100 focus:ring-gray-300 border border-gray-300',
     };
 
+    // Get icon size based on button size
+    const iconSize = size === 'sm' ? 16 : size === 'lg' ? 24 : 20;
+
     return (
       <button
         type="button"
@@ -55,8 +59,10 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         aria-label={props['aria-label']}
         {...props}
       >
-        {icon}
+        <IconComponent size={iconSize} color="currentColor" focusable="false" />
       </button>
     );
   },
 );
+
+IconButton.displayName = 'IconButton';

@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import clsx from 'clsx';
+import type { LucideIcon } from 'lucide-icon-type';
 
 import type { Size } from '../../@types/size';
 import { buttonSizeClasses } from '../../@types/size';
@@ -8,7 +9,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'tertiary';
   size?: Size;
   label: string;
-  icon?: React.ReactNode;
+  icon?: LucideIcon;
   iconPosition?: 'left' | 'right';
 }
 
@@ -23,7 +24,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant = 'primary',
       size = 'md',
       label,
-      icon,
+      icon: IconComponent,
       iconPosition = 'left',
       className,
       disabled = false,
@@ -43,6 +44,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         'bg-transparent text-gray-800 hover:bg-gray-100 focus:ring-gray-300 border border-gray-300',
     };
 
+    // Get icon size based on button size
+    const iconSize = size === 'sm' ? 16 : size === 'lg' ? 24 : 20;
+
     return (
       <button
         type="button"
@@ -56,12 +60,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         {...props}
       >
-        {icon && iconPosition === 'left' && (
-          <span className="mr-2">{icon}</span>
+        {IconComponent && iconPosition === 'left' && (
+          <span className="mr-2">
+            <IconComponent size={iconSize} color="currentColor" focusable="false" />
+          </span>
         )}
         {label}
-        {icon && iconPosition === 'right' && (
-          <span className="ml-2">{icon}</span>
+        {IconComponent && iconPosition === 'right' && (
+          <span className="ml-2">
+            <IconComponent size={iconSize} color="currentColor" focusable="false" />
+          </span>
         )}
       </button>
     );
