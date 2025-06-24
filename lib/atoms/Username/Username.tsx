@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
 import type { Size } from '../../@types/size';
+import { usernameComponentSizeClasses } from '../../@types/size';
 
 export interface UsernameProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: string;
@@ -10,18 +11,6 @@ export interface UsernameProps extends React.HTMLAttributes<HTMLSpanElement> {
   truncate?: boolean;
   maxLength?: number;
 }
-
-const sizeClasses = {
-  sm: 'text-sm',
-  md: 'text-base',
-  lg: 'text-lg',
-} as const;
-
-const variantClasses = {
-  default: 'text-gray-900',
-  bold: 'text-gray-900 font-semibold',
-  muted: 'text-gray-600',
-} as const;
 
 /**
  * Username atom component.
@@ -50,8 +39,8 @@ export const Username = forwardRef<HTMLSpanElement, UsernameProps>(
 
     const usernameClass = clsx(
       'inline-block',
-      sizeClasses[size],
-      variantClasses[variant],
+      usernameComponentSizeClasses.text[size],
+      usernameComponentSizeClasses.variant[variant],
       truncate && 'truncate max-w-full',
       className,
     );

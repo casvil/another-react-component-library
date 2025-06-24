@@ -238,3 +238,74 @@ export const inputIconSizeClasses = createInputIconPosition(
   textSizeClasses,
   inputIconPositionClasses,
 );
+
+
+const userPreviewLayoutClasses = {
+  horizontal: 'flex-row items-center',
+  vertical: 'flex-col items-center text-center',
+} as const;
+
+const userPreviewSpacingClasses = {
+  horizontal: {
+    sm: 'gap-2',
+    md: 'gap-3',
+    lg: 'gap-4',
+  },
+  vertical: {
+    sm: 'gap-1',
+    md: 'gap-2',
+    lg: 'gap-3',
+  },
+} as const;
+
+const userPreviewStatusPositionClasses = {
+  sm: 'bottom-0 -right-0.5',
+  md: 'bottom-0.5 -right-0.5', 
+  lg: 'bottom-1 -right-0.5',
+} as const;
+
+const userPreviewStatusIndicatorSizes = {
+  sm: 'sm' as const,
+  md: 'md' as const,
+  lg: 'lg' as const,
+} as const;
+
+const userPreviewInnerGapClasses = {
+  vertical: 'flex-col items-center gap-1',
+  horizontal: 'flex-col',
+} as const;
+
+export const userPreviewSizeClasses = {
+  layout: userPreviewLayoutClasses,
+  spacing: userPreviewSpacingClasses,
+  statusPosition: userPreviewStatusPositionClasses,
+  statusIndicatorSizes: userPreviewStatusIndicatorSizes,
+  innerGap: userPreviewInnerGapClasses,
+} as const;
+
+// StatusIndicator component sizing classes
+const statusIndicatorDotSizeClasses = {
+  sm: 'w-2 h-2',
+  md: 'w-3 h-3',
+  lg: 'w-4 h-4',
+} as const;
+
+const statusIndicatorGapClass = 'inline-flex items-center gap-1.5';
+
+export const statusIndicatorComponentSizeClasses = {
+  dot: statusIndicatorDotSizeClasses,
+  text: textSizeClasses,
+  container: statusIndicatorGapClass,
+} as const;
+
+// Username component sizing classes
+const usernameVariantClasses = {
+  default: 'text-gray-900',
+  bold: 'text-gray-900 font-semibold',
+  muted: 'text-gray-600',
+} as const;
+
+export const usernameComponentSizeClasses = {
+  text: textSizeClasses,
+  variant: usernameVariantClasses,
+} as const;

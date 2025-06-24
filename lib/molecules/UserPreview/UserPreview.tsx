@@ -5,6 +5,7 @@ import { Avatar } from '../../atoms/Avatar/Avatar';
 import { Username } from '../../atoms/Username/Username';
 import { StatusIndicator } from '../../atoms/StatusIndicator/StatusIndicator';
 import type { Size } from '../../@types/size';
+import { userPreviewSizeClasses } from '../../@types/size';
 import type { StatusType } from '../../atoms/StatusIndicator/StatusIndicator';
 
 export interface UserPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,24 +21,6 @@ export interface UserPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   truncateUsername?: boolean;
   maxUsernameLength?: number;
 }
-
-const layoutClasses = {
-  horizontal: 'flex-row items-center',
-  vertical: 'flex-col items-center text-center',
-} as const;
-
-const spacingClasses = {
-  horizontal: {
-    sm: 'gap-2',
-    md: 'gap-3',
-    lg: 'gap-4',
-  },
-  vertical: {
-    sm: 'gap-1',
-    md: 'gap-2',
-    lg: 'gap-3',
-  },
-} as const;
 
 const statusConfig = {
   online: 'Online',
@@ -72,8 +55,8 @@ export const UserPreview = forwardRef<HTMLDivElement, UserPreviewProps>(
   ) => {
     const containerClass = clsx(
       'flex relative',
-      layoutClasses[layout],
-      spacingClasses[layout][size],
+      userPreviewSizeClasses.layout[layout],
+      userPreviewSizeClasses.spacing[layout][size],
       className,
     );
 
@@ -89,12 +72,12 @@ export const UserPreview = forwardRef<HTMLDivElement, UserPreviewProps>(
           <div
             className={clsx(
               'absolute',
-              size === 'sm' ? '-bottom-0.5 -right-0.5' : '-bottom-1 -right-1',
+              userPreviewSizeClasses.statusPosition[size],
             )}
           >
             <StatusIndicator
               status={status}
-              size={size === 'lg' ? 'md' : 'sm'}
+              size={userPreviewSizeClasses.statusIndicatorSizes[size]}
               showLabel={false}
             />
           </div>
@@ -129,7 +112,7 @@ export const UserPreview = forwardRef<HTMLDivElement, UserPreviewProps>(
         <div
           className={clsx(
             'flex',
-            layout === 'vertical' ? 'flex-col items-center gap-1' : 'flex-col',
+            userPreviewSizeClasses.innerGap[layout],
           )}
         >
           {usernameElement}

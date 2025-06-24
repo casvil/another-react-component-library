@@ -152,10 +152,19 @@ export const LayoutComparison: Story = {
 
 export const SizeComparison: Story = {
   render: () => (
-    <div className="flex items-center gap-6">
-      <UserPreview name="John" status="online" size="sm" />
-      <UserPreview name="John Doe" status="online" size="md" />
-      <UserPreview name="John Doe Smith" status="online" size="lg" />
+    <div className="flex items-center gap-6 p-8 bg-gray-50">
+      <div className="flex flex-col items-center gap-2">
+        <div className="text-xs text-gray-500 font-medium">Small</div>
+        <UserPreview name="John" status="online" size="sm" />
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <div className="text-xs text-gray-500 font-medium">Medium</div>
+        <UserPreview name="John Doe" status="online" size="md" />
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <div className="text-xs text-gray-500 font-medium">Large</div>
+        <UserPreview name="John Doe Smith" status="online" size="lg" />
+      </div>
     </div>
   ),
 };
