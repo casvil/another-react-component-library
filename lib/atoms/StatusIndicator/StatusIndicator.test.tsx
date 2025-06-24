@@ -46,7 +46,9 @@ describe('StatusIndicator', () => {
     const sizes = ['sm', 'md', 'lg'] as const;
 
     sizes.forEach((size) => {
-      const { unmount } = render(<StatusIndicator status="online" size={size} />);
+      const { unmount } = render(
+        <StatusIndicator status="online" size={size} />,
+      );
       const statusElement = screen.getByRole('status');
       expect(statusElement).toBeInTheDocument();
       unmount();
@@ -56,7 +58,7 @@ describe('StatusIndicator', () => {
   it('has correct accessibility attributes', () => {
     render(<StatusIndicator status="busy" showLabel />);
     const statusElement = screen.getByRole('status');
-    
+
     expect(statusElement).toHaveAttribute('role', 'status');
     expect(statusElement).toHaveAttribute('aria-label', 'Busy');
   });
@@ -69,8 +71,8 @@ describe('StatusIndicator', () => {
   it('renders with default props', () => {
     render(<StatusIndicator status="online" />);
     const statusElement = screen.getByRole('status');
-    
+
     expect(statusElement).toBeInTheDocument();
     expect(screen.queryByText('Online')).not.toBeInTheDocument();
   });
-}); 
+});
