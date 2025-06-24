@@ -48,7 +48,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     );
     const inputChecked = isControlled ? checked : internalChecked;
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (!isControlled) setInternalChecked(e.target.checked);
       if (rest.onChange) rest.onChange(e);
     };
