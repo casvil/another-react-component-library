@@ -41,7 +41,7 @@ describe('Input', () => {
   });
 
   it('applies custom className', () => {
-    render(<Input className="custom-class" aria-label="input-field" />);
+    render(<Input inputClassName="custom-class" aria-label="input-field" />);
     expect(screen.getByRole('textbox', { name: 'input-field' })).toHaveClass(
       'custom-class',
     );

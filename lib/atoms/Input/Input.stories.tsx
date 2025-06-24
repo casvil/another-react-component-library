@@ -70,7 +70,7 @@ export const Invalid: Story = {
 export const WithLeftIcon: Story = {
   args: {
     placeholder: 'Search...',
-    icon: <Icon icon={<Search />} size={18} />,
+    icon: <Icon icon={Search} size={18} />,
     iconPosition: 'left',
   },
 };
@@ -78,7 +78,7 @@ export const WithLeftIcon: Story = {
 export const WithRightIcon: Story = {
   args: {
     placeholder: 'Search...',
-    icon: <Icon icon={<Send />} size={18} />,
+    icon: <Icon icon={Send} size={18} />,
     iconPosition: 'right',
   },
 };

@@ -62,13 +62,21 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {IconComponent && iconPosition === 'left' && (
           <span className="mr-2">
-            <IconComponent size={iconSize} color="currentColor" focusable="false" />
+            <IconComponent
+              size={iconSize}
+              color="currentColor"
+              focusable="false"
+            />
           </span>
         )}
         {label}
         {IconComponent && iconPosition === 'right' && (
           <span className="ml-2">
-            <IconComponent size={iconSize} color="currentColor" focusable="false" />
+            <IconComponent
+              size={iconSize}
+              color="currentColor"
+              focusable="false"
+            />
           </span>
         )}
       </button>

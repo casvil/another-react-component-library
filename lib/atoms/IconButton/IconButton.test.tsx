@@ -23,7 +23,9 @@ describe('IconButton', () => {
   });
 
   it('is disabled when disabled prop is true', () => {
-    render(<IconButton icon={MockIcon} aria-label="Disabled button" disabled />);
+    render(
+      <IconButton icon={MockIcon} aria-label="Disabled button" disabled />,
+    );
     const button = screen.getByRole('button', { name: /disabled button/i });
     expect(button).toBeDisabled();
   });
@@ -55,11 +57,7 @@ describe('IconButton', () => {
 
     sizes.forEach((size) => {
       const { unmount } = render(
-        <IconButton
-          icon={MockIcon}
-          aria-label={size}
-          size={size}
-        />,
+        <IconButton icon={MockIcon} aria-label={size} size={size} />,
       );
       const button = screen.getByRole('button', { name: size });
 

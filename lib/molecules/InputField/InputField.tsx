@@ -46,7 +46,7 @@ export const InputField = ({
         size={size}
         aria-invalid={!!error}
         aria-describedby={describedBy || undefined}
-        className={className}
+        inputClassName={className}
         {...props} // includes icon, iconPosition, etc.
       />
 
