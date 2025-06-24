@@ -239,7 +239,6 @@ export const inputIconSizeClasses = createInputIconPosition(
   inputIconPositionClasses,
 );
 
-
 const userPreviewLayoutClasses = {
   horizontal: 'flex-row items-center',
   vertical: 'flex-col items-center text-center',
@@ -260,7 +259,7 @@ const userPreviewSpacingClasses = {
 
 const userPreviewStatusPositionClasses = {
   sm: 'bottom-0 -right-0.5',
-  md: 'bottom-0.5 -right-0.5', 
+  md: 'bottom-0.5 -right-0.5',
   lg: 'bottom-1 -right-0.5',
 } as const;
 

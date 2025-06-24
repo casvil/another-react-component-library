@@ -49,7 +49,10 @@ export const StatusIndicator = forwardRef<
     statusIndicatorComponentSizeClasses.dot[size],
   );
 
-  const containerClass = clsx(statusIndicatorComponentSizeClasses.container, className);
+  const containerClass = clsx(
+    statusIndicatorComponentSizeClasses.container,
+    className,
+  );
 
   return (
     <span
@@ -61,7 +64,12 @@ export const StatusIndicator = forwardRef<
     >
       <span className={dotClass} aria-hidden="true" />
       {showLabel && (
-        <span className={clsx('text-gray-700', statusIndicatorComponentSizeClasses.text[size])}>
+        <span
+          className={clsx(
+            'text-gray-700',
+            statusIndicatorComponentSizeClasses.text[size],
+          )}
+        >
           {config.label}
         </span>
       )}
