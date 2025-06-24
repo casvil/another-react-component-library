@@ -1,10 +1,11 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { SearchBox } from './SearchBox';
+
+import { Search } from './Search';
 
 const meta = {
-  title: 'molecules/SearchBox',
-  component: SearchBox,
+  title: 'molecules/Search',
+  component: Search,
   parameters: {
     layout: 'centered',
   },
@@ -22,7 +23,7 @@ const meta = {
     value: { control: 'text' },
     onChange: { action: 'changed' },
   },
-} satisfies Meta<typeof SearchBox>;
+} satisfies Meta<typeof Search>;
 
 export default meta;
 
@@ -65,12 +66,12 @@ export const Controlled: Story = {
   render: (args) => {
     const [value, setValue] = React.useState('');
     return (
-      <SearchBox
+      <Search
         {...args}
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
         placeholder="Controlled search…"
       />
     );
   },
-}; 
+};

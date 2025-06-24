@@ -3,20 +3,20 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { SearchBox } from './SearchBox';
+import { Search } from './Search';
 
 const placeholder = 'Search…';
 
-describe('SearchBox', () => {
+describe('Search', () => {
   it('renders with search icon by default', () => {
-    render(<SearchBox placeholder={placeholder} />);
+    render(<Search placeholder={placeholder} />);
     expect(screen.getByPlaceholderText(placeholder)).toBeInTheDocument();
     // Should render the search icon (aria-label)
     expect(screen.getByLabelText(/search/i)).toBeInTheDocument();
   });
 
   it('renders loading spinner when loading', () => {
-    render(<SearchBox loading placeholder={placeholder} />);
+    render(<Search loading placeholder={placeholder} />);
     // Should render the spinner (role=status)
     expect(screen.getByRole('status')).toBeInTheDocument();
     // Input should be disabled when loading
@@ -29,7 +29,7 @@ describe('SearchBox', () => {
     function Wrapper() {
       const [value, setValue] = React.useState('');
       return (
-        <SearchBox
+        <Search
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
@@ -47,12 +47,12 @@ describe('SearchBox', () => {
   });
 
   it('supports disabled', () => {
-    render(<SearchBox disabled placeholder={placeholder} />);
+    render(<Search disabled placeholder={placeholder} />);
     expect(screen.getByPlaceholderText(placeholder)).toBeDisabled();
   });
 
   it('supports icon on the right', () => {
-    render(<SearchBox iconPosition="right" placeholder={placeholder} />);
+    render(<Search iconPosition="right" placeholder={placeholder} />);
     // Should still render the search icon
     expect(screen.getByLabelText(/search/i)).toBeInTheDocument();
   });
@@ -60,14 +60,14 @@ describe('SearchBox', () => {
   it('calls onChange when typing', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
-    render(<SearchBox onChange={onChange} placeholder={placeholder} />);
+    render(<Search onChange={onChange} placeholder={placeholder} />);
     const input = screen.getByPlaceholderText(placeholder);
     await user.type(input, 'abc');
     expect(onChange).toHaveBeenCalled();
   });
 
   it('applies custom className', () => {
-    render(<SearchBox className="custom-class" placeholder={placeholder} />);
+    render(<Search className="custom-class" placeholder={placeholder} />);
     const inputWrapper = screen.getByPlaceholderText(placeholder).parentElement;
     expect(inputWrapper).toHaveClass('custom-class');
   });
