@@ -109,12 +109,7 @@ export const UserPreview = forwardRef<HTMLDivElement, UserPreviewProps>(
         {...props}
       >
         {avatarWithStatus}
-        <div
-          className={clsx(
-            'flex',
-            userPreviewSizeClasses.innerGap[layout],
-          )}
-        >
+        <div className={clsx('flex', userPreviewSizeClasses.innerGap[layout])}>
           {usernameElement}
           {statusElement}
         </div>
