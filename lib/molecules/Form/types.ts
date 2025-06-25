@@ -118,12 +118,16 @@ export interface FormContextValue {
   getFieldValue: (name: string) => unknown;
 
   // Validation
-  validateField: (name: string, value: unknown) => Promise<void>;
-  validateForm: () => Promise<boolean>;
+  validateField: (name: string, value: unknown) => Promise<string | undefined>;
+  validateForm: () => Promise<FormErrors>;
 
   // Form operations
   submit: () => void;
   reset: () => void;
+
+  // Event handlers
+  handleFieldBlur: (name: string, value: unknown) => void;
+  clearErrors: () => void;
 
   // Configuration
   validateOnChange: boolean;
