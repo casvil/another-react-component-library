@@ -1,0 +1,222 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Button } from './atoms/Button/Button';
+import { Input } from './atoms/Input/Input';
+import { Badge } from './atoms/Badge/Badge';
+import { FormInput } from './molecules/Form/FormInput';
+import { Form } from './molecules/Form/Form';
+import { Select } from './molecules/Select/Select';
+import { Switch } from './atoms/Switch/Switch';
+import { Clock } from './molecules/Clock/Clock';
+
+<Meta title="Introduction" />
+
+# Another React Component Library
+
+A customizable React 19 component library built with Vite, Tailwind CSS v4 and TypeScript.
+
+## 🚀 Getting Started
+
+Install the component library in your React project:
+
+```bash
+npm install another-react-component-library
+```
+
+### Basic Usage
+
+```tsx
+import {
+  Form,
+  FormInput,
+  Select,
+  Switch,
+  Clock,
+} from 'another-react-component-library';
+
+const fruitOptions = [
+  { value: 'apple', label: '🍎 Apple' },
+  { value: 'banana', label: '🍌 Banana' },
+  { value: 'orange', label: '🍊 Orange' },
+  { value: 'grape', label: '🍇 Grape' },
+];
+
+function App() {
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Clock format="HH:mm:ss" bordered />
+      </div>
+      <div>
+        <Form onSubmit={(data) => alert(JSON.stringify(data, null, 2))}>
+          <FormInput
+            name="username"
+            label="Username"
+            placeholder="Enter your username"
+            required
+          />
+          <Select
+            label="Favorite Fruit"
+            options={fruitOptions}
+            defaultValue="apple"
+          />
+          <Switch
+            label="Enable notifications"
+            defaultChecked={true}
+            wrapperClassName="space-x-6"
+          />
+        </Form>
+      </div>
+    </div>
+  );
+}
+```
+
+**Live Example:**
+
+<div
+  style={{
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+    padding: '16px',
+    border: '1px solid #e5e7eb',
+    borderRadius: '8px',
+    backgroundColor: '#f9fafb',
+  }}
+>
+  <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <Clock format="HH:mm:ss" bordered />
+  </div>
+  <div>
+    <Form onSubmit={(data) => alert(JSON.stringify(data, null, 2))}>
+      <FormInput
+        name="username"
+        label="Username"
+        placeholder="Enter your username"
+        required
+      />
+      <Select
+        label="Favorite Fruit"
+        options={[
+          { value: 'apple', label: '🍎 Apple' },
+          { value: 'banana', label: '🍌 Banana' },
+          { value: 'orange', label: '🍊 Orange' },
+          { value: 'grape', label: '🍇 Grape' },
+        ]}
+        defaultValue="apple"
+      />
+      <Switch
+        label="Enable notifications"
+        defaultChecked={true}
+        wrapperClassName="space-x-6"
+      />
+    </Form>
+  </div>
+</div>
+
+## 🧩 Component Architecture
+
+This library follows **Atomic Design** principles, organizing components into atoms and molecules:
+
+### ⚛️ Atoms
+
+Basic building blocks - fundamental UI elements.
+
+- **Avatar** - User profile images
+- **Badge** - Status indicators and labels
+- **Button** - Interactive buttons
+- **Checkbox** - Selection controls
+- **Divider** - Visual separators
+- **ErrorMessage** - Error displays
+- **HelperText** - Contextual information
+- **Icon** - Lucide icon wrapper
+- **IconButton** - Icon-only buttons
+- **Image** - Image display
+- **Input** - Text inputs
+- **Label** - Form labels
+- **Link** - Navigation links
+- **ProgressBar** - Progress indicators
+- **Radio** - Single selection controls
+- **Spinner** - Loading indicators
+- **StatusIndicator** - Status displays
+- **Switch** - Toggle controls
+- **TextArea** - Multi-line text inputs
+- **TimeDisplay** - Time formatting
+- **Tooltip** - Information overlays
+- **Username** - Username displays
+
+### 🧬 Molecules
+
+Component combinations - groups of atoms working together.
+
+- **BadgeAvatar** - Avatar with badge overlay
+- **CheckboxGroup** - Multiple checkbox management
+- **Clock** - Real-time clock display
+- **Form** - Form management with validation
+- **FormField** - Input with label and validation
+- **FormInput** - Form-connected input
+- **InputField** - Enhanced input with states
+- **RadioGroup** - Multiple radio management
+- **Search** - Search input
+- **Select** - Dropdown selection
+- **UserPreview** - User info display
+
+## 🎨 Component Gallery
+
+### Atoms
+
+- [Avatar](?path=/story/atoms-avatar--image) - User profile images
+- [Badge](?path=/story/atoms-badge--default) - Status indicators and labels
+- [Button](?path=/story/atoms-button--primary) - Interactive buttons with variants
+- [Checkbox](?path=/story/atoms-checkbox--default) - Selection controls
+- [Divider](?path=/story/atoms-divider--horizontal) - Visual separators
+- [ErrorMessage](?path=/story/atoms-errormessage--default) - Error displays
+- [HelperText](?path=/story/atoms-helpertext--default) - Contextual information
+- [Icon](?path=/story/atoms-icon--medium) - Lucide icon wrapper
+- [IconButton](?path=/story/atoms-iconbutton--primary) - Icon-only buttons
+- [Image](?path=/story/atoms-image--default) - Image display
+- [Input](?path=/story/atoms-input--default) - Text inputs
+- [Label](?path=/story/atoms-label--default) - Form labels
+- [Link](?path=/story/atoms-link--primary) - Navigation links
+- [ProgressBar](?path=/story/atoms-progressbar--default) - Progress indicators
+- [Radio](?path=/story/atoms-radio--default) - Single selection controls
+- [Spinner](?path=/story/atoms-spinner--default) - Loading indicators
+- [StatusIndicator](?path=/story/atoms-statusindicator--default) - Status displays
+- [Switch](?path=/story/atoms-switch--default) - Toggle controls
+- [TextArea](?path=/story/atoms-textarea--default) - Multi-line text inputs
+- [TimeDisplay](?path=/story/atoms-timedisplay--default) - Time formatting
+- [Tooltip](?path=/story/atoms-tooltip--default) - Information overlays
+- [Username](?path=/story/atoms-username--default) - Username displays
+
+### Molecules
+
+- [BadgeAvatar](?path=/story/molecules-badgeavatar--default) - Avatar with badge overlay
+- [CheckboxGroup](?path=/story/molecules-checkboxgroup--default) - Multiple checkbox management
+- [Clock](?path=/story/molecules-clock--default) - Real-time clock display
+- [Form](?path=/story/molecules-form--basicform) - Form management with validation
+- [FormField](?path=/story/molecules-formfield--default) - Input with label and validation
+- [InputField](?path=/story/molecules-inputfield--default) - Enhanced input with states
+- [RadioGroup](?path=/story/molecules-radiogroup--default) - Multiple radio management
+- [Search](?path=/story/molecules-search--default) - Search input
+- [Select](?path=/story/molecules-select--default) - Dropdown selection
+- [UserPreview](?path=/story/molecules-userpreview--default) - User info display
+
+## 📖 Documentation
+
+Each component includes:
+
+- **Interactive Storybook examples** - Live demonstrations with multiple variants
+- **Props API documentation** - Auto-generated from TypeScript interfaces
+- **Interactive controls** - Test different prop combinations
+- **Multiple use cases** - Primary, secondary, disabled states, and size variants
+
+## 🔗 Resources
+
+- **GitHub**: [casvil/another-react-component-library](https://github.com/casvil/another-react-component-library)
+- **Homepage**: [casvil.github.io/another-react-component-library](https://casvil.github.io/another-react-component-library)
+- **NPM**: [another-react-component-library](https://www.npmjs.com/package/another-react-component-library)
+
+---
+
+**Version:** v0.11.0 | **Author:** David Casanellas | **License:** MIT  
+**React:** 18+ or 19+ | **Dependencies:** Tailwind CSS v4, Lucide React, clsx
