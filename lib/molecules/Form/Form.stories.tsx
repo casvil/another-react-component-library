@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Mail, Lock, User, Phone, MapPin, Bell } from 'lucide-react';
 
@@ -8,6 +8,9 @@ import { Button } from '../../atoms/Button/Button';
 import { Badge } from '../../atoms/Badge/Badge';
 import { Divider } from '../../atoms/Divider/Divider';
 import { UserPreview } from '../UserPreview/UserPreview';
+import { TextArea } from '../../atoms/TextArea/TextArea';
+import { Switch } from '../../atoms/Switch/Switch';
+import { FormField } from '../FormField/FormField';
 import type { FormData, FormHelpers, FormErrors } from './types';
 import { Select } from '../Select/Select';
 import { RadioGroup } from '../RadioGroup/RadioGroup';
@@ -440,26 +443,13 @@ export const CustomSubmitButton: Story = {
   },
 };
 
-// Demo: Form integrating with ALL library components (demonstrates it's a molecule)
+// Demo: Form integrating with library components
 export const ComponentShowcase: Story = {
   args: {
     onSubmit: () => {},
   },
   render: () => {
-    const handleSubmit = async (data: FormData, helpers: FormHelpers) => {
-      // 🎯 Multiple ways to log form data for debugging:
-
-      // 1. Browser console (F12 -> Console tab)
-      console.log('📋 Form submitted with data:', data);
-      console.log('🛠️ Form helpers available:', helpers);
-
-      // 2. Console table for better readability
-      console.table(data);
-
-      // 3. JSON string for copying
-      console.log('📄 JSON format:', JSON.stringify(data, null, 2));
-
-      // 4. Alert for immediate visibility (can be removed)
+    const handleSubmit = async (data: FormData) => {
       alert(
         `Form submitted! Check console for detailed logs.\n\nData: ${JSON.stringify(data, null, 2)}`,
       );
@@ -507,7 +497,7 @@ export const ComponentShowcase: Story = {
             This showcases Form molecule orchestrating atoms and molecules from
             our library
           </p>
-          <Badge variant="secondary" className="mt-2">
+          <Badge variant="warning" className="mt-2">
             Molecule Component
           </Badge>
         </div>
@@ -716,7 +706,7 @@ export const WithUserPreview: Story = {
             />
             <div className="mt-4 space-y-2">
               <div className="flex items-center gap-2">
-                <Badge variant="primary" size="sm">
+                <Badge variant="info" size="sm">
                   Name
                 </Badge>
                 <span className="text-sm">
@@ -725,7 +715,7 @@ export const WithUserPreview: Story = {
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Badge variant="secondary" size="sm">
+                <Badge variant="warning" size="sm">
                   Email
                 </Badge>
                 <span className="text-sm">
