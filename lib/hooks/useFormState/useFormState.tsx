@@ -3,15 +3,35 @@ import type {
   FormData,
   FormErrors,
   FieldConfig,
-  FormProps,
   FormHelpers,
+  FormSubmitHandler,
+  FormValidator,
+  FieldChangeHandler,
+  FieldBlurHandler,
+  FormResetHandler,
 } from '../../molecules/Form/types';
 import { getNestedValue, setNestedValue } from '../../molecules/Form/utils';
+
+// Interface for useFormState configuration
+export interface UseFormStateProps {
+  onSubmit: FormSubmitHandler;
+  onValidate?: FormValidator;
+  onFieldChange?: FieldChangeHandler;
+  onFieldBlur?: FieldBlurHandler;
+  onReset?: FormResetHandler;
+  initialValues?: FormData;
+  isSubmitting?: boolean;
+  disabled?: boolean;
+  resetOnSubmit?: boolean;
+  validateOnChange?: boolean;
+  validateOnBlur?: boolean;
+  validateOnSubmit?: boolean;
+}
 
 /**
  * Form state management hook
  */
-export function useFormState(props: FormProps) {
+export function useFormState(props: UseFormStateProps) {
   const {
     onSubmit,
     onValidate,
