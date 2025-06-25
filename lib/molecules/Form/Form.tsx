@@ -3,7 +3,10 @@ import clsx from 'clsx';
 
 import { Button } from '../../atoms/Button/Button';
 import { FormProvider } from './FormContext';
-import { useFormState } from '../../hooks/useFormState/useFormState';
+import {
+  useFormState,
+  type UseFormStateProps,
+} from '../../hooks/useFormState/useFormState';
 import type { FormProps } from './types';
 
 // Layout sizing classes - following our centralized pattern
@@ -67,22 +70,32 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
     ref,
   ) => {
     // Initialize form state with all Form-specific props
-    const formState = useFormState({
+    const formStateConfig: UseFormStateProps = {
       onSubmit,
-      disabled,
       onValidate,
       validateOnChange,
       validateOnBlur,
       validateOnSubmit,
-      isSubmitting: externalIsSubmitting,
       resetOnSubmit,
       initialValues,
       onFieldChange,
       onFieldBlur,
       onReset,
-    });
+      isSubmitting: externalIsSubmitting,
+      disabled,
+    };
+
+    const formState = useFormState(formStateConfig);
 
     const { submit, isSubmitting, errors } = formState;
+
+    // Create context value with all required properties
+    const contextValue = {
+      ...formState,
+      validateOnChange: validateOnChange ?? false,
+      validateOnBlur: validateOnBlur ?? true,
+      disabled: disabled || isSubmitting,
+    };
 
     // Handle form submission
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -132,7 +145,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
     );
 
     return (
-      <FormProvider value={formState}>
+      <FormProvider value={contextValue}>
         <form
           ref={ref}
           onSubmit={handleSubmit}
