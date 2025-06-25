@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Mail, Lock, User, Phone, MapPin, Bell } from 'lucide-react';
 
+import type { FormData, FormHelpers, FormErrors } from './types';
 import { Form } from './Form';
 import { FormInput } from './FormInput';
 import { Button } from '../../atoms/Button/Button';
@@ -11,7 +12,6 @@ import { UserPreview } from '../UserPreview/UserPreview';
 import { TextArea } from '../../atoms/TextArea/TextArea';
 import { Switch } from '../../atoms/Switch/Switch';
 import { FormField } from '../FormField/FormField';
-import type { FormData, FormHelpers, FormErrors } from './types';
 import { Select } from '../Select/Select';
 import { RadioGroup } from '../RadioGroup/RadioGroup';
 import { CheckboxGroup } from '../CheckboxGroup/CheckboxGroup';
