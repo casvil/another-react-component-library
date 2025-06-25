@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import clsx from 'clsx';
-import { HelpCircle } from 'lucide-react';
+import HelpCircle from 'lucide-react/icons/help-circle';
 
 import { Label } from '../../atoms/Label/Label';
 import { Input } from '../../atoms/Input/Input';
