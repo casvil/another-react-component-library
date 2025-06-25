@@ -5,11 +5,11 @@ import type { FieldConfig } from './types';
 // Hook to access form context
 export const useFormContext = () => {
   const context = useContext(FormContext);
-  
+
   if (!context) {
     throw new Error('useFormContext must be used within a Form component');
   }
-  
+
   return context;
 };
 
@@ -97,4 +97,4 @@ export const useField = (name: string, config?: Partial<FieldConfig>) => {
       'aria-invalid': hasError,
     },
   };
-}; 
+};
