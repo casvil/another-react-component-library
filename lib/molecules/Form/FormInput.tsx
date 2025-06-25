@@ -34,7 +34,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           ref={ref}
           {...props}
           {...fieldProps}
-          value={value || ''}
+          value={String(value || '')}
           className={clsx(
             hasError &&
               'border-red-300 focus:ring-red-500 focus:border-red-300',
