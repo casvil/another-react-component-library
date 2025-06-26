@@ -28,6 +28,8 @@ export { Username } from './atoms/Username/Username';
 export { BadgeAvatar } from './molecules/BadgeAvatar/BadgeAvatar';
 export { CheckboxGroup } from './molecules/CheckboxGroup/CheckboxGroup';
 export { Clock } from './molecules/Clock/Clock';
+export { CreditCardForm } from './molecules/CreditCardForm/CreditCardForm';
+export { CreditCardPreview } from './molecules/CreditCardPreview/CreditCardPreview';
 export { Form } from './molecules/Form/Form';
 export { FormField } from './molecules/FormField/FormField';
 export { FormInput } from './molecules/Form/FormInput';
@@ -49,6 +51,13 @@ export type {
   FormHelpers,
   FormProps,
 } from './molecules/Form/types';
+export type { CreditCardFormData } from './molecules/CreditCardForm/CreditCardForm';
+export type { CardType, CardPattern } from './utils/cardPatterns';
+export {
+  CARD_PATTERNS,
+  detectCardType,
+  getCardFormatRules,
+} from './utils/cardPatterns';
 export type { Size } from './@types/size';
 
 // Size utilities
