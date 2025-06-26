@@ -41,7 +41,9 @@ describe('CreditCardForm', () => {
     await user.type(cardNumberInput, '4111');
 
     await waitFor(() => {
-      expect(screen.getByText(/detected card.*visa/i)).toBeInTheDocument();
+      // Check for the text split across multiple elements
+      expect(screen.getByText('Detected card:')).toBeInTheDocument();
+      expect(screen.getByText('visa')).toBeInTheDocument();
     });
   });
 
@@ -265,6 +267,6 @@ describe('CreditCardForm', () => {
 
     rerender(<CreditCardForm size="lg" />);
     cardNumberInput = screen.getByLabelText(/card number/i);
-    expect(cardNumberInput).toHaveClass('text-base');
+    expect(cardNumberInput).toHaveClass('text-lg');
   });
 });

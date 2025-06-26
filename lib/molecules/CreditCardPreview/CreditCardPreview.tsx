@@ -6,8 +6,38 @@ import {
   getCardFormatRules,
 } from '../../utils/cardPatterns';
 import type { Size } from '../../@types/size';
+import { creditCardPreviewSizeClasses } from '../../@types/size';
 
 type FieldName = 'cardNumber' | 'cardholderName' | 'expiryDate' | 'cvc';
+
+// Static configurations moved outside component
+const textSizeClasses = {
+  sm: {
+    brand: 'text-base',
+    number: 'text-base',
+    label: 'text-xs',
+    value: 'text-xs',
+  },
+  md: {
+    brand: 'text-lg',
+    number: 'text-lg',
+    label: 'text-xs',
+    value: 'text-sm',
+  },
+  lg: {
+    brand: 'text-xl',
+    number: 'text-xl',
+    label: 'text-sm',
+    value: 'text-base',
+  },
+};
+
+// Size-specific spacing for bottom row
+const bottomRowSpacing = {
+  sm: 'mt-auto',
+  md: 'mt-auto',
+  lg: 'mt-auto',
+};
 
 export interface CreditCardPreviewProps {
   cardNumber?: string;
@@ -34,10 +64,10 @@ export interface CreditCardPreviewProps {
  * Users can click on fields to edit them directly on the card.
  */
 export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
-  cardNumber = '1234 1234 1234 1234',
-  cardholderName = 'VICTOR SAULER PORTAL',
-  expiryDate = '10/25',
-  cvc = '123',
+  cardNumber = '',
+  cardholderName = '',
+  expiryDate = '',
+  cvc = '',
   cardType: propCardType,
   onChange,
   editable = true,
@@ -47,13 +77,15 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
 }) => {
   const [editingField, setEditingField] = useState<FieldName | null>(null);
   const [tempValues, setTempValues] = useState({
-    cardNumber,
-    cardholderName,
-    expiryDate,
-    cvc,
+    cardNumber: cardNumber,
+    cardholderName: cardholderName,
+    expiryDate: expiryDate,
+    cvc: cvc,
   });
 
-  const inputRefs = useRef<Record<FieldName, React.RefObject<HTMLInputElement>>>({
+  const inputRefs = useRef<
+    Record<FieldName, React.RefObject<HTMLInputElement>>
+  >({
     cardNumber: useRef<HTMLInputElement>(null),
     cardholderName: useRef<HTMLInputElement>(null),
     expiryDate: useRef<HTMLInputElement>(null),
@@ -128,7 +160,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
           formattedValue = formatCardNumber(value);
           break;
         case 'cardholderName':
-          formattedValue = value.trim().toUpperCase();
+          formattedValue = value.toUpperCase();
           break;
         case 'expiryDate':
           formattedValue = formatExpiryDate(value);
@@ -155,8 +187,13 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
             : tempValues.cardNumber.trim()
               ? detectCardType(tempValues.cardNumber)
               : null;
+        
+        // Ensure we pass optional properties to match the onChange interface
         onChange({
-          ...tempValues,
+          cardNumber: tempValues.cardNumber,
+          cardholderName: tempValues.cardholderName,
+          expiryDate: tempValues.expiryDate,
+          cvc: tempValues.cvc,
           cardType: newCardType,
         });
       }
@@ -173,21 +210,12 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
       if (e.key === 'Escape') {
         setEditingField(null);
         // Reset temp values to original
-        const resetValues = {
-          cardNumber,
-          cardholderName,
-          expiryDate,
-          cvc,
-        };
-        setTempValues(resetValues);
-
-        // Call onChange to sync with parent
-        if (onChange) {
-          onChange({
-            ...resetValues,
-            cardType: propCardType || detectCardType(cardNumber),
-          });
-        }
+        setTempValues({
+          cardNumber: cardNumber,
+          cardholderName: cardholderName,
+          expiryDate: expiryDate,
+          cvc: cvc,
+        });
       }
     },
     [
@@ -196,8 +224,6 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
       cardholderName,
       expiryDate,
       cvc,
-      onChange,
-      propCardType,
     ],
   );
 
@@ -213,39 +239,12 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
   // Sync with prop changes
   useEffect(() => {
     setTempValues({
-      cardNumber,
-      cardholderName,
-      expiryDate,
-      cvc,
+      cardNumber: cardNumber,
+      cardholderName: cardholderName,
+      expiryDate: expiryDate,
+      cvc: cvc,
     });
   }, [cardNumber, cardholderName, expiryDate, cvc]);
-
-  const sizeClasses = {
-    sm: 'w-80 h-48 p-4',
-    md: 'w-96 h-56 p-6',
-    lg: 'w-[28rem] h-64 p-8',
-  };
-
-  const textSizeClasses = {
-    sm: {
-      brand: 'text-base',
-      number: 'text-base',
-      label: 'text-xs',
-      value: 'text-xs',
-    },
-    md: {
-      brand: 'text-lg',
-      number: 'text-lg',
-      label: 'text-xs',
-      value: 'text-sm',
-    },
-    lg: {
-      brand: 'text-xl',
-      number: 'text-xl',
-      label: 'text-sm',
-      value: 'text-base',
-    },
-  };
 
   const currentTextSizes = textSizeClasses[size];
 
@@ -256,6 +255,19 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     return detectedCardType?.toUpperCase() || 'CARD';
   };
 
+  const getCardTypeClasses = () => {
+    switch (detectedCardType) {
+      case 'visa':
+        return 'border-blue-200';
+      case 'mastercard':
+        return 'border-red-200';
+      case 'amex':
+        return 'border-green-200';
+      default:
+        return 'border-gray-200';
+    }
+  };
+
   const renderEditableField = (
     field: FieldName,
     displayValue: string,
@@ -264,6 +276,15 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     maxLength?: number,
   ) => {
     const isEditing = editingField === field;
+    
+    // Use placeholder if no actual value is provided via props
+    const shouldShowPlaceholder = 
+      (field === 'cardNumber' && !cardNumber) ||
+      (field === 'cardholderName' && !cardholderName) ||
+      (field === 'expiryDate' && !expiryDate) ||
+      (field === 'cvc' && !cvc);
+    
+    const valueToShow = shouldShowPlaceholder ? placeholder : displayValue;
 
     const getFieldLabel = (field: FieldName): string => {
       switch (field) {
@@ -299,32 +320,37 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
       );
     }
 
+    if (!editable) {
+      return (
+        <span className="font-mono tracking-wider">
+          {valueToShow}
+        </span>
+      );
+    }
+
     return (
       <button
         type="button"
         onClick={() => handleFieldClick(field)}
         className={clsx(
           'font-mono tracking-wider text-left',
-          editable &&
-            'cursor-pointer hover:bg-white/10 rounded px-1 -mx-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20',
-          !editable && 'cursor-default',
+          'cursor-pointer hover:bg-white/10 rounded px-1 -mx-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20',
         )}
-        aria-label={
-          editable ? `Edit ${getFieldLabel(field)}` : getFieldLabel(field)
-        }
-        disabled={!editable}
-        tabIndex={editable ? 0 : -1}
+        aria-label={`Edit ${getFieldLabel(field)}`}
+        tabIndex={0}
       >
-        {displayValue || placeholder}
+        {valueToShow}
       </button>
     );
   };
 
   return (
     <div
+      role="article"
       className={clsx(
-        'bg-gradient-to-br from-slate-800 via-slate-700 to-teal-600 rounded-xl text-white relative overflow-hidden shadow-xl',
-        sizeClasses[size],
+        'bg-gradient-to-br from-slate-800 via-slate-700 to-teal-600 rounded-xl text-white relative overflow-hidden shadow-xl border-2',
+        creditCardPreviewSizeClasses[size],
+        getCardTypeClasses(),
         className,
       )}
     >
@@ -354,7 +380,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
         </div>
 
         {/* Bottom row */}
-        <div className="flex justify-between items-end mt-auto">
+        <div className={clsx('flex justify-between items-end', bottomRowSpacing[size])}>
           <div className="flex-1 min-w-0 pr-4">
             <div className={clsx('text-gray-300 mb-1', currentTextSizes.label)}>
               Card Holder
@@ -384,7 +410,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
             <div className="w-full h-px bg-gray-400 mt-1"></div>
           </div>
           {showCvc && (
-            <div className="text-right flex-shrink-0">
+            <div className="text-left flex-shrink-0">
               <div
                 className={clsx('text-gray-300 mb-1', currentTextSizes.label)}
               >
