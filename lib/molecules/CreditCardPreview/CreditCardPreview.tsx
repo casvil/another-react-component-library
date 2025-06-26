@@ -7,6 +7,8 @@ import {
 } from '../../utils/cardPatterns';
 import type { Size } from '../../@types/size';
 
+type FieldName = 'cardNumber' | 'cardholderName' | 'expiryDate' | 'cvc';
+
 export interface CreditCardPreviewProps {
   cardNumber?: string;
   cardholderName?: string;
@@ -33,7 +35,7 @@ export interface CreditCardPreviewProps {
  */
 export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
   cardNumber = '1234 1234 1234 1234',
-  cardholderName = 'DAVID CASANELLAS VILARRUBIAS',
+  cardholderName = 'VICTOR SAULER PORTAL',
   expiryDate = '10/25',
   cvc = '123',
   cardType: propCardType,
@@ -43,7 +45,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
   size = 'md',
   showCvc = true,
 }) => {
-  const [editingField, setEditingField] = useState<string | null>(null);
+  const [editingField, setEditingField] = useState<FieldName | null>(null);
   const [tempValues, setTempValues] = useState({
     cardNumber,
     cardholderName,
@@ -51,16 +53,16 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     cvc,
   });
 
-  const inputRefs = {
+  const inputRefs = useRef<Record<FieldName, React.RefObject<HTMLInputElement>>>({
     cardNumber: useRef<HTMLInputElement>(null),
     cardholderName: useRef<HTMLInputElement>(null),
     expiryDate: useRef<HTMLInputElement>(null),
     cvc: useRef<HTMLInputElement>(null),
-  };
+  }).current;
 
-  // Detect card type from card number
-  const detectedCardType =
-    propCardType || detectCardType(tempValues.cardNumber);
+  // Detect card type from current card number (real-time)
+  const liveCardType = detectCardType(tempValues.cardNumber);
+  const detectedCardType = propCardType || liveCardType;
   const formatRules = getCardFormatRules(detectedCardType);
 
   // Format card number with spaces
@@ -83,11 +85,18 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     [formatRules.gaps],
   );
 
-  // Format expiry date as MM/YY
+  // Format expiry date as MM/YY with basic validation
   const formatExpiryDate = useCallback((input: string): string => {
     const cleanInput = input.replace(/\D/g, '').slice(0, 4);
     if (cleanInput.length >= 2) {
-      return `${cleanInput.slice(0, 2)}/${cleanInput.slice(2)}`;
+      const month = cleanInput.slice(0, 2);
+      const year = cleanInput.slice(2);
+
+      // Basic month validation (01-12)
+      const monthNum = parseInt(month, 10);
+      const validMonth = monthNum >= 1 && monthNum <= 12 ? month : '12';
+
+      return `${validMonth}/${year}`;
     }
     return cleanInput;
   }, []);
@@ -102,7 +111,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
 
   // Handle field click to start editing
   const handleFieldClick = useCallback(
-    (field: string) => {
+    (field: FieldName) => {
       if (!editable) return;
       setEditingField(field);
     },
@@ -111,7 +120,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
 
   // Handle input changes
   const handleInputChange = useCallback(
-    (field: string, value: string) => {
+    (field: FieldName, value: string) => {
       let formattedValue = value;
 
       switch (field) {
@@ -119,7 +128,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
           formattedValue = formatCardNumber(value);
           break;
         case 'cardholderName':
-          formattedValue = value.toUpperCase();
+          formattedValue = value.trim().toUpperCase();
           break;
         case 'expiryDate':
           formattedValue = formatExpiryDate(value);
@@ -136,50 +145,66 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
 
   // Handle input blur to save changes
   const handleInputBlur = useCallback(
-    (field: string) => {
+    (field: FieldName) => {
       setEditingField(null);
 
       if (onChange) {
         const newCardType =
-          field === 'cardNumber'
+          field === 'cardNumber' && tempValues.cardNumber.trim()
             ? detectCardType(tempValues.cardNumber)
-            : detectedCardType;
+            : tempValues.cardNumber.trim()
+              ? detectCardType(tempValues.cardNumber)
+              : null;
         onChange({
           ...tempValues,
           cardType: newCardType,
         });
       }
     },
-    [tempValues, onChange, detectedCardType],
+    [tempValues, onChange],
   );
 
   // Handle enter key to save
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent, field: string) => {
+    (e: React.KeyboardEvent, field: FieldName) => {
       if (e.key === 'Enter') {
         handleInputBlur(field);
       }
       if (e.key === 'Escape') {
         setEditingField(null);
         // Reset temp values to original
-        setTempValues({
+        const resetValues = {
           cardNumber,
           cardholderName,
           expiryDate,
           cvc,
-        });
+        };
+        setTempValues(resetValues);
+
+        // Call onChange to sync with parent
+        if (onChange) {
+          onChange({
+            ...resetValues,
+            cardType: propCardType || detectCardType(cardNumber),
+          });
+        }
       }
     },
-    [handleInputBlur, cardNumber, cardholderName, expiryDate, cvc],
+    [
+      handleInputBlur,
+      cardNumber,
+      cardholderName,
+      expiryDate,
+      cvc,
+      onChange,
+      propCardType,
+    ],
   );
 
   // Focus input when editing starts
   useEffect(() => {
-    if (
-      editingField &&
-      inputRefs[editingField as keyof typeof inputRefs]?.current
-    ) {
-      const input = inputRefs[editingField as keyof typeof inputRefs].current;
+    if (editingField && inputRefs[editingField]?.current) {
+      const input = inputRefs[editingField].current;
       input?.focus();
       input?.select();
     }
@@ -232,13 +257,28 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
   };
 
   const renderEditableField = (
-    field: keyof typeof tempValues,
+    field: FieldName,
     displayValue: string,
     placeholder: string,
     inputMode: 'text' | 'numeric' = 'text',
     maxLength?: number,
   ) => {
     const isEditing = editingField === field;
+
+    const getFieldLabel = (field: FieldName): string => {
+      switch (field) {
+        case 'cardNumber':
+          return 'Card number';
+        case 'cardholderName':
+          return 'Cardholder name';
+        case 'expiryDate':
+          return 'Expiry date';
+        case 'cvc':
+          return 'CVC security code';
+        default:
+          return 'Field';
+      }
+    };
 
     if (isEditing) {
       return (
@@ -251,6 +291,8 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
           placeholder={placeholder}
           inputMode={inputMode}
           maxLength={maxLength}
+          aria-label={`Edit ${getFieldLabel(field)}`}
+          role="textbox"
           className="bg-transparent border-none outline-none text-white font-mono tracking-wider w-full resize-none"
           style={{ fontSize: 'inherit', fontFamily: 'inherit' }}
         />
@@ -258,17 +300,23 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     }
 
     return (
-      <span
+      <button
+        type="button"
         onClick={() => handleFieldClick(field)}
         className={clsx(
-          'font-mono tracking-wider',
+          'font-mono tracking-wider text-left',
           editable &&
-            'cursor-pointer hover:bg-white/10 rounded px-1 -mx-1 transition-colors',
+            'cursor-pointer hover:bg-white/10 rounded px-1 -mx-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20',
+          !editable && 'cursor-default',
         )}
-        title={editable ? 'Click to edit' : undefined}
+        aria-label={
+          editable ? `Edit ${getFieldLabel(field)}` : getFieldLabel(field)
+        }
+        disabled={!editable}
+        tabIndex={editable ? 0 : -1}
       >
         {displayValue || placeholder}
-      </span>
+      </button>
     );
   };
 
@@ -297,7 +345,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
             {renderEditableField(
               'cardNumber',
               tempValues.cardNumber,
-              '1234 1234 1234 1234',
+              '•••• •••• •••• ••••',
               'numeric',
               formatRules.maxLength,
             )}
@@ -315,7 +363,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
               {renderEditableField(
                 'cardholderName',
                 tempValues.cardholderName,
-                'VICTOR SAULER',
+                'CARDHOLDER NAME',
               )}
             </div>
             <div className="w-2/3 h-px bg-gray-400 mt-1"></div>
@@ -328,7 +376,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
               {renderEditableField(
                 'expiryDate',
                 tempValues.expiryDate,
-                '10/25',
+                'MM/YY',
                 'numeric',
                 5,
               )}
@@ -346,7 +394,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
                 {renderEditableField(
                   'cvc',
                   tempValues.cvc,
-                  formatRules.cvcLength === 4 ? '1234' : '123',
+                  formatRules.cvcLength === 4 ? '••••' : '•••',
                   'numeric',
                   formatRules.cvcLength,
                 )}
