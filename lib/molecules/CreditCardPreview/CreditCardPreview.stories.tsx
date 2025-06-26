@@ -105,7 +105,7 @@ export const InteractiveEditing: Story = {
       cvc?: string;
       cardType?: CardType | null;
     }) => {
-      setCardData(prev => ({
+      setCardData((prev) => ({
         ...prev,
         ...data,
       }));
@@ -294,7 +294,7 @@ export const WithFormIntegration: Story = {
       cvc?: string;
       cardType?: CardType | null;
     }) => {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         ...data,
       }));
