@@ -187,7 +187,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
             : tempValues.cardNumber.trim()
               ? detectCardType(tempValues.cardNumber)
               : null;
-        
+
         // Ensure we pass optional properties to match the onChange interface
         onChange({
           cardNumber: tempValues.cardNumber,
@@ -218,13 +218,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
         });
       }
     },
-    [
-      handleInputBlur,
-      cardNumber,
-      cardholderName,
-      expiryDate,
-      cvc,
-    ],
+    [handleInputBlur, cardNumber, cardholderName, expiryDate, cvc],
   );
 
   // Focus input when editing starts
@@ -276,14 +270,14 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     maxLength?: number,
   ) => {
     const isEditing = editingField === field;
-    
+
     // Use placeholder if no actual value is provided via props
-    const shouldShowPlaceholder = 
+    const shouldShowPlaceholder =
       (field === 'cardNumber' && !cardNumber) ||
       (field === 'cardholderName' && !cardholderName) ||
       (field === 'expiryDate' && !expiryDate) ||
       (field === 'cvc' && !cvc);
-    
+
     const valueToShow = shouldShowPlaceholder ? placeholder : displayValue;
 
     const getFieldLabel = (field: FieldName): string => {
@@ -321,11 +315,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     }
 
     if (!editable) {
-      return (
-        <span className="font-mono tracking-wider">
-          {valueToShow}
-        </span>
-      );
+      return <span className="font-mono tracking-wider">{valueToShow}</span>;
     }
 
     return (
@@ -380,7 +370,12 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
         </div>
 
         {/* Bottom row */}
-        <div className={clsx('flex justify-between items-end', bottomRowSpacing[size])}>
+        <div
+          className={clsx(
+            'flex justify-between items-end',
+            bottomRowSpacing[size],
+          )}
+        >
           <div className="flex-1 min-w-0 pr-4">
             <div className={clsx('text-gray-300 mb-1', currentTextSizes.label)}>
               Card Holder
