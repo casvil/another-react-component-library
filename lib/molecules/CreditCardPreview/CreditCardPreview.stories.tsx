@@ -1,33 +1,69 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
 
 import { CreditCardPreview } from './CreditCardPreview';
-import type { CardType } from '../../utils/cardPatterns';
 
 const meta = {
-  title: 'molecules/CreditCardPreview',
+  title: 'Molecules/CreditCardPreview',
   component: CreditCardPreview,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component:
-          'An editable credit card preview component. Click on any field to edit it directly on the card.',
+          'An editable credit card preview component that supports all major international card networks with gradient styling. Detects card types automatically and formats input accordingly.',
       },
     },
   },
   tags: ['autodocs'],
   argTypes: {
-    size: {
+    cardNumber: {
+      control: 'text',
+      description: 'The card number (formatted automatically)',
+    },
+    cardholderName: {
+      control: 'text',
+      description: 'The cardholder name (converts to uppercase)',
+    },
+    expiryDate: {
+      control: 'text',
+      description: 'Expiry date in MM/YY format',
+    },
+    cvc: {
+      control: 'text',
+      description: 'CVC security code (3 or 4 digits based on card type)',
+    },
+    cardType: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: [
+        'visa',
+        'mastercard',
+        'amex',
+        'discover',
+        'diners',
+        'jcb',
+        'unionpay',
+        'maestro',
+        'elo',
+        'mir',
+        'rupay',
+        null,
+      ],
+      description: 'Override auto-detected card type',
     },
     editable: {
       control: 'boolean',
+      description: 'Whether fields can be edited by clicking',
     },
     showCvc: {
       control: 'boolean',
+      description: 'Whether to show the CVC field',
     },
+    size: {
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
+      description: 'Card size',
+    },
+    onChange: { action: 'card-changed' },
   },
 } satisfies Meta<typeof CreditCardPreview>;
 
@@ -35,367 +71,286 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+// Sample card numbers for testing (from payment industry test sets)
+const testCardNumbers = {
+  visa: '4111 1111 1111 1111',
+  mastercard: '5555 5555 5555 4444',
+  amex: '3782 822463 10005',
+  discover: '6011 1111 1111 1117',
+  diners: '3056 930902 5904',
+  jcb: '3530 1113 3330 0000',
+  unionpay: '6200 0000 0000 0005',
+  maestro: '5018 4500 0000 0000',
+  elo: '4011 7812 3456 7890',
+  mir: '2200 4500 0000 0000',
+  rupay: '6521 4500 0000 0000',
+};
+
 export const Default: Story = {
-  args: {},
-};
-
-export const NonEditable: Story = {
   args: {
-    editable: false,
+    cardNumber: '',
+    cardholderName: '',
+    expiryDate: '',
+    cvc: '',
+    editable: true,
+    showCvc: true,
+    size: 'md',
   },
 };
 
-export const WithoutCvc: Story = {
+export const FilledExample: Story = {
   args: {
-    showCvc: false,
+    cardNumber: testCardNumbers.visa,
+    cardholderName: 'JOHN DOE',
+    expiryDate: '12/25',
+    cvc: '123',
+    editable: true,
+    showCvc: true,
+    size: 'md',
   },
 };
 
-export const Small: Story = {
-  args: {
-    size: 'sm',
+export const AllCardNetworks: Story = {
+  render: () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 p-6 max-w-7xl mx-auto">
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          VISA
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.visa}
+          cardholderName="JOHN SMITH"
+          expiryDate="12/25"
+          cvc="123"
+          editable={false}
+          size="md"
+        />
+      </div>
+
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          MASTERCARD
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.mastercard}
+          cardholderName="JANE DOE"
+          expiryDate="06/27"
+          cvc="456"
+          editable={false}
+          size="md"
+        />
+      </div>
+
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          AMERICAN EXPRESS
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.amex}
+          cardholderName="ALEX JOHNSON"
+          expiryDate="03/26"
+          cvc="1234"
+          editable={false}
+          size="md"
+        />
+      </div>
+
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          DISCOVER
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.discover}
+          cardholderName="SARAH WILSON"
+          expiryDate="09/28"
+          cvc="789"
+          editable={false}
+          size="md"
+        />
+      </div>
+
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          DINERS CLUB
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.diners}
+          cardholderName="MIKE BROWN"
+          expiryDate="11/24"
+          cvc="321"
+          editable={false}
+          size="md"
+        />
+      </div>
+
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          JCB
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.jcb}
+          cardholderName="YUKI TANAKA"
+          expiryDate="04/29"
+          cvc="567"
+          editable={false}
+          size="md"
+        />
+      </div>
+
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          UNIONPAY
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.unionpay}
+          cardholderName="LI WEI"
+          expiryDate="07/26"
+          cvc="890"
+          editable={false}
+          size="md"
+        />
+      </div>
+
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          MAESTRO
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.maestro}
+          cardholderName="ELENA ROSSI"
+          expiryDate="02/25"
+          cvc="234"
+          editable={false}
+          size="md"
+        />
+      </div>
+
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          ELO
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.elo}
+          cardholderName="CARLOS SILVA"
+          expiryDate="08/27"
+          cvc="345"
+          editable={false}
+          size="md"
+        />
+      </div>
+
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          MIR
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.mir}
+          cardholderName="IVAN PETROV"
+          expiryDate="10/26"
+          cvc="678"
+          editable={false}
+          size="md"
+        />
+      </div>
+
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          RUPAY
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.rupay}
+          cardholderName="PRIYA SHARMA"
+          expiryDate="05/28"
+          cvc="901"
+          editable={false}
+          size="md"
+        />
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story:
+          'All supported card networks with their unique gradient styling and formatting rules.',
+      },
+    },
   },
 };
 
-export const Large: Story = {
-  args: {
-    size: 'lg',
-  },
-};
-
-export const VisaCard: Story = {
+export const EditableCard: Story = {
   args: {
     cardNumber: '4111 1111 1111 1111',
     cardholderName: 'JOHN DOE',
     expiryDate: '12/25',
     cvc: '123',
+    editable: true,
+    showCvc: true,
+    size: 'md',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Click on any field to edit it. The card type and styling will update automatically as you type.',
+      },
+    },
   },
 };
 
-export const MastercardCard: Story = {
-  args: {
-    cardNumber: '5555 5555 5555 4444',
-    cardholderName: 'ALEX JOHNSON',
-    expiryDate: '03/27',
-    cvc: '567',
-  },
-};
-
-// Interactive editable example
-export const InteractiveEditing: Story = {
-  render: () => {
-    const [cardData, setCardData] = useState<{
-      cardNumber: string;
-      cardholderName: string;
-      expiryDate: string;
-      cvc: string;
-      cardType: CardType | null;
-    }>({
-      cardNumber: '4111 1111 1111 1111',
-      cardholderName: 'JOHN DOE',
-      expiryDate: '12/25',
-      cvc: '123',
-      cardType: null,
-    });
-
-    const handleCardChange = (data: {
-      cardNumber?: string;
-      cardholderName?: string;
-      expiryDate?: string;
-      cvc?: string;
-      cardType?: CardType | null;
-    }) => {
-      setCardData((prev) => ({
-        ...prev,
-        ...data,
-      }));
-    };
-
-    return (
-      <div className="space-y-6">
-        <div className="text-center">
-          <h3 className="text-lg font-semibold mb-2">
-            Interactive Credit Card
-          </h3>
-          <p className="text-sm text-gray-600 mb-4">
-            Click on any field to edit it directly on the card
-          </p>
-        </div>
-
-        <CreditCardPreview {...cardData} onChange={handleCardChange} />
-
-        <div className="bg-gray-50 p-4 rounded-lg max-w-md mx-auto">
-          <h4 className="font-medium text-gray-900 mb-2">Current Data:</h4>
-          <pre className="text-xs bg-white p-2 rounded border overflow-x-auto">
-            {JSON.stringify(cardData, null, 2)}
-          </pre>
-        </div>
-
-        <div className="text-xs text-gray-500 bg-blue-50 p-3 rounded max-w-md mx-auto">
-          <div>
-            <strong>Editing Tips:</strong>
-          </div>
-          <ul className="list-disc list-inside space-y-1 mt-1">
-            <li>Click on any field to edit it</li>
-            <li>Press Enter to save or Escape to cancel</li>
-            <li>Card type is auto-detected from number</li>
-            <li>CVC length adapts to card type (4 for Amex, 3 for others)</li>
-          </ul>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Comparison of different card types
-export const CardTypeShowcase: Story = {
+export const DifferentSizes: Story = {
   render: () => (
-    <div className="space-y-6">
-      <div className="text-center mb-8">
-        <h3 className="text-lg font-semibold mb-2">Different Card Types</h3>
-        <p className="text-sm text-gray-600">
-          Each card type has different formatting and styling
-        </p>
+    <div className="flex flex-col gap-8 items-center p-6 max-w-2xl mx-auto">
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          Small (sm)
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.visa}
+          cardholderName="SMALL CARD"
+          expiryDate="12/25"
+          cvc="123"
+          editable={false}
+          size="sm"
+        />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <h4 className="text-sm font-medium text-gray-700 mb-2 text-center">
-            Visa
-          </h4>
-          <CreditCardPreview
-            cardNumber="4111 1111 1111 1111"
-            cardholderName="JOHN DOE"
-            expiryDate="12/25"
-            cvc="123"
-            size="sm"
-          />
-        </div>
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          Medium (md) - Default
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.mastercard}
+          cardholderName="MEDIUM CARD"
+          expiryDate="06/27"
+          cvc="456"
+          editable={false}
+          size="md"
+        />
+      </div>
 
-        <div>
-          <h4 className="text-sm font-medium text-gray-700 mb-2 text-center">
-            Mastercard
-          </h4>
-          <CreditCardPreview
-            cardNumber="5555 5555 5555 4444"
-            cardholderName="JANE SMITH"
-            expiryDate="09/26"
-            cvc="567"
-            size="sm"
-          />
-        </div>
-
-        <div>
-          <h4 className="text-sm font-medium text-gray-700 mb-2 text-center">
-            American Express
-          </h4>
-          <CreditCardPreview
-            cardNumber="3782 822463 10005"
-            cardholderName="ALEX JOHNSON"
-            expiryDate="03/27"
-            cvc="1234"
-            size="sm"
-          />
-        </div>
-
-        <div>
-          <h4 className="text-sm font-medium text-gray-700 mb-2 text-center">
-            Discover
-          </h4>
-          <CreditCardPreview
-            cardNumber="6011 1111 1111 1117"
-            cardholderName="SARAH WILSON"
-            expiryDate="06/28"
-            cvc="890"
-            size="sm"
-          />
-        </div>
+      <div className="flex flex-col items-center space-y-3">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+          Large (lg)
+        </h3>
+        <CreditCardPreview
+          cardNumber={testCardNumbers.amex}
+          cardholderName="LARGE CARD"
+          expiryDate="03/26"
+          cvc="1234"
+          editable={false}
+          size="lg"
+        />
       </div>
     </div>
   ),
-};
-
-// Size comparison
-export const SizeComparison: Story = {
-  render: () => (
-    <div className="space-y-8">
-      <div className="text-center mb-8">
-        <h3 className="text-lg font-semibold mb-2">Size Variants</h3>
-        <p className="text-sm text-gray-600">
-          Available in small, medium, and large sizes
-        </p>
-      </div>
-
-      <div className="space-y-6 flex flex-row gap-5">
-        <div>
-          <h4 className="text-sm font-medium text-gray-700 mb-2 text-center">
-            Small
-          </h4>
-          <CreditCardPreview
-            size="sm"
-            cardNumber="4111 1111 1111 1111"
-            cardholderName="JOHN DOE"
-            expiryDate="12/25"
-            cvc="123"
-          />
-        </div>
-
-        <div>
-          <h4 className="text-sm font-medium text-gray-700 mb-2 text-center">
-            Medium (Default)
-          </h4>
-          <CreditCardPreview
-            size="md"
-            cardNumber="4111 1111 1111 1111"
-            cardholderName="JOHN DOE"
-            expiryDate="12/25"
-            cvc="123"
-          />
-        </div>
-
-        <div>
-          <h4 className="text-sm font-medium text-gray-700 mb-2 text-center">
-            Large
-          </h4>
-          <CreditCardPreview
-            size="lg"
-            cardNumber="4111 1111 1111 1111"
-            cardholderName="JOHN DOE"
-            expiryDate="12/25"
-            cvc="123"
-          />
-        </div>
-      </div>
-    </div>
-  ),
-};
-
-// Integration with CreditCardForm
-export const WithFormIntegration: Story = {
-  render: () => {
-    const [formData, setFormData] = useState<{
-      cardNumber: string;
-      cardholderName: string;
-      expiryDate: string;
-      cvc: string;
-      cardType: CardType | null;
-    }>({
-      cardNumber: '4111 1111 1111 1111',
-      cardholderName: 'JOHN DOE',
-      expiryDate: '12/25',
-      cvc: '123',
-      cardType: null,
-    });
-
-    const handleFormChange = (data: {
-      cardNumber?: string;
-      cardholderName?: string;
-      expiryDate?: string;
-      cvc?: string;
-      cardType?: CardType | null;
-    }) => {
-      setFormData((prev) => ({
-        ...prev,
-        ...data,
-      }));
-    };
-
-    return (
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <h3 className="text-lg font-semibold mb-2">
-            Card Preview + Form Integration
-          </h3>
-          <p className="text-sm text-gray-600">
-            The card preview syncs with form data in real-time
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          {/* Card Preview */}
-          <div className="space-y-4">
-            <h4 className="font-medium text-gray-900">Live Card Preview</h4>
-            <CreditCardPreview
-              {...formData}
-              onChange={handleFormChange}
-              className="mx-auto"
-            />
-            <p className="text-xs text-gray-500 text-center">
-              Click on the card to edit fields directly
-            </p>
-          </div>
-
-          {/* Form representation */}
-          <div className="space-y-4">
-            <h4 className="font-medium text-gray-900">Form Data</h4>
-            <div className="bg-gray-50 p-4 rounded-lg space-y-3">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Card Number
-                </label>
-                <input
-                  type="text"
-                  value={formData.cardNumber}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      cardNumber: e.target.value,
-                    }))
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm font-mono"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Cardholder Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.cardholderName}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      cardholderName: e.target.value.toUpperCase(),
-                    }))
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Expiry Date
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.expiryDate}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        expiryDate: e.target.value,
-                      }))
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm font-mono"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    CVC
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.cvc}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, cvc: e.target.value }))
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm font-mono text-center"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story: 'Different card sizes available.',
+      },
+    },
   },
 };

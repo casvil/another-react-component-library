@@ -57,6 +57,7 @@ export {
   CARD_PATTERNS,
   detectCardType,
   getCardFormatRules,
+  getCardPattern,
 } from './utils/cardPatterns';
 export type { Size } from './@types/size';
 
