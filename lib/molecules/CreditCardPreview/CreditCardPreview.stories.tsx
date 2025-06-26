@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
 import { CreditCardPreview } from './CreditCardPreview';
+import type { CardType } from '../../utils/cardPatterns';
 
 const meta = {
   title: 'molecules/CreditCardPreview',
@@ -71,15 +72,6 @@ export const VisaCard: Story = {
   },
 };
 
-export const AmexCard: Story = {
-  args: {
-    cardNumber: '3782 822463 10005',
-    cardholderName: 'JANE SMITH',
-    expiryDate: '09/26',
-    cvc: '1234',
-  },
-};
-
 export const MastercardCard: Story = {
   args: {
     cardNumber: '5555 5555 5555 4444',
@@ -92,13 +84,32 @@ export const MastercardCard: Story = {
 // Interactive editable example
 export const InteractiveEditing: Story = {
   render: () => {
-    const [cardData, setCardData] = useState({
+    const [cardData, setCardData] = useState<{
+      cardNumber: string;
+      cardholderName: string;
+      expiryDate: string;
+      cvc: string;
+      cardType: CardType | null;
+    }>({
       cardNumber: '4111 1111 1111 1111',
       cardholderName: 'JOHN DOE',
       expiryDate: '12/25',
       cvc: '123',
       cardType: null,
     });
+
+    const handleCardChange = (data: {
+      cardNumber?: string;
+      cardholderName?: string;
+      expiryDate?: string;
+      cvc?: string;
+      cardType?: CardType | null;
+    }) => {
+      setCardData(prev => ({
+        ...prev,
+        ...data,
+      }));
+    };
 
     return (
       <div className="space-y-6">
@@ -111,7 +122,7 @@ export const InteractiveEditing: Story = {
           </p>
         </div>
 
-        <CreditCardPreview {...cardData} onChange={setCardData} />
+        <CreditCardPreview {...cardData} onChange={handleCardChange} />
 
         <div className="bg-gray-50 p-4 rounded-lg max-w-md mx-auto">
           <h4 className="font-medium text-gray-900 mb-2">Current Data:</h4>
@@ -215,7 +226,7 @@ export const SizeComparison: Story = {
         </p>
       </div>
 
-      <div className="space-y-6 flex flex-col items-center">
+      <div className="space-y-6 flex flex-row gap-5">
         <div>
           <h4 className="text-sm font-medium text-gray-700 mb-2 text-center">
             Small
@@ -262,13 +273,32 @@ export const SizeComparison: Story = {
 // Integration with CreditCardForm
 export const WithFormIntegration: Story = {
   render: () => {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<{
+      cardNumber: string;
+      cardholderName: string;
+      expiryDate: string;
+      cvc: string;
+      cardType: CardType | null;
+    }>({
       cardNumber: '4111 1111 1111 1111',
       cardholderName: 'JOHN DOE',
       expiryDate: '12/25',
       cvc: '123',
       cardType: null,
     });
+
+    const handleFormChange = (data: {
+      cardNumber?: string;
+      cardholderName?: string;
+      expiryDate?: string;
+      cvc?: string;
+      cardType?: CardType | null;
+    }) => {
+      setFormData(prev => ({
+        ...prev,
+        ...data,
+      }));
+    };
 
     return (
       <div className="max-w-4xl mx-auto">
@@ -287,7 +317,7 @@ export const WithFormIntegration: Story = {
             <h4 className="font-medium text-gray-900">Live Card Preview</h4>
             <CreditCardPreview
               {...formData}
-              onChange={setFormData}
+              onChange={handleFormChange}
               className="mx-auto"
             />
             <p className="text-xs text-gray-500 text-center">

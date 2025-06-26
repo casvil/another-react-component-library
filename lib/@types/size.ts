@@ -308,3 +308,12 @@ export const usernameComponentSizeClasses = {
   text: textSizeClasses,
   variant: usernameVariantClasses,
 } as const;
+
+// CreditCardPreview component sizing classes
+const creditCardSizeClasses = {
+  sm: 'w-72 h-48 p-2 pb-4',
+  md: 'w-80 h-56 p-4 pb-6',
+  lg: 'w-96 h-64 p-6 pb-8',
+} as const;
+
+export const creditCardPreviewSizeClasses = creditCardSizeClasses;
