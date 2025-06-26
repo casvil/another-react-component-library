@@ -232,9 +232,7 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
     <form onSubmit={handleSubmit} className={containerClass} role="form">
       {/* Card Number */}
       <div>
-        <Label htmlFor="credit-card-number">
-          Card Number
-        </Label>
+        <Label htmlFor="credit-card-number">Card Number</Label>
         <Input
           id="credit-card-number"
           size={size}
@@ -270,9 +268,7 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
       {/* Cardholder Name */}
       {showCardholderName && (
         <div>
-          <Label htmlFor="cardholder-name">
-            Card Holder
-          </Label>
+          <Label htmlFor="cardholder-name">Card Holder</Label>
           <Input
             id="cardholder-name"
             size={size}
@@ -301,9 +297,7 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
       {/* Expiry Date and CVC */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="expiry-date">
-            Exp. Date
-          </Label>
+          <Label htmlFor="expiry-date">Exp. Date</Label>
           <Input
             id="expiry-date"
             size={size}
@@ -331,9 +325,7 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
         </div>
 
         <div>
-          <Label htmlFor="cvc">
-            CVC
-          </Label>
+          <Label htmlFor="cvc">CVC</Label>
           <Input
             id="cvc"
             size={size}
