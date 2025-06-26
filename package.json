@@ -63,7 +63,6 @@
     "globals": "^16.0.0",
     "jsdom": "^26.1.0",
     "lefthook": "^1.11.14",
-    "playwright": "^1.53.0",
     "prettier": "^3.5.3",
     "storybook": "^9.0.9",
     "typescript": "~5.8.3",
