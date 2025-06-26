@@ -4,6 +4,7 @@ import {
   CardType,
   detectCardType,
   getCardFormatRules,
+  getCardPattern,
 } from '../../utils/cardPatterns';
 import type { Size } from '../../@types/size';
 import { creditCardPreviewSizeClasses } from '../../@types/size';
@@ -100,21 +101,27 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
   // Format card number with spaces
   const formatCardNumber = useCallback(
     (input: string): string => {
+      // Remove all non-digit characters
       const cleanInput = input.replace(/\D/g, '');
+
+      // Limit to maximum card length for the detected type
+      const maxLength = formatRules.maxLength;
+      const truncatedInput = cleanInput.slice(0, maxLength);
+
       let formatted = '';
       let digitIndex = 0;
 
-      for (let i = 0; i < cleanInput.length; i++) {
+      for (let i = 0; i < truncatedInput.length; i++) {
         if (formatRules.gaps.includes(digitIndex) && formatted.length > 0) {
           formatted += ' ';
         }
-        formatted += cleanInput[i];
+        formatted += truncatedInput[i];
         digitIndex++;
       }
 
       return formatted;
     },
-    [formatRules.gaps],
+    [formatRules.gaps, formatRules.maxLength],
   );
 
   // Format expiry date as MM/YY with basic validation
@@ -156,23 +163,59 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
       let formattedValue = value;
 
       switch (field) {
-        case 'cardNumber':
-          formattedValue = formatCardNumber(value);
+        case 'cardNumber': {
+          // Only allow digits and spaces, then check digit count before formatting
+          const cleanValue = value.replace(/[^\d\s]/g, '');
+          const digitCount = cleanValue.replace(/\D/g, '').length;
+
+          // Simple validation: prevent extending complete 16-digit cards
+          // This covers the most common case while allowing normal typing for incomplete cards
+          const currentDigitCount = tempValues.cardNumber.replace(
+            /\D/g,
+            '',
+          ).length;
+          const isComplete16DigitCard = currentDigitCount === 16;
+          const isAmexComplete =
+            currentDigitCount === 15 && detectedCardType === 'amex';
+          const isDinersComplete =
+            currentDigitCount === 14 && detectedCardType === 'diners';
+
+          const isCompleteCard =
+            isComplete16DigitCard || isAmexComplete || isDinersComplete;
+
+          // Only prevent adding digits to complete cards
+          if (isCompleteCard && digitCount > currentDigitCount) {
+            formattedValue = tempValues.cardNumber;
+          } else {
+            // Allow normal formatting within maximum limits
+            const allowedDigits = cleanValue
+              .replace(/\D/g, '')
+              .slice(0, formatRules.maxLength);
+            formattedValue = formatCardNumber(allowedDigits);
+          }
           break;
-        case 'cardholderName':
-          formattedValue = value.toUpperCase();
+        }
+        case 'cardholderName': {
+          // Only allow letters, spaces, hyphens, and apostrophes
+          formattedValue = value
+            .replace(/[^a-zA-Z\s\-']/g, '')
+            .toUpperCase()
+            .slice(0, 26); // Reasonable limit for cardholder names
           break;
-        case 'expiryDate':
+        }
+        case 'expiryDate': {
           formattedValue = formatExpiryDate(value);
           break;
-        case 'cvc':
+        }
+        case 'cvc': {
           formattedValue = formatCvc(value);
           break;
+        }
       }
 
       setTempValues((prev) => ({ ...prev, [field]: formattedValue }));
     },
-    [formatCardNumber, formatExpiryDate, formatCvc],
+    [formatCardNumber, formatExpiryDate, formatCvc, formatRules.maxLength],
   );
 
   // Handle input blur to save changes
@@ -242,24 +285,17 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
 
   const currentTextSizes = textSizeClasses[size];
 
+  // Get card pattern for styling
+  const cardPattern = getCardPattern(detectedCardType);
+
   const getCardBrandDisplay = () => {
-    if (detectedCardType === 'visa') {
-      return <span className="text-blue-300">VISA</span>;
-    }
-    return detectedCardType?.toUpperCase() || 'CARD';
+    return (
+      cardPattern?.displayName || detectedCardType?.toUpperCase() || 'CARD'
+    );
   };
 
-  const getCardTypeClasses = () => {
-    switch (detectedCardType) {
-      case 'visa':
-        return 'border-blue-200';
-      case 'mastercard':
-        return 'border-red-200';
-      case 'amex':
-        return 'border-green-200';
-      default:
-        return 'border-gray-200';
-    }
+  const getCardGradient = () => {
+    return cardPattern?.gradient || 'from-slate-800 via-slate-700 to-teal-600';
   };
 
   const renderEditableField = (
@@ -271,9 +307,9 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
   ) => {
     const isEditing = editingField === field;
 
-    // Use placeholder if no actual value is provided via props
+    // Use placeholder if no actual value is provided via props OR if displayValue is empty after formatting
     const shouldShowPlaceholder =
-      (field === 'cardNumber' && !cardNumber) ||
+      (field === 'cardNumber' && (!cardNumber || !displayValue.trim())) ||
       (field === 'cardholderName' && !cardholderName) ||
       (field === 'expiryDate' && !expiryDate) ||
       (field === 'cvc' && !cvc);
@@ -305,7 +341,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
           onKeyDown={(e) => handleKeyDown(e, field)}
           placeholder={placeholder}
           inputMode={inputMode}
-          maxLength={maxLength}
+          {...(field !== 'cardNumber' && { maxLength })}
           aria-label={`Edit ${getFieldLabel(field)}`}
           role="textbox"
           className="bg-transparent border-none outline-none text-white font-mono tracking-wider w-full resize-none"
@@ -338,9 +374,9 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     <div
       role="article"
       className={clsx(
-        'bg-gradient-to-br from-slate-800 via-slate-700 to-teal-600 rounded-xl text-white relative overflow-hidden shadow-xl border-2',
+        'bg-gradient-to-br rounded-xl text-white relative overflow-hidden shadow-xl',
+        getCardGradient(),
         creditCardPreviewSizeClasses[size],
-        getCardTypeClasses(),
         className,
       )}
     >
@@ -360,10 +396,10 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
           <div className={currentTextSizes.number}>
             {renderEditableField(
               'cardNumber',
-              tempValues.cardNumber,
+              formatCardNumber(tempValues.cardNumber),
               '•••• •••• •••• ••••',
               'numeric',
-              formatRules.maxLength,
+              undefined,
             )}
           </div>
           <div className="w-full h-px bg-gray-400 mt-2"></div>

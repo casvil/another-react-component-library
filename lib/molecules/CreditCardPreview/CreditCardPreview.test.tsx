@@ -1,9 +1,25 @@
 import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { CreditCardPreview } from './CreditCardPreview';
+import { detectCardType } from '../../utils/cardPatterns';
+
+// Test card numbers for each network
+const TEST_CARD_NUMBERS = {
+  visa: '4111111111111111',
+  mastercard: '5555555555554444',
+  amex: '378282246310005',
+  discover: '6011111111111117',
+  diners: '30569309025904',
+  jcb: '3530111333300000',
+  unionpay: '6200000000000005',
+  maestro: '5018450000000000',
+  elo: '5067000000000000',
+  mir: '2200450000000000',
+  rupay: '6070000000000000',
+};
 
 describe('CreditCardPreview', () => {
   const defaultProps = {
@@ -84,21 +100,33 @@ describe('CreditCardPreview', () => {
       render(<CreditCardPreview cardNumber="4111 1111 1111 1111" />);
 
       const cardElement = screen.getByRole('article');
-      expect(cardElement).toHaveClass('border-blue-200');
+      expect(cardElement).toHaveClass(
+        'from-blue-600',
+        'via-blue-500',
+        'to-blue-700',
+      );
     });
 
     it('detects Mastercard card type', () => {
       render(<CreditCardPreview cardNumber="5555 5555 5555 4444" />);
 
       const cardElement = screen.getByRole('article');
-      expect(cardElement).toHaveClass('border-red-200');
+      expect(cardElement).toHaveClass(
+        'from-red-500',
+        'via-orange-500',
+        'to-yellow-500',
+      );
     });
 
     it('detects American Express card type', () => {
       render(<CreditCardPreview cardNumber="3782 822463 10005" />);
 
       const cardElement = screen.getByRole('article');
-      expect(cardElement).toHaveClass('border-green-200');
+      expect(cardElement).toHaveClass(
+        'from-green-600',
+        'via-teal-600',
+        'to-blue-600',
+      );
     });
   });
 
@@ -371,7 +399,9 @@ describe('CreditCardPreview', () => {
     it('handles invalid card numbers gracefully', () => {
       render(<CreditCardPreview cardNumber="invalid" />);
 
-      expect(screen.getByText('invalid')).toBeInTheDocument();
+      // When invalid characters are provided, they are filtered out
+      // and the placeholder should be shown
+      expect(screen.getByText('•••• •••• •••• ••••')).toBeInTheDocument();
       // Should not crash or throw errors
     });
 
@@ -390,6 +420,350 @@ describe('CreditCardPreview', () => {
       await user.keyboard('{Enter}');
 
       // Should not crash when onChange is not provided
+    });
+  });
+
+  describe('Card Network Detection and Gradients', () => {
+    it('detects and styles Visa cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.visa} />);
+      expect(screen.getByText('VISA')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-blue-600',
+        'via-blue-500',
+        'to-blue-700',
+      );
+    });
+
+    it('detects and styles Mastercard cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.mastercard} />);
+      expect(screen.getByText('MASTERCARD')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-red-500',
+        'via-orange-500',
+        'to-yellow-500',
+      );
+    });
+
+    it('detects and styles American Express cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.amex} />);
+      expect(screen.getByText('AMERICAN EXPRESS')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-green-600',
+        'via-teal-600',
+        'to-blue-600',
+      );
+    });
+
+    it('detects and styles Discover cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.discover} />);
+      expect(screen.getByText('DISCOVER')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-orange-500',
+        'via-orange-600',
+        'to-red-600',
+      );
+    });
+
+    it('detects and styles Diners Club cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.diners} />);
+      expect(screen.getByText('DINERS CLUB')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-gray-600',
+        'via-gray-700',
+        'to-gray-800',
+      );
+    });
+
+    it('detects and styles JCB cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.jcb} />);
+      expect(screen.getByText('JCB')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-blue-800',
+        'via-indigo-700',
+        'to-purple-600',
+      );
+    });
+
+    it('detects and styles UnionPay cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.unionpay} />);
+      expect(screen.getByText('UNIONPAY')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-red-600',
+        'via-red-700',
+        'to-red-800',
+      );
+    });
+
+    it('detects and styles Maestro cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.maestro} />);
+      expect(screen.getByText('MAESTRO')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-blue-700',
+        'via-red-500',
+        'to-yellow-400',
+      );
+    });
+
+    it('detects and styles Elo cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.elo} />);
+      expect(screen.getByText('ELO')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-yellow-500',
+        'via-yellow-600',
+        'to-orange-600',
+      );
+    });
+
+    it('detects and styles Mir cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.mir} />);
+      expect(screen.getByText('MIR')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-green-600',
+        'via-blue-600',
+        'to-red-600',
+      );
+    });
+
+    it('detects and styles RuPay cards correctly', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.rupay} />);
+      expect(screen.getByText('RUPAY')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-orange-500',
+        'via-white',
+        'to-green-600',
+      );
+    });
+
+    it('uses default styling for unknown card types', () => {
+      render(<CreditCardPreview cardNumber="1234567890123456" />);
+      expect(screen.getByText('UNKNOWN')).toBeInTheDocument();
+      expect(screen.getByRole('article')).toHaveClass(
+        'from-slate-800',
+        'via-slate-700',
+        'to-teal-600',
+      );
+    });
+  });
+
+  describe('Card Formatting Rules', () => {
+    it('formats Amex cards correctly (15 digits, different gaps)', () => {
+      render(
+        <CreditCardPreview
+          cardNumber={TEST_CARD_NUMBERS.amex}
+          editable={false}
+        />,
+      );
+      expect(screen.getByText('3782 822463 10005')).toBeInTheDocument();
+    });
+
+    it('shows 4-digit CVC for Amex cards', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.amex} />);
+      expect(screen.getByText('••••')).toBeInTheDocument();
+    });
+
+    it('shows 3-digit CVC for other card types', () => {
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.visa} />);
+      expect(screen.getByText('•••')).toBeInTheDocument();
+    });
+
+    it('formats Diners Club cards correctly (14 digits)', () => {
+      render(
+        <CreditCardPreview
+          cardNumber={TEST_CARD_NUMBERS.diners}
+          editable={false}
+        />,
+      );
+      expect(screen.getByText('3056 930902 5904')).toBeInTheDocument();
+    });
+  });
+
+  describe('Editing Functionality', () => {
+    it('allows editing card number', () => {
+      const mockOnChange = vi.fn();
+      render(<CreditCardPreview onChange={mockOnChange} />);
+
+      const cardNumberButton = screen.getByText('•••• •••• •••• ••••');
+      fireEvent.click(cardNumberButton);
+
+      const input = screen.getByRole('textbox', { name: /edit card number/i });
+      fireEvent.change(input, { target: { value: '4111111111111111' } });
+      fireEvent.blur(input);
+
+      expect(mockOnChange).toHaveBeenCalledWith({
+        cardNumber: '4111 1111 1111 1111',
+        cardholderName: '',
+        expiryDate: '',
+        cvc: '',
+        cardType: 'visa',
+      });
+    });
+
+    it('auto-formats card number during typing', () => {
+      render(<CreditCardPreview />);
+
+      const cardNumberButton = screen.getByText('•••• •••• •••• ••••');
+      fireEvent.click(cardNumberButton);
+
+      const input = screen.getByRole('textbox', { name: /edit card number/i });
+      fireEvent.change(input, { target: { value: '4111111111111111' } });
+
+      expect(input).toHaveValue('4111 1111 1111 1111');
+    });
+
+    it('auto-formats expiry date during typing', () => {
+      render(<CreditCardPreview />);
+
+      const expiryButton = screen.getByText('MM/YY');
+      fireEvent.click(expiryButton);
+
+      const input = screen.getByRole('textbox', { name: /edit expiry date/i });
+      fireEvent.change(input, { target: { value: '1225' } });
+
+      expect(input).toHaveValue('12/25');
+    });
+
+    it('converts cardholder name to uppercase', () => {
+      render(<CreditCardPreview />);
+
+      const nameButton = screen.getByText('CARDHOLDER NAME');
+      fireEvent.click(nameButton);
+
+      const input = screen.getByRole('textbox', {
+        name: /edit cardholder name/i,
+      });
+      fireEvent.change(input, { target: { value: 'john doe' } });
+
+      expect(input).toHaveValue('JOHN DOE');
+    });
+
+    it('limits CVC input based on card type', () => {
+      // Test Amex (4 digits)
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.amex} />);
+      let cvcButton = screen.getByText('••••');
+      fireEvent.click(cvcButton);
+      let input = screen.getByRole('textbox', { name: /edit cvc/i });
+      fireEvent.change(input, { target: { value: '12345' } });
+      expect(input).toHaveValue('1234');
+      fireEvent.blur(input);
+
+      // Test Visa (3 digits)
+      render(<CreditCardPreview cardNumber={TEST_CARD_NUMBERS.visa} />);
+      cvcButton = screen.getByText('•••');
+      fireEvent.click(cvcButton);
+      input = screen.getByRole('textbox', { name: /edit cvc/i });
+      fireEvent.change(input, { target: { value: '1234' } });
+      expect(input).toHaveValue('123');
+    });
+  });
+
+  describe('Live Card Type Detection', () => {
+    it('updates card type and styling as user types', () => {
+      const mockOnChange = vi.fn();
+      render(<CreditCardPreview onChange={mockOnChange} />);
+
+      const cardNumberButton = screen.getByText('•••• •••• •••• ••••');
+      fireEvent.click(cardNumberButton);
+
+      const input = screen.getByRole('textbox', { name: /edit card number/i });
+
+      // Type partial Visa number
+      fireEvent.change(input, { target: { value: '4' } });
+      expect(screen.getByText('VISA')).toBeInTheDocument();
+
+      // Clear and type partial Mastercard number
+      fireEvent.change(input, { target: { value: '5555' } });
+      expect(screen.getByText('MASTERCARD')).toBeInTheDocument();
+
+      // Clear and type partial Amex number
+      fireEvent.change(input, { target: { value: '37' } });
+      expect(screen.getByText('AMERICAN EXPRESS')).toBeInTheDocument();
+    });
+  });
+
+  describe('Card Pattern Utilities', () => {
+    it('detectCardType function works correctly for all networks', () => {
+      expect(detectCardType(TEST_CARD_NUMBERS.visa)).toBe('visa');
+      expect(detectCardType(TEST_CARD_NUMBERS.mastercard)).toBe('mastercard');
+      expect(detectCardType(TEST_CARD_NUMBERS.amex)).toBe('amex');
+      expect(detectCardType(TEST_CARD_NUMBERS.discover)).toBe('discover');
+      expect(detectCardType(TEST_CARD_NUMBERS.diners)).toBe('diners');
+      expect(detectCardType(TEST_CARD_NUMBERS.jcb)).toBe('jcb');
+      expect(detectCardType(TEST_CARD_NUMBERS.unionpay)).toBe('unionpay');
+      expect(detectCardType(TEST_CARD_NUMBERS.maestro)).toBe('maestro');
+      expect(detectCardType(TEST_CARD_NUMBERS.elo)).toBe('elo');
+      expect(detectCardType(TEST_CARD_NUMBERS.mir)).toBe('mir');
+      expect(detectCardType(TEST_CARD_NUMBERS.rupay)).toBe('rupay');
+
+      expect(detectCardType('1234567890123456')).toBe('unknown');
+      expect(detectCardType('')).toBe(null);
+    });
+  });
+
+  test('prevents adding more digits than maximum allowed for card type', async () => {
+    const mockOnChange = vi.fn();
+
+    render(
+      <CreditCardPreview
+        cardNumber="4111 1111 1111 1111" // 16 digits, maximum for Visa
+        cardholderName="JOHN DOE"
+        editable={true}
+        onChange={mockOnChange}
+      />,
+    );
+
+    // Click on card number to edit
+    const cardNumberButton = screen.getByLabelText('Edit Card number');
+    fireEvent.click(cardNumberButton);
+
+    // Get the input field
+    const cardNumberInput = screen.getByDisplayValue('4111 1111 1111 1111');
+
+    // Try to add more digits (should be prevented)
+    fireEvent.change(cardNumberInput, {
+      target: { value: '4111 1111 1111 1111 123456' },
+    });
+
+    // Wait for React state updates
+    await waitFor(() => {
+      expect(cardNumberInput.value).toBe('4111 1111 1111 1111');
+    });
+
+    // Try with a different approach - appending one digit at a time
+    fireEvent.change(cardNumberInput, {
+      target: { value: '4111 1111 1111 11111' },
+    });
+    await waitFor(() => {
+      expect(cardNumberInput.value).toBe('4111 1111 1111 1111');
+    });
+  });
+
+  test('prevents adding more than 15 digits for American Express', async () => {
+    const mockOnChange = vi.fn();
+
+    render(
+      <CreditCardPreview
+        cardNumber="3782 822463 10005" // 15 digits, maximum for Amex
+        cardholderName="JOHN DOE"
+        editable={true}
+        onChange={mockOnChange}
+      />,
+    );
+
+    // Click on card number to edit
+    const cardNumberButton = screen.getByLabelText('Edit Card number');
+    fireEvent.click(cardNumberButton);
+
+    // Get the input field
+    const cardNumberInput = screen.getByDisplayValue('3782 822463 10005');
+
+    // Try to add more digits (should be prevented)
+    fireEvent.change(cardNumberInput, {
+      target: { value: '3782 822463 10005 1' },
+    });
+
+    // Wait for React state updates
+    await waitFor(() => {
+      expect(cardNumberInput.value).toBe('3782 822463 10005');
     });
   });
 });
