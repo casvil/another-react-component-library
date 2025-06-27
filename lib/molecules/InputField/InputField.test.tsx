@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { Search } from 'lucide-react';
 
 import { InputField } from './InputField';
-import { inputSizeClasses } from '../../@types/size';
+import { inputSizeClasses } from '../../@types/classes';
 
 describe('InputField', () => {
   it('renders without crashing', () => {

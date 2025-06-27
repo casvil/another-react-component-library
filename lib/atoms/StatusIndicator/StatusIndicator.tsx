@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import type { Size } from '../../@types/size';
-import { statusIndicatorComponentSizeClasses } from '../../@types/size';
+import type { Size } from '../../@types/classes';
+import { statusIndicatorComponentSizeClasses } from '../../@types/classes';
 
 export type StatusType = 'online' | 'offline' | 'away' | 'busy';
 

@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import type { Size } from '../../@types/size';
-import { avatarSizeClasses } from '../../@types/size';
+import type { Size } from '../../@types/classes';
+import { avatarSizeClasses } from '../../@types/classes';
 
 export interface AvatarProps {
   alt?: string;

@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { cardSizeClasses } from '../../@types/size';
+import { cardSizeClasses } from '../../@types/classes';
 
 export type CardSize = 'sm' | 'md' | 'lg';
 export type CardVariant = 'default' | 'outlined' | 'elevated';

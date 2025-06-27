@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Checkbox } from './Checkbox';
-import { checkboxSizeClasses } from '../../@types/size';
+import { checkboxSizeClasses } from '../../@types/classes';
 
 describe('Checkbox', () => {
   it('renders with label', () => {

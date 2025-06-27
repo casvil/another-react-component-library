@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { Badge, BadgeProps } from '../../atoms/Badge/Badge';
 import { Avatar, AvatarProps } from '../../atoms/Avatar/Avatar';
-import type { Size } from '../../@types/size';
+import type { Size } from '../../@types/classes';
 
 export interface BadgeAvatarProps {
   avatarProps?: Omit<AvatarProps, 'size'>;

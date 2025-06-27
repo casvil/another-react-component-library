@@ -12,12 +12,12 @@ import {
   getFieldConfig,
   getCommonStyle,
 } from '../../hooks/useCreditCardFormatting/useCreditCardFormatting';
-import type { Size } from '../../@types/size';
+import type { Size } from '../../@types/classes';
 import {
   creditCardPreviewSizeClasses,
   creditCardTextSizeClasses,
   creditCardBottomRowSpacing,
-} from '../../@types/size';
+} from '../../@types/classes';
 
 type FieldName = 'cardNumber' | 'cardholderName' | 'expiryDate' | 'cvc';
 

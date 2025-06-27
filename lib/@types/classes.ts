@@ -1,4 +1,13 @@
 export type Size = 'sm' | 'md' | 'lg';
+export type Intent = 'default' | 'info' | 'success' | 'warning' | 'error';
+
+// Text alignment classes
+export const TEXT_ALIGN_CLASSES = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+  justify: 'text-justify',
+} as const;
 
 // Base size configurations
 export const textSizeClasses = {
@@ -375,3 +384,128 @@ export const creditCardTypeColors = {
 export const creditCardPreviewSizeClasses = creditCardSizeClasses;
 export const creditCardTextSizeClasses = creditCardPreviewTextSizeClasses;
 export const creditCardBottomRowSpacing = creditCardPreviewBottomRowSpacing;
+
+// Alert component sizing classes
+const alertPaddingClasses = {
+  sm: 'p-3',
+  md: 'p-4',
+  lg: 'p-5',
+} as const;
+
+const alertIconSizeClasses = {
+  sm: 'w-4 h-4',
+  md: 'w-5 h-5',
+  lg: 'w-6 h-6',
+} as const;
+
+const alertBorderRadiusClasses = {
+  sm: 'rounded-md',
+  md: 'rounded-lg',
+  lg: 'rounded-xl',
+} as const;
+
+const alertIntentClasses = {
+  info: 'bg-blue-50 border-blue-200 text-blue-800',
+  success: 'bg-green-50 border-green-200 text-green-800',
+  warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
+  error: 'bg-red-50 border-red-200 text-red-800',
+} as const;
+
+const alertIconIntentClasses = {
+  info: 'text-blue-600',
+  success: 'text-green-600',
+  warning: 'text-yellow-600',
+  error: 'text-red-600',
+} as const;
+
+const alertDismissButtonHoverClasses = {
+  info: 'hover:bg-blue-100',
+  success: 'hover:bg-green-100',
+  warning: 'hover:bg-yellow-100',
+  error: 'hover:bg-red-100',
+} as const;
+
+export const alertSizeClasses = {
+  padding: alertPaddingClasses,
+  text: textSizeClasses,
+  icon: alertIconSizeClasses,
+  borderRadius: alertBorderRadiusClasses,
+  variant: alertIntentClasses,
+  iconVariant: alertIconIntentClasses,
+  dismissHover: alertDismissButtonHoverClasses,
+} as const;
+
+// Card component sizing classes
+const cardPaddingClasses = {
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8',
+} as const;
+
+const cardBorderRadiusClasses = {
+  sm: 'rounded-lg',
+  md: 'rounded-xl',
+  lg: 'rounded-2xl',
+} as const;
+
+const cardShadowClasses = {
+  sm: 'shadow-sm',
+  md: 'shadow-md',
+  lg: 'shadow-lg',
+} as const;
+
+export const cardSizeClasses = {
+  padding: cardPaddingClasses,
+  borderRadius: cardBorderRadiusClasses,
+  shadow: cardShadowClasses,
+} as const;
+
+// Text component sizing classes
+const textVariantClasses = {
+  h1: 'text-4xl',
+  h2: 'text-3xl',
+  h3: 'text-2xl',
+  h4: 'text-xl',
+  h5: 'text-lg',
+  h6: 'text-base',
+  body: 'text-base',
+  small: 'text-sm',
+  caption: 'text-xs',
+} as const;
+
+const textVariantDefaultWeights = {
+  h1: 'font-bold',
+  h2: 'font-bold',
+  h3: 'font-bold',
+  h4: 'font-bold',
+  h5: 'font-bold',
+  h6: 'font-bold',
+  body: undefined,
+  small: undefined,
+  caption: undefined,
+} as const;
+
+const textWeightClasses = {
+  light: 'font-light',
+  normal: 'font-normal',
+  medium: 'font-medium',
+  semibold: 'font-semibold',
+  bold: 'font-bold',
+} as const;
+
+const textColorClasses = {
+  primary: 'text-gray-900',
+  secondary: 'text-gray-600',
+  muted: 'text-gray-500',
+  success: 'text-green-600',
+  warning: 'text-yellow-600',
+  error: 'text-red-600',
+  info: 'text-blue-600',
+} as const;
+
+export const textComponentSizeClasses = {
+  variant: textVariantClasses,
+  variantDefaultWeights: textVariantDefaultWeights,
+  weight: textWeightClasses,
+  color: textColorClasses,
+} as const;

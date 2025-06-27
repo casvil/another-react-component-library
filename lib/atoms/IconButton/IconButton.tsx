@@ -2,8 +2,8 @@ import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import clsx from 'clsx';
 import type { LucideIcon } from 'lucide-icon-type';
 
-import type { Size } from '../../@types/size';
-import { iconButtonSizeClasses } from '../../@types/size';
+import type { Size } from '../../@types/classes';
+import { iconButtonSizeClasses } from '../../@types/classes';
 
 export interface IconButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {

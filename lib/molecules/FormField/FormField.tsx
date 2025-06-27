@@ -6,7 +6,7 @@ import { Label } from '../../atoms/Label/Label';
 import { Input } from '../../atoms/Input/Input';
 import { Tooltip } from '../../atoms/Tooltip/Tooltip';
 import { useStableId } from '../../hooks/useStableId/useStableId';
-import type { Size } from '../../@types/size';
+import type { Size } from '../../@types/classes';
 import type { InputProps } from '../../atoms/Input/Input';
 
 export interface FormFieldProps extends Omit<InputProps, 'id'> {

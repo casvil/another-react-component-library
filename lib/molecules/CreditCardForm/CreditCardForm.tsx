@@ -16,7 +16,7 @@ import {
   getCvcPlaceholder,
   getMaxLengthWithSpaces,
 } from '../../hooks/useCreditCardFormatting/useCreditCardFormatting';
-import type { Size } from '../../@types/size';
+import type { Size } from '../../@types/classes';
 import type { CardType } from '../../utils/cardPatterns';
 
 export interface CreditCardFormData {

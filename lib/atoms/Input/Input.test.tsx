@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { Search } from 'lucide-react';
 
 import { Input } from './Input';
-import { inputSizeClasses } from '../../@types/size';
+import { inputSizeClasses } from '../../@types/classes';
 
 describe('Input', () => {
   it('renders without crashing', () => {

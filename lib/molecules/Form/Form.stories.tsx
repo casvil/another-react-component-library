@@ -497,7 +497,7 @@ export const ComponentShowcase: Story = {
             This showcases Form molecule orchestrating atoms and molecules from
             our library
           </p>
-          <Badge variant="warning" className="mt-2">
+          <Badge intent="warning" className="mt-2">
             Molecule Component
           </Badge>
         </div>
@@ -706,7 +706,7 @@ export const WithUserPreview: Story = {
             />
             <div className="mt-4 space-y-2">
               <div className="flex items-center gap-2">
-                <Badge variant="info" size="sm">
+                <Badge intent="info" size="sm">
                   Name
                 </Badge>
                 <span className="text-sm">
@@ -715,7 +715,7 @@ export const WithUserPreview: Story = {
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Badge variant="warning" size="sm">
+                <Badge intent="warning" size="sm">
                   Email
                 </Badge>
                 <span className="text-sm">
@@ -723,7 +723,7 @@ export const WithUserPreview: Story = {
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Badge variant="success" size="sm">
+                <Badge intent="success" size="sm">
                   Status
                 </Badge>
                 <span className="text-sm capitalize">{previewData.status}</span>

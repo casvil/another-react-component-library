@@ -1,19 +1,18 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { alertSizeClasses, Intent } from '../../@types/size';
+import { alertSizeClasses, Intent } from '../../@types/classes';
 import InfoIcon from 'lucide-react/icons/info';
 import CheckCircleIcon from 'lucide-react/icons/check-circle';
 import AlertTriangleIcon from 'lucide-react/icons/alert-triangle';
 import XCircleIcon from 'lucide-react/icons/x-circle';
 import XIcon from 'lucide-react/icons/x';
 
-export type AlertIntent = Intent;
 export type AlertSize = 'sm' | 'md' | 'lg';
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  intent?: AlertIntent;
+  intent?: Intent;
   size?: AlertSize;
   dismissible?: boolean;
   onDismiss?: () => void;
