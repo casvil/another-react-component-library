@@ -8,7 +8,14 @@ import User from 'lucide-react/icons/user';
 import { Input } from '../../atoms/Input/Input';
 import { Label } from '../../atoms/Label/Label';
 import { ErrorMessage } from '../../atoms/ErrorMessage/ErrorMessage';
-import { useCreditCardFormatting } from '../../hooks/useCreditCardFormatting/useCreditCardFormatting';
+import {
+  useCreditCardFormatting,
+  FORM_FIELD_CONFIG,
+  ERROR_MESSAGES,
+  getCardTypeColor,
+  getCvcPlaceholder,
+  getMaxLengthWithSpaces,
+} from '../../hooks/useCreditCardFormatting/useCreditCardFormatting';
 import type { Size } from '../../@types/size';
 import type { CardType } from '../../utils/cardPatterns';
 
@@ -107,25 +114,25 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
       const newErrors: Partial<Record<keyof CreditCardFormData, string>> = {};
 
       if (!formData.cardNumber) {
-        newErrors.cardNumber = 'Card number is required';
+        newErrors.cardNumber = ERROR_MESSAGES.cardNumber.required;
       } else if (!validateCardNumber(formData.cardNumber)) {
-        newErrors.cardNumber = 'Please enter a valid card number';
+        newErrors.cardNumber = ERROR_MESSAGES.cardNumber.invalid;
       }
 
       if (showCardholderName && !formData.cardholderName.trim()) {
-        newErrors.cardholderName = 'Cardholder name is required';
+        newErrors.cardholderName = ERROR_MESSAGES.cardholderName.required;
       }
 
       if (!formData.expiryDate) {
-        newErrors.expiryDate = 'Expiry date is required';
+        newErrors.expiryDate = ERROR_MESSAGES.expiryDate.required;
       } else if (!validateExpiryDate(formData.expiryDate)) {
-        newErrors.expiryDate = 'Please enter a valid future date';
+        newErrors.expiryDate = ERROR_MESSAGES.expiryDate.invalid;
       }
 
       if (!formData.cvc) {
-        newErrors.cvc = 'CVC is required';
+        newErrors.cvc = ERROR_MESSAGES.cvc.required;
       } else if (!validateCvc(formData.cvc, cardType)) {
-        newErrors.cvc = `CVC must be ${formatRules.cvcLength} digits`;
+        newErrors.cvc = ERROR_MESSAGES.cvc.invalid(formatRules.cvcLength);
       }
 
       setErrors(newErrors);
@@ -157,36 +164,31 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
     <form onSubmit={handleSubmit} className={containerClass} role="form">
       {/* Card Number */}
       <div>
-        <Label htmlFor="credit-card-number">Card Number</Label>
+        <Label htmlFor={FORM_FIELD_CONFIG.cardNumber.id}>
+          {FORM_FIELD_CONFIG.cardNumber.label}
+        </Label>
         <Input
-          id="credit-card-number"
+          id={FORM_FIELD_CONFIG.cardNumber.id}
           size={size}
           icon={CreditCard}
-          iconClassName={clsx(
-            cardType === 'visa' && 'text-blue-600',
-            cardType === 'mastercard' && 'text-red-500',
-            cardType === 'amex' && 'text-green-600',
-            cardType === 'discover' && 'text-orange-500',
-          )}
+          iconClassName={getCardTypeColor(cardType)}
           value={formData.cardNumber}
           onChange={(e) =>
             updateFormData('cardNumber', formatCardNumber(e.target.value))
           }
-          placeholder="1234 5678 9012 3456"
-          inputMode="numeric"
-          autoComplete="cc-number"
-          maxLength={
-            formatRules.maxLength + Math.floor(formatRules.maxLength / 4)
-          } // Account for spaces
+          placeholder={FORM_FIELD_CONFIG.cardNumber.placeholder}
+          inputMode={FORM_FIELD_CONFIG.cardNumber.inputMode}
+          autoComplete={FORM_FIELD_CONFIG.cardNumber.autoComplete}
+          maxLength={getMaxLengthWithSpaces(formatRules.maxLength)}
           className={clsx(
-            'font-mono tracking-wider',
-            errors.cardNumber && 'border-red-300 focus:ring-red-500',
+            FORM_FIELD_CONFIG.cardNumber.className,
+            errors.cardNumber && FORM_FIELD_CONFIG.cardNumber.errorClass,
           )}
           disabled={disabled}
-          required
+          required={FORM_FIELD_CONFIG.cardNumber.required}
         />
         {errors.cardNumber && (
-          <ErrorMessage id="credit-card-number-error">
+          <ErrorMessage id={`${FORM_FIELD_CONFIG.cardNumber.id}-error`}>
             {errors.cardNumber}
           </ErrorMessage>
         )}
@@ -195,9 +197,11 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
       {/* Cardholder Name */}
       {showCardholderName && (
         <div>
-          <Label htmlFor="cardholder-name">Card Holder</Label>
+          <Label htmlFor={FORM_FIELD_CONFIG.cardholderName.id}>
+            {FORM_FIELD_CONFIG.cardholderName.label}
+          </Label>
           <Input
-            id="cardholder-name"
+            id={FORM_FIELD_CONFIG.cardholderName.id}
             size={size}
             icon={User}
             value={formData.cardholderName}
@@ -207,17 +211,18 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
                 formatCardholderName(e.target.value),
               )
             }
-            placeholder="VICTOR SAULER"
-            autoComplete="cc-name"
+            placeholder={FORM_FIELD_CONFIG.cardholderName.placeholder}
+            autoComplete={FORM_FIELD_CONFIG.cardholderName.autoComplete}
             className={clsx(
-              'uppercase tracking-wider',
-              errors.cardholderName && 'border-red-300 focus:ring-red-500',
+              FORM_FIELD_CONFIG.cardholderName.className,
+              errors.cardholderName &&
+                FORM_FIELD_CONFIG.cardholderName.errorClass,
             )}
             disabled={disabled}
             required={showCardholderName}
           />
           {errors.cardholderName && (
-            <ErrorMessage id="cardholder-name-error">
+            <ErrorMessage id={`${FORM_FIELD_CONFIG.cardholderName.id}-error`}>
               {errors.cardholderName}
             </ErrorMessage>
           )}
@@ -227,54 +232,60 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
       {/* Expiry Date and CVC */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="expiry-date">Exp. Date</Label>
+          <Label htmlFor={FORM_FIELD_CONFIG.expiryDate.id}>
+            {FORM_FIELD_CONFIG.expiryDate.label}
+          </Label>
           <Input
-            id="expiry-date"
+            id={FORM_FIELD_CONFIG.expiryDate.id}
             size={size}
             icon={Calendar}
             value={formData.expiryDate}
             onChange={(e) =>
               updateFormData('expiryDate', formatExpiryDate(e.target.value))
             }
-            placeholder="MM/YY"
-            inputMode="numeric"
-            autoComplete="cc-exp"
-            maxLength={5}
+            placeholder={FORM_FIELD_CONFIG.expiryDate.placeholder}
+            inputMode={FORM_FIELD_CONFIG.expiryDate.inputMode}
+            autoComplete={FORM_FIELD_CONFIG.expiryDate.autoComplete}
+            maxLength={FORM_FIELD_CONFIG.expiryDate.maxLength}
             className={clsx(
-              'font-mono tracking-wider',
-              errors.expiryDate && 'border-red-300 focus:ring-red-500',
+              FORM_FIELD_CONFIG.expiryDate.className,
+              errors.expiryDate && FORM_FIELD_CONFIG.expiryDate.errorClass,
             )}
             disabled={disabled}
-            required
+            required={FORM_FIELD_CONFIG.expiryDate.required}
           />
           {errors.expiryDate && (
-            <ErrorMessage id="expiry-date-error">
+            <ErrorMessage id={`${FORM_FIELD_CONFIG.expiryDate.id}-error`}>
               {errors.expiryDate}
             </ErrorMessage>
           )}
         </div>
 
         <div>
-          <Label htmlFor="cvc">CVC</Label>
+          <Label htmlFor={FORM_FIELD_CONFIG.cvc.id}>
+            {FORM_FIELD_CONFIG.cvc.label}
+          </Label>
           <Input
-            id="cvc"
+            id={FORM_FIELD_CONFIG.cvc.id}
             size={size}
             icon={Lock}
             value={formData.cvc}
             onChange={(e) => updateFormData('cvc', formatCvc(e.target.value))}
-            placeholder={formatRules.cvcLength === 4 ? '1234' : '123'}
-            inputMode="numeric"
-            autoComplete="cc-csc"
+            placeholder={getCvcPlaceholder(formatRules.cvcLength)}
+            inputMode={FORM_FIELD_CONFIG.cvc.inputMode}
+            autoComplete={FORM_FIELD_CONFIG.cvc.autoComplete}
             maxLength={formatRules.cvcLength}
             className={clsx(
-              'font-mono tracking-wider text-center',
-              errors.cvc && 'border-red-300 focus:ring-red-500',
+              FORM_FIELD_CONFIG.cvc.className,
+              errors.cvc && FORM_FIELD_CONFIG.cvc.errorClass,
             )}
             disabled={disabled}
-            required
+            required={FORM_FIELD_CONFIG.cvc.required}
           />
           {errors.cvc && (
-            <ErrorMessage id="cvc-error">{errors.cvc}</ErrorMessage>
+            <ErrorMessage id={`${FORM_FIELD_CONFIG.cvc.id}-error`}>
+              {errors.cvc}
+            </ErrorMessage>
           )}
         </div>
       </div>

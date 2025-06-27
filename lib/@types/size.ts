@@ -343,6 +343,35 @@ const creditCardPreviewBottomRowSpacing = {
   lg: 'mt-auto',
 } as const;
 
+// Credit Card field widths (used by both CreditCardForm and CreditCardPreview)
+export const creditCardFieldWidths = {
+  expiryDate: '75px',
+  cvc: '55px',
+  cardNumber: '100%',
+  cardholderName: '100%',
+} as const;
+
+// Credit Card form field styling classes
+export const creditCardFormFieldClasses = {
+  cardNumber: 'font-mono tracking-wider',
+  cardholderName: 'uppercase tracking-wider',
+  expiryDate: 'font-mono tracking-wider',
+  cvc: 'font-mono tracking-wider text-center',
+} as const;
+
+// Credit Card form error styling classes
+export const creditCardFormErrorClasses = {
+  default: 'border-red-300 focus:ring-red-500',
+} as const;
+
+// Credit Card type color classes for icons
+export const creditCardTypeColors = {
+  visa: 'text-blue-600',
+  mastercard: 'text-red-500',
+  amex: 'text-green-600',
+  discover: 'text-orange-500',
+} as const;
+
 export const creditCardPreviewSizeClasses = creditCardSizeClasses;
 export const creditCardTextSizeClasses = creditCardPreviewTextSizeClasses;
 export const creditCardBottomRowSpacing = creditCardPreviewBottomRowSpacing;
