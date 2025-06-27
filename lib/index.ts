@@ -1,9 +1,11 @@
 import './index.css';
 
 // Atoms
+export { Alert } from './atoms/Alert/Alert';
 export { Avatar } from './atoms/Avatar/Avatar';
 export { Badge } from './atoms/Badge/Badge';
 export { Button } from './atoms/Button/Button';
+export { Card } from './atoms/Card/Card';
 export { Checkbox } from './atoms/Checkbox/Checkbox';
 export { Divider } from './atoms/Divider/Divider';
 export { ErrorMessage } from './atoms/ErrorMessage/ErrorMessage';
@@ -19,6 +21,7 @@ export { Radio } from './atoms/Radio/Radio';
 export { Spinner } from './atoms/Spinner/Spinner';
 export { StatusIndicator } from './atoms/StatusIndicator/StatusIndicator';
 export { Switch } from './atoms/Switch/Switch';
+export { Text } from './atoms/Text/Text';
 export { TextArea } from './atoms/TextArea/TextArea';
 export { TimeDisplay } from './atoms/TimeDisplay/TimeDisplay';
 export { Tooltip } from './atoms/Tooltip/Tooltip';
@@ -50,6 +53,16 @@ export type {
 } from './hooks/useCreditCardFormatting/useCreditCardFormatting';
 
 // Types
+export type { AlertProps, AlertIntent, AlertSize } from './atoms/Alert/Alert';
+export type { BadgeProps } from './atoms/Badge/Badge';
+export type { CardProps, CardVariant, CardSize } from './atoms/Card/Card';
+export type {
+  TextProps,
+  TextVariant,
+  TextWeight,
+  TextColor,
+  TextAlign,
+} from './atoms/Text/Text';
 export type {
   FormData,
   FormErrors,
@@ -64,13 +77,15 @@ export {
   getCardFormatRules,
   getCardPattern,
 } from './utils/cardPatterns';
-export type { Size } from './@types/size';
+export type { Size } from './@types/classes';
 
-// Size utilities
+// Style utilities
 export {
+  alertSizeClasses,
   avatarSizeClasses,
   badgeSizeClasses,
   buttonSizeClasses,
+  cardSizeClasses,
   checkboxSizeClasses,
   iconButtonSizeClasses,
   inputSizeClasses,
@@ -79,6 +94,8 @@ export {
   sizeClasses,
   spinnerSizeClasses,
   statusIndicatorComponentSizeClasses,
+  textComponentSizeClasses,
   userPreviewSizeClasses,
   usernameComponentSizeClasses,
-} from './@types/size';
+  TEXT_ALIGN_CLASSES,
+} from './@types/classes';
