@@ -316,4 +316,33 @@ const creditCardSizeClasses = {
   lg: 'w-96 h-64 p-6 pb-8',
 } as const;
 
+const creditCardPreviewTextSizeClasses = {
+  sm: {
+    brand: 'text-base',
+    number: 'text-base',
+    label: 'text-xs',
+    value: 'text-xs',
+  },
+  md: {
+    brand: 'text-lg',
+    number: 'text-lg',
+    label: 'text-xs',
+    value: 'text-sm',
+  },
+  lg: {
+    brand: 'text-xl',
+    number: 'text-xl',
+    label: 'text-sm',
+    value: 'text-base',
+  },
+} as const;
+
+const creditCardPreviewBottomRowSpacing = {
+  sm: 'mt-auto',
+  md: 'mt-auto',
+  lg: 'mt-auto',
+} as const;
+
 export const creditCardPreviewSizeClasses = creditCardSizeClasses;
+export const creditCardTextSizeClasses = creditCardPreviewTextSizeClasses;
+export const creditCardBottomRowSpacing = creditCardPreviewBottomRowSpacing;

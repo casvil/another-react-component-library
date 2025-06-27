@@ -1,44 +1,26 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+} from 'react';
 import clsx from 'clsx';
+
 import {
   CardType,
   detectCardType,
-  getCardFormatRules,
   getCardPattern,
 } from '../../utils/cardPatterns';
+import { useCreditCardFormatting } from '../../hooks/useCreditCardFormatting/useCreditCardFormatting';
 import type { Size } from '../../@types/size';
-import { creditCardPreviewSizeClasses } from '../../@types/size';
+import {
+  creditCardPreviewSizeClasses,
+  creditCardTextSizeClasses,
+  creditCardBottomRowSpacing,
+} from '../../@types/size';
 
 type FieldName = 'cardNumber' | 'cardholderName' | 'expiryDate' | 'cvc';
-
-// Static configurations moved outside component
-const textSizeClasses = {
-  sm: {
-    brand: 'text-base',
-    number: 'text-base',
-    label: 'text-xs',
-    value: 'text-xs',
-  },
-  md: {
-    brand: 'text-lg',
-    number: 'text-lg',
-    label: 'text-xs',
-    value: 'text-sm',
-  },
-  lg: {
-    brand: 'text-xl',
-    number: 'text-xl',
-    label: 'text-sm',
-    value: 'text-base',
-  },
-};
-
-// Size-specific spacing for bottom row
-const bottomRowSpacing = {
-  sm: 'mt-auto',
-  md: 'mt-auto',
-  lg: 'mt-auto',
-};
 
 export interface CreditCardPreviewProps {
   cardNumber?: string;
@@ -59,10 +41,37 @@ export interface CreditCardPreviewProps {
   showCvc?: boolean;
 }
 
+// Field configurations
+const FIELD_CONFIG = {
+  cardNumber: {
+    label: 'Card number',
+    placeholder: '•••• •••• •••• ••••',
+    inputMode: 'numeric' as const,
+  },
+  cardholderName: {
+    label: 'cardholder name',
+    placeholder: 'CARDHOLDER NAME',
+    inputMode: 'text' as const,
+  },
+  expiryDate: {
+    label: 'expiry date',
+    placeholder: 'MM/YY',
+    inputMode: 'numeric' as const,
+    maxLength: 5,
+  },
+} as const;
+
+// Helper function to get CVC config based on card type
+const getCvcConfig = (cardType: CardType | null) => ({
+  label: 'cvc',
+  placeholder: cardType === 'amex' ? '••••' : '•••',
+  inputMode: 'numeric' as const,
+  maxLength: cardType === 'amex' ? 4 : 3,
+});
+
 /**
  * CreditCardPreview molecule component.
  * An editable credit card visualization that matches real credit card design.
- * Users can click on fields to edit them directly on the card.
  */
 export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
   cardNumber = '',
@@ -78,12 +87,13 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
 }) => {
   const [editingField, setEditingField] = useState<FieldName | null>(null);
   const [tempValues, setTempValues] = useState({
-    cardNumber: cardNumber,
-    cardholderName: cardholderName,
-    expiryDate: expiryDate,
-    cvc: cvc,
+    cardNumber,
+    cardholderName,
+    expiryDate,
+    cvc,
   });
 
+  // Create input refs inside the component
   const inputRefs = useRef<
     Record<FieldName, React.RefObject<HTMLInputElement>>
   >({
@@ -93,243 +103,133 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     cvc: useRef<HTMLInputElement>(null),
   }).current;
 
-  // Detect card type from current card number (real-time)
-  const liveCardType = detectCardType(tempValues.cardNumber);
-  const detectedCardType = propCardType || liveCardType;
-  const formatRules = getCardFormatRules(detectedCardType);
+  // Use shared formatting hook
+  const {
+    formatCardNumber,
+    formatExpiryDate,
+    formatCvc,
+    formatCardholderName,
+    cardType: detectedCardType,
+  } = useCreditCardFormatting({
+    cardNumber: cardNumber,
+    cardType: propCardType,
+    mode: 'preview',
+  });
 
-  // Format card number with spaces
-  const formatCardNumber = useCallback(
-    (input: string): string => {
-      // Remove all non-digit characters
-      const cleanInput = input.replace(/\D/g, '');
+  // Get live card type from current input for UI updates
+  const liveCardType = useMemo(() => {
+    return propCardType || detectCardType(tempValues.cardNumber);
+  }, [tempValues.cardNumber, propCardType]);
 
-      // Limit to maximum card length for the detected type
-      const maxLength = formatRules.maxLength;
-      const truncatedInput = cleanInput.slice(0, maxLength);
-
-      let formatted = '';
-      let digitIndex = 0;
-
-      for (let i = 0; i < truncatedInput.length; i++) {
-        if (formatRules.gaps.includes(digitIndex) && formatted.length > 0) {
-          formatted += ' ';
-        }
-        formatted += truncatedInput[i];
-        digitIndex++;
-      }
-
-      return formatted;
-    },
-    [formatRules.gaps, formatRules.maxLength],
+  // Memoize formatters to avoid useCallback dependency issues
+  const formatters = useMemo(
+    () => ({
+      cardNumber: formatCardNumber,
+      cardholderName: formatCardholderName,
+      expiryDate: formatExpiryDate,
+      cvc: formatCvc,
+    }),
+    [formatCardNumber, formatCardholderName, formatExpiryDate, formatCvc],
   );
 
-  // Format expiry date as MM/YY with basic validation
-  const formatExpiryDate = useCallback((input: string): string => {
-    const cleanInput = input.replace(/\D/g, '').slice(0, 4);
-    if (cleanInput.length >= 2) {
-      const month = cleanInput.slice(0, 2);
-      const year = cleanInput.slice(2);
+  // Current props mapping
+  const currentProps = { cardNumber, cardholderName, expiryDate, cvc };
+  const currentTextSizes = creditCardTextSizeClasses[size];
+  const cardPattern = getCardPattern(liveCardType);
 
-      // Basic month validation (01-12)
-      const monthNum = parseInt(month, 10);
-      const validMonth = monthNum >= 1 && monthNum <= 12 ? month : '12';
-
-      return `${validMonth}/${year}`;
-    }
-    return cleanInput;
-  }, []);
-
-  // Format CVC (digits only)
-  const formatCvc = useCallback(
-    (input: string): string => {
-      return input.replace(/\D/g, '').slice(0, formatRules.cvcLength);
-    },
-    [formatRules.cvcLength],
-  );
-
-  // Handle field click to start editing
+  // Event handlers
   const handleFieldClick = useCallback(
-    (field: FieldName) => {
-      if (!editable) return;
-      setEditingField(field);
-    },
+    (field: FieldName) => editable && setEditingField(field),
     [editable],
   );
 
-  // Handle input changes
   const handleInputChange = useCallback(
     (field: FieldName, value: string) => {
-      let formattedValue = value;
-
-      switch (field) {
-        case 'cardNumber': {
-          // Only allow digits and spaces, then check digit count before formatting
-          const cleanValue = value.replace(/[^\d\s]/g, '');
-          const digitCount = cleanValue.replace(/\D/g, '').length;
-
-          // Simple validation: prevent extending complete 16-digit cards
-          // This covers the most common case while allowing normal typing for incomplete cards
-          const currentDigitCount = tempValues.cardNumber.replace(
-            /\D/g,
-            '',
-          ).length;
-          const isComplete16DigitCard = currentDigitCount === 16;
-          const isAmexComplete =
-            currentDigitCount === 15 && detectedCardType === 'amex';
-          const isDinersComplete =
-            currentDigitCount === 14 && detectedCardType === 'diners';
-
-          const isCompleteCard =
-            isComplete16DigitCard || isAmexComplete || isDinersComplete;
-
-          // Only prevent adding digits to complete cards
-          if (isCompleteCard && digitCount > currentDigitCount) {
-            formattedValue = tempValues.cardNumber;
-          } else {
-            // Allow normal formatting within maximum limits
-            const allowedDigits = cleanValue
-              .replace(/\D/g, '')
-              .slice(0, formatRules.maxLength);
-            formattedValue = formatCardNumber(allowedDigits);
-          }
-          break;
-        }
-        case 'cardholderName': {
-          // Only allow letters, spaces, hyphens, and apostrophes
-          formattedValue = value
-            .replace(/[^a-zA-Z\s\-']/g, '')
-            .toUpperCase()
-            .slice(0, 26); // Reasonable limit for cardholder names
-          break;
-        }
-        case 'expiryDate': {
-          formattedValue = formatExpiryDate(value);
-          break;
-        }
-        case 'cvc': {
-          formattedValue = formatCvc(value);
-          break;
-        }
-      }
-
+      // Format the value and ensure it doesn't exceed max length
+      const formattedValue = formatters[field](value);
       setTempValues((prev) => ({ ...prev, [field]: formattedValue }));
     },
-    [formatCardNumber, formatExpiryDate, formatCvc, formatRules.maxLength],
+    [formatters],
   );
 
-  // Handle input blur to save changes
-  const handleInputBlur = useCallback(
-    (field: FieldName) => {
-      setEditingField(null);
+  const handleInputBlur = useCallback(() => {
+    setEditingField(null);
+    onChange?.({ ...tempValues, cardType: liveCardType });
+  }, [tempValues, onChange, liveCardType]);
 
-      if (onChange) {
-        const newCardType =
-          field === 'cardNumber' && tempValues.cardNumber.trim()
-            ? detectCardType(tempValues.cardNumber)
-            : tempValues.cardNumber.trim()
-              ? detectCardType(tempValues.cardNumber)
-              : null;
-
-        // Ensure we pass optional properties to match the onChange interface
-        onChange({
-          cardNumber: tempValues.cardNumber,
-          cardholderName: tempValues.cardholderName,
-          expiryDate: tempValues.expiryDate,
-          cvc: tempValues.cvc,
-          cardType: newCardType,
-        });
-      }
-    },
-    [tempValues, onChange],
-  );
-
-  // Handle enter key to save
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent, field: FieldName) => {
-      if (e.key === 'Enter') {
-        handleInputBlur(field);
-      }
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') handleInputBlur();
       if (e.key === 'Escape') {
         setEditingField(null);
-        // Reset temp values to original
-        setTempValues({
-          cardNumber: cardNumber,
-          cardholderName: cardholderName,
-          expiryDate: expiryDate,
-          cvc: cvc,
-        });
+        setTempValues({ cardNumber, cardholderName, expiryDate, cvc });
       }
     },
     [handleInputBlur, cardNumber, cardholderName, expiryDate, cvc],
   );
 
-  // Focus input when editing starts
+  // Effects
   useEffect(() => {
-    if (editingField && inputRefs[editingField]?.current) {
-      const input = inputRefs[editingField].current;
-      input?.focus();
-      input?.select();
+    if (editingField) {
+      inputRefs[editingField].current?.focus();
+      inputRefs[editingField].current?.select();
     }
   }, [editingField]);
 
-  // Sync with prop changes
   useEffect(() => {
-    setTempValues({
-      cardNumber: cardNumber,
-      cardholderName: cardholderName,
-      expiryDate: expiryDate,
-      cvc: cvc,
-    });
+    setTempValues({ cardNumber, cardholderName, expiryDate, cvc });
   }, [cardNumber, cardholderName, expiryDate, cvc]);
 
-  const currentTextSizes = textSizeClasses[size];
-
-  // Get card pattern for styling
-  const cardPattern = getCardPattern(detectedCardType);
-
-  const getCardBrandDisplay = () => {
-    return (
-      cardPattern?.displayName || detectedCardType?.toUpperCase() || 'CARD'
-    );
-  };
-
-  const getCardGradient = () => {
-    return cardPattern?.gradient || 'from-slate-800 via-slate-700 to-teal-600';
-  };
-
-  const renderEditableField = (
-    field: FieldName,
-    displayValue: string,
-    placeholder: string,
-    inputMode: 'text' | 'numeric' = 'text',
-    maxLength?: number,
-  ) => {
+  // Render field function
+  const renderField = (field: FieldName, displayValue: string) => {
+    const config =
+      field === 'cvc' ? getCvcConfig(liveCardType) : FIELD_CONFIG[field];
     const isEditing = editingField === field;
+    const shouldShowPlaceholder = !currentProps[field] || !displayValue.trim();
+    const valueToShow = shouldShowPlaceholder
+      ? config.placeholder
+      : displayValue;
 
-    // Use placeholder if no actual value is provided via props OR if displayValue is empty after formatting
-    const shouldShowPlaceholder =
-      (field === 'cardNumber' && (!cardNumber || !displayValue.trim())) ||
-      (field === 'cardholderName' && !cardholderName) ||
-      (field === 'expiryDate' && !expiryDate) ||
-      (field === 'cvc' && !cvc);
+    // Calculate maxLength for card number field
+    let maxLength = config.maxLength;
+    if (field === 'cardNumber' && !maxLength) {
+      // For card numbers, use the same logic as the formatting hook
+      const currentCardType = detectedCardType || 'visa'; // fallback to visa
+      const cardPattern = getCardPattern(currentCardType);
 
-    const valueToShow = shouldShowPlaceholder ? placeholder : displayValue;
+      if (cardPattern) {
+        let maxDigits = Math.max(...cardPattern.lengths); // default to max
 
-    const getFieldLabel = (field: FieldName): string => {
-      switch (field) {
-        case 'cardNumber':
-          return 'Card number';
-        case 'cardholderName':
-          return 'Cardholder name';
-        case 'expiryDate':
-          return 'Expiry date';
-        case 'cvc':
-          return 'CVC security code';
-        default:
-          return 'Field';
+        // If we have an existing card number, use its length to determine appropriate limit
+        if (cardNumber) {
+          const originalCleanNumber = cardNumber.replace(/\D/g, '');
+          const originalLength = originalCleanNumber.length;
+
+          if (cardPattern.lengths.length > 1) {
+            const validLengths = cardPattern.lengths.sort((a, b) => a - b);
+
+            // If the original card has a valid length, use that as the limit
+            if (validLengths.includes(originalLength)) {
+              maxDigits = originalLength;
+            } else {
+              // If original length is not valid, find the next valid length
+              maxDigits =
+                validLengths.find((len) => len >= originalLength) ||
+                validLengths[validLengths.length - 1];
+            }
+          }
+        } else {
+          // For new/empty cards, limit to 16 digits (most common) instead of 19
+          maxDigits = 16;
+        }
+
+        const spaceCount = cardPattern.gaps.length;
+        maxLength = maxDigits + spaceCount;
+      } else {
+        // Fallback: 16 digits + 3 spaces = 19 characters (instead of 22)
+        maxLength = 19;
       }
-    };
+    }
 
     if (isEditing) {
       return (
@@ -337,33 +237,65 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
           ref={inputRefs[field]}
           value={tempValues[field]}
           onChange={(e) => handleInputChange(field, e.target.value)}
-          onBlur={() => handleInputBlur(field)}
-          onKeyDown={(e) => handleKeyDown(e, field)}
-          placeholder={placeholder}
-          inputMode={inputMode}
-          {...(field !== 'cardNumber' && { maxLength })}
-          aria-label={`Edit ${getFieldLabel(field)}`}
-          role="textbox"
-          className="bg-transparent border-none outline-none text-white font-mono tracking-wider w-full resize-none"
-          style={{ fontSize: 'inherit', fontFamily: 'inherit' }}
+          onBlur={handleInputBlur}
+          onKeyDown={handleKeyDown}
+          placeholder={config.placeholder}
+          inputMode={config.inputMode}
+          maxLength={maxLength}
+          aria-label={`Edit ${config.label}`}
+          className="bg-transparent border-none outline-none text-white font-mono tracking-wider min-h-[1.25em]"
+          style={{
+            fontSize: 'inherit',
+            fontFamily: 'inherit',
+            width:
+              field === 'expiryDate'
+                ? '75px'
+                : field === 'cvc'
+                  ? '55px'
+                  : field === 'cardNumber'
+                    ? '100%'
+                    : '100%',
+          }}
         />
       );
     }
 
     if (!editable) {
-      return <span className="font-mono tracking-wider">{valueToShow}</span>;
+      return (
+        <span
+          className="font-mono tracking-wider min-h-[1.25em] inline-block"
+          style={{
+            width:
+              field === 'expiryDate'
+                ? '75px'
+                : field === 'cvc'
+                  ? '55px'
+                  : field === 'cardNumber'
+                    ? '100%'
+                    : '100%',
+          }}
+        >
+          {valueToShow}
+        </span>
+      );
     }
 
     return (
       <button
         type="button"
         onClick={() => handleFieldClick(field)}
-        className={clsx(
-          'font-mono tracking-wider text-left',
-          'cursor-pointer hover:bg-white/10 rounded px-1 -mx-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20',
-        )}
-        aria-label={`Edit ${getFieldLabel(field)}`}
-        tabIndex={0}
+        className="font-mono tracking-wider text-left cursor-pointer hover:bg-white/10 rounded px-1 -mx-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20 min-h-[1.25em] inline-block"
+        aria-label={`Edit ${config.label}`}
+        style={{
+          width:
+            field === 'expiryDate'
+              ? '75px'
+              : field === 'cvc'
+                ? '55px'
+                : field === 'cardNumber'
+                  ? '100%'
+                  : '100%',
+        }}
       >
         {valueToShow}
       </button>
@@ -375,7 +307,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
       role="article"
       className={clsx(
         'bg-gradient-to-br rounded-xl text-white relative overflow-hidden shadow-xl',
-        getCardGradient(),
+        cardPattern?.gradient || 'from-slate-800 via-slate-700 to-teal-600',
         creditCardPreviewSizeClasses[size],
         className,
       )}
@@ -384,7 +316,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
         {/* Card brand */}
         <div className="flex justify-between items-start mb-8">
           <div className={clsx('font-bold italic', currentTextSizes.brand)}>
-            {getCardBrandDisplay()}
+            {cardPattern?.displayName || liveCardType?.toUpperCase() || 'CARD'}
           </div>
         </div>
 
@@ -394,77 +326,56 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
             Card Number
           </div>
           <div className={currentTextSizes.number}>
-            {renderEditableField(
-              'cardNumber',
-              formatCardNumber(tempValues.cardNumber),
-              '•••• •••• •••• ••••',
-              'numeric',
-              undefined,
-            )}
+            {renderField('cardNumber', formatCardNumber(tempValues.cardNumber))}
           </div>
-          <div className="w-full h-px bg-gray-400 mt-2"></div>
+          <div className="w-full h-px bg-gray-400 mt-2" />
         </div>
 
         {/* Bottom row */}
         <div
           className={clsx(
             'flex justify-between items-end',
-            bottomRowSpacing[size],
+            creditCardBottomRowSpacing[size],
           )}
         >
+          {/* Cardholder */}
           <div className="flex-1 min-w-0 pr-4">
             <div className={clsx('text-gray-300 mb-1', currentTextSizes.label)}>
               Card Holder
             </div>
             <div className={clsx('uppercase truncate', currentTextSizes.value)}>
-              {renderEditableField(
-                'cardholderName',
-                tempValues.cardholderName,
-                'CARDHOLDER NAME',
-              )}
+              {renderField('cardholderName', tempValues.cardholderName)}
             </div>
-            <div className="w-2/3 h-px bg-gray-400 mt-1"></div>
+            <div className="w-2/3 h-px bg-gray-400 mt-1" />
           </div>
-          <div className="text-left mx-4 flex-shrink-0">
+
+          {/* Expiry */}
+          <div className="text-left mx-4 flex-shrink-0 w-20">
             <div className={clsx('text-gray-300 mb-1', currentTextSizes.label)}>
               Exp. Date
             </div>
             <div className={currentTextSizes.value}>
-              {renderEditableField(
-                'expiryDate',
-                tempValues.expiryDate,
-                'MM/YY',
-                'numeric',
-                5,
-              )}
+              {renderField('expiryDate', tempValues.expiryDate)}
             </div>
-            <div className="w-full h-px bg-gray-400 mt-1"></div>
+            <div className="w-full h-px bg-gray-400 mt-1" />
           </div>
+
+          {/* CVC */}
           {showCvc && (
-            <div className="text-left flex-shrink-0">
+            <div className="text-left flex-shrink-0 w-16">
               <div
                 className={clsx('text-gray-300 mb-1', currentTextSizes.label)}
               >
                 CCV
               </div>
               <div className={currentTextSizes.value}>
-                {renderEditableField(
-                  'cvc',
-                  tempValues.cvc,
-                  formatRules.cvcLength === 4 ? '••••' : '•••',
-                  'numeric',
-                  formatRules.cvcLength,
-                )}
+                {renderField('cvc', tempValues.cvc)}
               </div>
-              <div className="w-full h-px bg-gray-400 mt-1"></div>
+              <div className="w-full h-px bg-gray-400 mt-1" />
             </div>
           )}
         </div>
       </div>
-
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-white/10 to-transparent rounded-full transform translate-x-8 -translate-y-8"></div>
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-white/5 to-transparent rounded-full transform -translate-x-4 translate-y-4"></div>
     </div>
   );
 };
