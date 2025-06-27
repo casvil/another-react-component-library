@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import clsx from 'clsx';
 import CreditCard from 'lucide-react/icons/credit-card';
 import Calendar from 'lucide-react/icons/calendar';
@@ -8,12 +8,9 @@ import User from 'lucide-react/icons/user';
 import { Input } from '../../atoms/Input/Input';
 import { Label } from '../../atoms/Label/Label';
 import { ErrorMessage } from '../../atoms/ErrorMessage/ErrorMessage';
-import {
-  CardType,
-  detectCardType,
-  getCardFormatRules,
-} from '../../utils/cardPatterns';
+import { useCreditCardFormatting } from '../../hooks/useCreditCardFormatting/useCreditCardFormatting';
 import type { Size } from '../../@types/size';
+import type { CardType } from '../../utils/cardPatterns';
 
 export interface CreditCardFormData {
   cardNumber: string;
@@ -60,94 +57,21 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
     Partial<Record<keyof CreditCardFormData, string>>
   >({});
 
-  // Detect card type from card number
-  const cardType = useMemo((): CardType | null => {
-    return detectCardType(formData.cardNumber);
-  }, [formData.cardNumber]);
-
-  // Get formatting rules for current card type
-  const formatRules = useMemo(() => {
-    return getCardFormatRules(cardType);
-  }, [cardType]);
-
-  // Format card number with spaces
-  const formatCardNumber = useCallback(
-    (input: string): string => {
-      const cleanInput = input.replace(/\D/g, '');
-      let formatted = '';
-      let digitIndex = 0;
-
-      for (let i = 0; i < cleanInput.length; i++) {
-        if (formatRules.gaps.includes(digitIndex) && formatted.length > 0) {
-          formatted += ' ';
-        }
-        formatted += cleanInput[i];
-        digitIndex++;
-      }
-
-      return formatted;
-    },
-    [formatRules.gaps],
-  );
-
-  // Format expiry date as MM/YY
-  const formatExpiryDate = useCallback((input: string): string => {
-    const cleanInput = input.replace(/\D/g, '').slice(0, 4);
-    if (cleanInput.length >= 2) {
-      return `${cleanInput.slice(0, 2)}/${cleanInput.slice(2)}`;
-    }
-    return cleanInput;
-  }, []);
-
-  // Format CVC (digits only)
-  const formatCvc = useCallback(
-    (input: string): string => {
-      return input.replace(/\D/g, '').slice(0, formatRules.cvcLength);
-    },
-    [formatRules.cvcLength],
-  );
-
-  // Validate card number using Luhn algorithm
-  const validateCardNumber = useCallback((cardNumber: string): boolean => {
-    const cleanNumber = cardNumber.replace(/\s/g, '');
-    if (cleanNumber.length < 13 || cleanNumber.length > 19) return false;
-
-    let sum = 0;
-    let isEven = false;
-
-    for (let i = cleanNumber.length - 1; i >= 0; i--) {
-      let digit = parseInt(cleanNumber[i]);
-
-      if (isEven) {
-        digit *= 2;
-        if (digit > 9) digit -= 9;
-      }
-
-      sum += digit;
-      isEven = !isEven;
-    }
-
-    return sum % 10 === 0;
-  }, []);
-
-  // Validate expiry date
-  const validateExpiryDate = useCallback((expiryDate: string): boolean => {
-    const cleanValue = expiryDate.replace(/\D/g, '');
-    if (cleanValue.length !== 4) return false;
-
-    const month = parseInt(cleanValue.slice(0, 2));
-    const year = parseInt(cleanValue.slice(2, 4));
-
-    if (month < 1 || month > 12) return false;
-
-    const now = new Date();
-    const currentYear = now.getFullYear() % 100;
-    const currentMonth = now.getMonth() + 1;
-
-    return (
-      year > currentYear || (year === currentYear && month >= currentMonth)
-    );
-  }, []);
+  // Use the shared formatting and validation hook
+  const {
+    formatCardNumber,
+    formatExpiryDate,
+    formatCvc,
+    formatCardholderName,
+    validateCardNumber,
+    validateExpiryDate,
+    validateCvc,
+    cardType,
+    formatRules,
+  } = useCreditCardFormatting({
+    cardNumber: formData.cardNumber,
+    mode: 'form',
+  });
 
   // Update form data and trigger validation
   const updateFormData = useCallback(
@@ -174,12 +98,12 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
     [formData, cardType, errors, onChange],
   );
 
-  // Handle form submission
+  // Handle form submission with validation
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
 
-      // Validate all fields
+      // Validate all fields using the hook's validation functions
       const newErrors: Partial<Record<keyof CreditCardFormData, string>> = {};
 
       if (!formData.cardNumber) {
@@ -200,7 +124,7 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
 
       if (!formData.cvc) {
         newErrors.cvc = 'CVC is required';
-      } else if (formData.cvc.length !== formatRules.cvcLength) {
+      } else if (!validateCvc(formData.cvc, cardType)) {
         newErrors.cvc = `CVC must be ${formatRules.cvcLength} digits`;
       }
 
@@ -216,6 +140,7 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
       showCardholderName,
       validateCardNumber,
       validateExpiryDate,
+      validateCvc,
       formatRules.cvcLength,
       cardType,
       onSubmit,
@@ -250,7 +175,9 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
           placeholder="1234 5678 9012 3456"
           inputMode="numeric"
           autoComplete="cc-number"
-          maxLength={formatRules.maxLength}
+          maxLength={
+            formatRules.maxLength + Math.floor(formatRules.maxLength / 4)
+          } // Account for spaces
           className={clsx(
             'font-mono tracking-wider',
             errors.cardNumber && 'border-red-300 focus:ring-red-500',
@@ -275,7 +202,10 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
             icon={User}
             value={formData.cardholderName}
             onChange={(e) =>
-              updateFormData('cardholderName', e.target.value.toUpperCase())
+              updateFormData(
+                'cardholderName',
+                formatCardholderName(e.target.value),
+              )
             }
             placeholder="VICTOR SAULER"
             autoComplete="cc-name"
