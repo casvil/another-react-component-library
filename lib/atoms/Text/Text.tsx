@@ -1,7 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { textComponentSizeClasses, TEXT_ALIGN_CLASSES } from '../../@types/classes';
+import {
+  textComponentSizeClasses,
+  textAlignClasses,
+} from '../../@types/classes';
 
 export type TextVariant =
   | 'h1'
@@ -70,7 +73,7 @@ export const Text: React.FC<TextProps> = ({
     textComponentSizeClasses.variant[variant],
     weightClass,
     textComponentSizeClasses.color[color],
-    TEXT_ALIGN_CLASSES[align],
+    textAlignClasses[align],
     {
       truncate: truncate,
     },
