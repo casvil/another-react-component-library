@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { CreditCardPreview } from './CreditCardPreview';
@@ -269,6 +269,176 @@ export const AllCardNetworks: Story = {
       description: {
         story:
           'All supported card networks with their unique gradient styling and formatting rules.',
+      },
+    },
+  },
+};
+
+export const AutoCyclingDemo: Story = {
+  render: () => {
+    const cardData = [
+      {
+        type: 'VISA',
+        cardNumber: testCardNumbers.visa,
+        name: 'JOHN SMITH',
+        expiry: '12/25',
+        cvc: '123',
+      },
+      {
+        type: 'MASTERCARD',
+        cardNumber: testCardNumbers.mastercard,
+        name: 'JANE DOE',
+        expiry: '06/27',
+        cvc: '456',
+      },
+      {
+        type: 'AMERICAN EXPRESS',
+        cardNumber: testCardNumbers.amex,
+        name: 'ALEX JOHNSON',
+        expiry: '03/26',
+        cvc: '1234',
+      },
+      {
+        type: 'DISCOVER',
+        cardNumber: testCardNumbers.discover,
+        name: 'SARAH WILSON',
+        expiry: '09/28',
+        cvc: '789',
+      },
+      {
+        type: 'DINERS CLUB',
+        cardNumber: testCardNumbers.diners,
+        name: 'MIKE BROWN',
+        expiry: '11/24',
+        cvc: '321',
+      },
+      {
+        type: 'JCB',
+        cardNumber: testCardNumbers.jcb,
+        name: 'YUKI TANAKA',
+        expiry: '04/29',
+        cvc: '567',
+      },
+      {
+        type: 'UNIONPAY',
+        cardNumber: testCardNumbers.unionpay,
+        name: 'LI WEI',
+        expiry: '07/26',
+        cvc: '890',
+      },
+      {
+        type: 'MAESTRO',
+        cardNumber: testCardNumbers.maestro,
+        name: 'ELENA ROSSI',
+        expiry: '02/25',
+        cvc: '234',
+      },
+      {
+        type: 'ELO',
+        cardNumber: testCardNumbers.elo,
+        name: 'CARLOS SILVA',
+        expiry: '08/27',
+        cvc: '345',
+      },
+      {
+        type: 'MIR',
+        cardNumber: testCardNumbers.mir,
+        name: 'IVAN PETROV',
+        expiry: '10/26',
+        cvc: '678',
+      },
+      {
+        type: 'RUPAY',
+        cardNumber: testCardNumbers.rupay,
+        name: 'PRIYA SHARMA',
+        expiry: '05/28',
+        cvc: '901',
+      },
+    ];
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setIsAnimating(true);
+        setTimeout(() => {
+          setCurrentIndex((prev) => (prev + 1) % cardData.length);
+          setIsAnimating(false);
+        }, 200);
+      }, 2500);
+
+      return () => clearInterval(interval);
+    }, [cardData.length]);
+
+    const currentCard = cardData[currentIndex];
+
+    return (
+      <div className="flex flex-col items-center space-y-6 p-8 max-w-lg mx-auto">
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl font-bold text-gray-900">
+            Auto-Cycling Card Demo
+          </h2>
+          <p className="text-gray-600">
+            Showcasing all {cardData.length} supported card networks
+          </p>
+        </div>
+
+        <div className="flex items-center space-x-4 text-sm text-gray-500">
+          <span>Currently showing:</span>
+          <div className="bg-blue-100 px-3 py-1 rounded-full">
+            <span className="font-semibold text-blue-800">
+              {currentCard.type}
+            </span>
+          </div>
+          <span>
+            ({currentIndex + 1}/{cardData.length})
+          </span>
+        </div>
+
+        <div
+          className={`transition-all duration-200 ${
+            isAnimating ? 'opacity-50 scale-95' : 'opacity-100 scale-100'
+          }`}
+        >
+          <CreditCardPreview
+            cardNumber={currentCard.cardNumber}
+            cardholderName={currentCard.name}
+            expiryDate={currentCard.expiry}
+            cvc={currentCard.cvc}
+            editable={false}
+            size="lg"
+            className="shadow-xl"
+          />
+        </div>
+
+        <div className="flex space-x-1">
+          {cardData.map((_, index) => (
+            <div
+              key={index}
+              className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                index === currentIndex ? 'bg-blue-500' : 'bg-gray-300'
+              }`}
+            />
+          ))}
+        </div>
+
+        <div className="text-center text-xs text-gray-500 max-w-md">
+          <p>
+            Cards automatically cycle every 2.5 seconds. Each card shows the
+            correct formatting, CVC length, and network-specific styling
+            patterns.
+          </p>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story:
+          'An interactive demonstration that automatically cycles through all 11 supported card networks, showcasing real-time card type detection, formatting, and network-specific styling.',
       },
     },
   },
