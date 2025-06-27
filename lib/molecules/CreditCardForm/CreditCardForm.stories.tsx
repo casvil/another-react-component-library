@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import React from 'react';
 
 import { CreditCardForm, CreditCardFormData } from './CreditCardForm';
 import { Button } from '../../atoms/Button/Button';
+import { CreditCardPreview } from '../CreditCardPreview/CreditCardPreview';
 
 const meta = {
   title: 'molecules/CreditCardForm',
@@ -159,59 +161,17 @@ export const PaymentCardPreview: Story = {
 
     return (
       <div className="max-w-md mx-auto space-y-6">
-        {/* Card preview section matching the image design */}
-        <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-teal-600 rounded-xl p-6 text-white relative overflow-hidden shadow-xl">
-          <div className="relative z-10">
-            {/* Card brand */}
-            <div className="flex justify-between items-start mb-8">
-              <div className="text-blue-400 font-bold text-lg italic">
-                {formData.cardType?.toUpperCase() === 'VISA' ? (
-                  <span className="text-blue-300">VISA</span>
-                ) : (
-                  formData.cardType?.toUpperCase() || 'CARD'
-                )}
-              </div>
-            </div>
-
-            {/* Card number */}
-            <div className="mb-6">
-              <div className="text-xs text-gray-300 mb-1">Card Number</div>
-              <div className="font-mono text-lg tracking-wider">
-                {formData.cardNumber || '1234 1234 1234 1234'}
-              </div>
-              <div className="w-full h-px bg-gray-400 mt-2"></div>
-            </div>
-
-            {/* Bottom row */}
-            <div className="flex justify-between items-end">
-              <div className="flex-1">
-                <div className="text-xs text-gray-300 mb-1">Card Holder</div>
-                <div className="font-mono text-sm tracking-wider uppercase">
-                  {formData.cardholderName || 'VICTOR SAULER'}
-                </div>
-                <div className="w-3/4 h-px bg-gray-400 mt-1"></div>
-              </div>
-              <div className="text-right mx-4">
-                <div className="text-xs text-gray-300 mb-1">Exp. Date</div>
-                <div className="font-mono text-sm tracking-wider">
-                  {formData.expiryDate || '10/25'}
-                </div>
-                <div className="w-full h-px bg-gray-400 mt-1"></div>
-              </div>
-              <div className="text-right">
-                <div className="text-xs text-gray-300 mb-1">CCV</div>
-                <div className="font-mono text-sm tracking-wider">
-                  {formData.cvc || '123'}
-                </div>
-                <div className="w-full h-px bg-gray-400 mt-1"></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Background decoration */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-white/10 to-transparent rounded-full transform translate-x-8 -translate-y-8"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-white/5 to-transparent rounded-full transform -translate-x-4 translate-y-4"></div>
-        </div>
+        {/* Card preview using the actual CreditCardPreview component */}
+        <CreditCardPreview
+          cardNumber={formData.cardNumber}
+          cardholderName={formData.cardholderName}
+          expiryDate={formData.expiryDate}
+          cvc={formData.cvc}
+          cardType={formData.cardType}
+          editable={false}
+          size="md"
+          className="shadow-xl"
+        />
 
         {/* Form */}
         <div className="bg-white p-6 rounded-lg border shadow-sm">
@@ -224,6 +184,15 @@ export const PaymentCardPreview: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        story:
+          'A complete payment card form with live preview. The card preview updates in real-time as you type in the form below.',
+      },
+    },
   },
 };
 
