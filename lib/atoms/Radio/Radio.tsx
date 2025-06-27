@@ -4,8 +4,8 @@ import React from 'react';
 
 import { Label } from '../Label/Label';
 import { useStableId } from '../../hooks/useStableId/useStableId';
-import type { Size } from '../../@types/size';
-import { radioSizeClasses } from '../../@types/size';
+import type { Size } from '../../@types/classes';
+import { radioSizeClasses } from '../../@types/classes';
 
 export interface RadioProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {

@@ -11,8 +11,8 @@ import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
 import { useStableId } from '../../hooks/useStableId/useStableId';
-import type { Size } from '../../@types/size';
-import { switchSizeClasses, textSizeClasses } from '../../@types/size';
+import type { Size } from '../../@types/classes';
+import { switchSizeClasses, textSizeClasses } from '../../@types/classes';
 
 export interface SwitchProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {

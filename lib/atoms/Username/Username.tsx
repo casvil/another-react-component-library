@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import type { Size } from '../../@types/size';
-import { usernameComponentSizeClasses } from '../../@types/size';
+import type { Size } from '../../@types/classes';
+import { usernameComponentSizeClasses } from '../../@types/classes';
 
 export interface UsernameProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: string;

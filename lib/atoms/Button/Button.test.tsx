@@ -4,7 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import type { LucideIcon } from 'lucide-icon-type';
 
 import { Button } from './Button';
-import { buttonSizeClasses } from '../../@types/size';
+import { buttonSizeClasses } from '../../@types/classes';
 
 // Mock icon components for testing
 const MockArrowLeft: LucideIcon = (props) => (

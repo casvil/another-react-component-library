@@ -2,12 +2,12 @@ import React, { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 import type { LucideIcon } from 'lucide-icon-type';
 
-import type { Size } from '../../@types/size';
+import type { Size } from '../../@types/classes';
 import {
   inputSizeClasses,
   iconSizeValues,
   inputIconSizeClasses,
-} from '../../@types/size';
+} from '../../@types/classes';
 
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {

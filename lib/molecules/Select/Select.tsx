@@ -12,7 +12,7 @@ import clsx from 'clsx';
 import { Input } from '../../atoms/Input/Input';
 import { Label } from '../../atoms/Label/Label';
 import { useStableId } from '../../hooks/useStableId/useStableId';
-import type { Size } from '../../@types/size';
+import type { Size } from '../../@types/classes';
 
 export interface SelectOption {
   value: string;

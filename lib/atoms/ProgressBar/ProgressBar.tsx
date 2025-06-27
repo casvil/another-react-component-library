@@ -2,8 +2,8 @@ import React from 'react';
 import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
-import type { Size } from '../../@types/size';
-import { progressBarSizeClasses } from '../../@types/size';
+import type { Size } from '../../@types/classes';
+import { progressBarSizeClasses } from '../../@types/classes';
 
 export interface ProgressBarProps {
   value: number; // 0 to 100

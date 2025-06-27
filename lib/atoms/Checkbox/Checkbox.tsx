@@ -3,8 +3,8 @@ import clsx from 'clsx';
 
 import { Label } from '../Label/Label';
 import { useStableId } from '../../hooks/useStableId/useStableId';
-import type { Size } from '../../@types/size';
-import { checkboxSizeClasses } from '../../@types/size';
+import type { Size } from '../../@types/classes';
+import { checkboxSizeClasses } from '../../@types/classes';
 
 export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {

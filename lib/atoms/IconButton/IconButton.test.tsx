@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import type { LucideIcon } from 'lucide-icon-type';
 
 import { IconButton } from './IconButton';
-import { iconButtonSizeClasses } from '../../@types/size';
+import { iconButtonSizeClasses } from '../../@types/classes';
 
 // Mock icon component for testing
 const MockIcon: LucideIcon = (props) => (

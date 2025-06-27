@@ -2,8 +2,8 @@ import React from 'react';
 import clsx from 'clsx';
 import LoaderCircle from 'lucide-react/icons/loader-circle';
 
-import type { Size } from '../../@types/size';
-import { spinnerSizeClasses } from '../../@types/size';
+import type { Size } from '../../@types/classes';
+import { spinnerSizeClasses } from '../../@types/classes';
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: Size;

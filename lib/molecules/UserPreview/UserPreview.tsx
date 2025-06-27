@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { Avatar } from '../../atoms/Avatar/Avatar';
 import { Username } from '../../atoms/Username/Username';
 import { StatusIndicator } from '../../atoms/StatusIndicator/StatusIndicator';
-import type { Size } from '../../@types/size';
-import { userPreviewSizeClasses } from '../../@types/size';
+import type { Size } from '../../@types/classes';
+import { userPreviewSizeClasses } from '../../@types/classes';
 import type { StatusType } from '../../atoms/StatusIndicator/StatusIndicator';
 
 export interface UserPreviewProps extends React.HTMLAttributes<HTMLDivElement> {

@@ -10,7 +10,7 @@ import {
   creditCardFormFieldClasses,
   creditCardFormErrorClasses,
   creditCardTypeColors,
-} from '../../@types/size';
+} from '../../@types/classes';
 
 // Static field configurations for credit card UI components
 export const STATIC_FIELD_CONFIG = {

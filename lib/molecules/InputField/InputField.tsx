@@ -4,7 +4,7 @@ import { ErrorMessage } from '../../atoms/ErrorMessage/ErrorMessage';
 import { HelperText } from '../../atoms/HelperText/HelperText';
 import { useStableId } from '../../hooks/useStableId/useStableId';
 
-import type { Size } from '../../@types/size';
+import type { Size } from '../../@types/classes';
 
 export interface InputFieldProps extends React.ComponentProps<typeof Input> {
   label?: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { textComponentSizeClasses } from '../../@types/size';
+import { textComponentSizeClasses, TEXT_ALIGN_CLASSES } from '../../@types/classes';
 
 export type TextVariant =
   | 'h1'
@@ -45,13 +45,6 @@ const VARIANT_ELEMENTS = {
   body: 'p',
   small: 'small',
   caption: 'span',
-} as const;
-
-const TEXT_ALIGN_CLASSES = {
-  left: 'text-left',
-  center: 'text-center',
-  right: 'text-right',
-  justify: 'text-justify',
 } as const;
 
 export const Text: React.FC<TextProps> = ({
