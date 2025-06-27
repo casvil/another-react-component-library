@@ -5,6 +5,120 @@ import {
   getCardFormatRules,
   CARD_PATTERNS,
 } from '../../utils/cardPatterns';
+import {
+  creditCardFieldWidths,
+  creditCardFormFieldClasses,
+  creditCardFormErrorClasses,
+  creditCardTypeColors,
+} from '../../@types/size';
+
+// Static field configurations for credit card UI components
+export const STATIC_FIELD_CONFIG = {
+  cardNumber: {
+    label: 'Card number',
+    ariaLabel: 'Credit card number',
+    id: 'cardNumber',
+    placeholder: '•••• •••• •••• ••••',
+    inputMode: 'numeric' as const,
+    maxLength: 23, // 19 digits + 4 spaces max
+  },
+  cardholderName: {
+    label: 'cardholder name',
+    ariaLabel: 'Cardholder name',
+    id: 'cardholderName',
+    placeholder: 'CARDHOLDER NAME',
+    inputMode: 'text' as const,
+    maxLength: 26,
+  },
+  expiryDate: {
+    label: 'expiry date',
+    ariaLabel: 'Expiry date',
+    id: 'expiryDate',
+    placeholder: 'MM/YY',
+    inputMode: 'numeric' as const,
+    maxLength: 5,
+  },
+  cvc: {
+    label: 'cvc',
+    ariaLabel: 'CVC',
+    id: 'cvc',
+  },
+} as const;
+
+// CSS class configurations for CreditCardPreview
+export const CSS_CLASSES = {
+  input:
+    'bg-transparent border-none outline-none text-white font-mono tracking-wider min-h-[1.25em]',
+  span: 'font-mono tracking-wider min-h-[1.25em] inline-block',
+  button:
+    'font-mono tracking-wider text-left cursor-pointer hover:bg-white/10 rounded px-1 -mx-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20 min-h-[1.25em] inline-block',
+} as const;
+
+// Form field configurations for CreditCardForm
+export const FORM_FIELD_CONFIG = {
+  cardNumber: {
+    id: 'credit-card-number',
+    label: 'Card Number',
+    placeholder: '1234 5678 9012 3456',
+    inputMode: 'numeric' as const,
+    autoComplete: 'cc-number',
+    className: creditCardFormFieldClasses.cardNumber,
+    errorClass: creditCardFormErrorClasses.default,
+    required: true,
+  },
+  cardholderName: {
+    id: 'cardholder-name',
+    label: 'Card Holder',
+    placeholder: 'VICTOR SAULER',
+    inputMode: 'text' as const,
+    autoComplete: 'cc-name',
+    className: creditCardFormFieldClasses.cardholderName,
+    errorClass: creditCardFormErrorClasses.default,
+    required: true,
+  },
+  expiryDate: {
+    id: 'expiry-date',
+    label: 'Exp. Date',
+    placeholder: 'MM/YY',
+    inputMode: 'numeric' as const,
+    autoComplete: 'cc-exp',
+    maxLength: 5,
+    className: creditCardFormFieldClasses.expiryDate,
+    errorClass: creditCardFormErrorClasses.default,
+    required: true,
+  },
+  cvc: {
+    id: 'cvc',
+    label: 'CVC',
+    inputMode: 'numeric' as const,
+    autoComplete: 'cc-csc',
+    className: creditCardFormFieldClasses.cvc,
+    errorClass: creditCardFormErrorClasses.default,
+    required: true,
+  },
+} as const;
+
+// Card type color configurations
+export const CARD_TYPE_COLORS = creditCardTypeColors;
+
+// Error messages for form validation
+export const ERROR_MESSAGES = {
+  cardNumber: {
+    required: 'Card number is required',
+    invalid: 'Please enter a valid card number',
+  },
+  cardholderName: {
+    required: 'Cardholder name is required',
+  },
+  expiryDate: {
+    required: 'Expiry date is required',
+    invalid: 'Please enter a valid future date',
+  },
+  cvc: {
+    required: 'CVC is required',
+    invalid: (length: number) => `CVC must be ${length} digits`,
+  },
+} as const;
 
 export interface UseCreditCardFormattingReturn {
   formatCardNumber: (input: string) => string;
@@ -21,7 +135,7 @@ export interface UseCreditCardFormattingReturn {
 export interface UseCreditCardFormattingProps {
   cardNumber: string;
   cardType?: CardType | null;
-  mode?: 'form' | 'preview'; // New parameter to control behavior
+  mode?: 'form' | 'preview';
 }
 
 /**
@@ -277,4 +391,47 @@ export const useCreditCardFormatting = ({
     cardType,
     formatRules,
   };
+};
+
+// Helper functions for credit card UI components
+export const getCvcConfig = (cardType: CardType | null) => ({
+  label: 'cvc',
+  placeholder: cardType === 'amex' ? '••••' : '•••',
+  inputMode: 'numeric' as const,
+  maxLength: cardType === 'amex' ? 4 : 3,
+});
+
+export const getFieldConfig = (
+  field: keyof typeof STATIC_FIELD_CONFIG,
+  cardType: CardType | null = null,
+) => {
+  if (field === 'cvc') {
+    return getCvcConfig(cardType);
+  }
+  return STATIC_FIELD_CONFIG[field];
+};
+
+export const getCommonStyle = (field: keyof typeof creditCardFieldWidths) => ({
+  fontSize: 'inherit',
+  fontFamily: 'inherit',
+  width: creditCardFieldWidths[field],
+});
+
+// Helper functions for CreditCardForm
+export const getFormFieldConfig = (field: keyof typeof FORM_FIELD_CONFIG) => {
+  const baseConfig = FORM_FIELD_CONFIG[field];
+  return baseConfig;
+};
+
+export const getCardTypeColor = (cardType: CardType | null) => {
+  if (!cardType || !(cardType in CARD_TYPE_COLORS)) return '';
+  return CARD_TYPE_COLORS[cardType as keyof typeof CARD_TYPE_COLORS];
+};
+
+export const getCvcPlaceholder = (cvcLength: number) => {
+  return cvcLength === 4 ? '1234' : '123';
+};
+
+export const getMaxLengthWithSpaces = (maxLength: number) => {
+  return maxLength + Math.floor(maxLength / 4); // Account for spaces
 };

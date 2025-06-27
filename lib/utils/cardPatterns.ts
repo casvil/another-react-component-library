@@ -148,7 +148,7 @@ export const detectCardType = (cardNumber: string): CardType | null => {
  */
 export const getCardFormatRules = (cardType: CardType | null) => {
   if (!cardType || cardType === 'unknown') {
-    return { gaps: [4, 8, 12], maxLength: 19, cvcLength: 3 };
+    return { gaps: [4, 8, 12], maxLength: 16, cvcLength: 3 };
   }
   const card = CARD_PATTERNS.find((c) => c.name === cardType);
   return {

@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 
 import {
@@ -12,7 +6,12 @@ import {
   detectCardType,
   getCardPattern,
 } from '../../utils/cardPatterns';
-import { useCreditCardFormatting } from '../../hooks/useCreditCardFormatting/useCreditCardFormatting';
+import {
+  useCreditCardFormatting,
+  CSS_CLASSES,
+  getFieldConfig,
+  getCommonStyle,
+} from '../../hooks/useCreditCardFormatting/useCreditCardFormatting';
 import type { Size } from '../../@types/size';
 import {
   creditCardPreviewSizeClasses,
@@ -41,34 +40,6 @@ export interface CreditCardPreviewProps {
   showCvc?: boolean;
 }
 
-// Field configurations
-const FIELD_CONFIG = {
-  cardNumber: {
-    label: 'Card number',
-    placeholder: '•••• •••• •••• ••••',
-    inputMode: 'numeric' as const,
-  },
-  cardholderName: {
-    label: 'cardholder name',
-    placeholder: 'CARDHOLDER NAME',
-    inputMode: 'text' as const,
-  },
-  expiryDate: {
-    label: 'expiry date',
-    placeholder: 'MM/YY',
-    inputMode: 'numeric' as const,
-    maxLength: 5,
-  },
-} as const;
-
-// Helper function to get CVC config based on card type
-const getCvcConfig = (cardType: CardType | null) => ({
-  label: 'cvc',
-  placeholder: cardType === 'amex' ? '••••' : '•••',
-  inputMode: 'numeric' as const,
-  maxLength: cardType === 'amex' ? 4 : 3,
-});
-
 /**
  * CreditCardPreview molecule component.
  * An editable credit card visualization that matches real credit card design.
@@ -93,7 +64,6 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     cvc,
   });
 
-  // Create input refs inside the component
   const inputRefs = useRef<
     Record<FieldName, React.RefObject<HTMLInputElement>>
   >({
@@ -109,33 +79,16 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
     formatExpiryDate,
     formatCvc,
     formatCardholderName,
-    cardType: detectedCardType,
   } = useCreditCardFormatting({
     cardNumber: cardNumber,
     cardType: propCardType,
     mode: 'preview',
   });
 
-  // Get live card type from current input for UI updates
-  const liveCardType = useMemo(() => {
-    return propCardType || detectCardType(tempValues.cardNumber);
-  }, [tempValues.cardNumber, propCardType]);
-
-  // Memoize formatters to avoid useCallback dependency issues
-  const formatters = useMemo(
-    () => ({
-      cardNumber: formatCardNumber,
-      cardholderName: formatCardholderName,
-      expiryDate: formatExpiryDate,
-      cvc: formatCvc,
-    }),
-    [formatCardNumber, formatCardholderName, formatExpiryDate, formatCvc],
-  );
-
-  // Current props mapping
-  const currentProps = { cardNumber, cardholderName, expiryDate, cvc };
-  const currentTextSizes = creditCardTextSizeClasses[size];
+  // Get live card type and pattern
+  const liveCardType = propCardType || detectCardType(tempValues.cardNumber);
   const cardPattern = getCardPattern(liveCardType);
+  const currentTextSizes = creditCardTextSizeClasses[size];
 
   // Event handlers
   const handleFieldClick = useCallback(
@@ -145,11 +98,27 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
 
   const handleInputChange = useCallback(
     (field: FieldName, value: string) => {
-      // Format the value and ensure it doesn't exceed max length
-      const formattedValue = formatters[field](value);
+      let formattedValue = value;
+
+      // Apply appropriate formatting
+      switch (field) {
+        case 'cardNumber':
+          formattedValue = formatCardNumber(value);
+          break;
+        case 'cardholderName':
+          formattedValue = formatCardholderName(value);
+          break;
+        case 'expiryDate':
+          formattedValue = formatExpiryDate(value);
+          break;
+        case 'cvc':
+          formattedValue = formatCvc(value);
+          break;
+      }
+
       setTempValues((prev) => ({ ...prev, [field]: formattedValue }));
     },
-    [formatters],
+    [formatCardNumber, formatCardholderName, formatExpiryDate, formatCvc],
   );
 
   const handleInputBlur = useCallback(() => {
@@ -182,54 +151,16 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
 
   // Render field function
   const renderField = (field: FieldName, displayValue: string) => {
-    const config =
-      field === 'cvc' ? getCvcConfig(liveCardType) : FIELD_CONFIG[field];
+    const config = getFieldConfig(field, liveCardType);
     const isEditing = editingField === field;
-    const shouldShowPlaceholder = !currentProps[field] || !displayValue.trim();
+    const originalValue = { cardNumber, cardholderName, expiryDate, cvc }[
+      field
+    ];
+    const shouldShowPlaceholder = !originalValue || !displayValue.trim();
     const valueToShow = shouldShowPlaceholder
       ? config.placeholder
       : displayValue;
-
-    // Calculate maxLength for card number field
-    let maxLength = config.maxLength;
-    if (field === 'cardNumber' && !maxLength) {
-      // For card numbers, use the same logic as the formatting hook
-      const currentCardType = detectedCardType || 'visa'; // fallback to visa
-      const cardPattern = getCardPattern(currentCardType);
-
-      if (cardPattern) {
-        let maxDigits = Math.max(...cardPattern.lengths); // default to max
-
-        // If we have an existing card number, use its length to determine appropriate limit
-        if (cardNumber) {
-          const originalCleanNumber = cardNumber.replace(/\D/g, '');
-          const originalLength = originalCleanNumber.length;
-
-          if (cardPattern.lengths.length > 1) {
-            const validLengths = cardPattern.lengths.sort((a, b) => a - b);
-
-            // If the original card has a valid length, use that as the limit
-            if (validLengths.includes(originalLength)) {
-              maxDigits = originalLength;
-            } else {
-              // If original length is not valid, find the next valid length
-              maxDigits =
-                validLengths.find((len) => len >= originalLength) ||
-                validLengths[validLengths.length - 1];
-            }
-          }
-        } else {
-          // For new/empty cards, limit to 16 digits (most common) instead of 19
-          maxDigits = 16;
-        }
-
-        const spaceCount = cardPattern.gaps.length;
-        maxLength = maxDigits + spaceCount;
-      } else {
-        // Fallback: 16 digits + 3 spaces = 19 characters (instead of 22)
-        maxLength = 19;
-      }
-    }
+    const commonStyle = getCommonStyle(field);
 
     if (isEditing) {
       return (
@@ -241,40 +172,17 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
           onKeyDown={handleKeyDown}
           placeholder={config.placeholder}
           inputMode={config.inputMode}
-          maxLength={maxLength}
+          maxLength={config.maxLength}
           aria-label={`Edit ${config.label}`}
-          className="bg-transparent border-none outline-none text-white font-mono tracking-wider min-h-[1.25em]"
-          style={{
-            fontSize: 'inherit',
-            fontFamily: 'inherit',
-            width:
-              field === 'expiryDate'
-                ? '75px'
-                : field === 'cvc'
-                  ? '55px'
-                  : field === 'cardNumber'
-                    ? '100%'
-                    : '100%',
-          }}
+          className={CSS_CLASSES.input}
+          style={commonStyle}
         />
       );
     }
 
     if (!editable) {
       return (
-        <span
-          className="font-mono tracking-wider min-h-[1.25em] inline-block"
-          style={{
-            width:
-              field === 'expiryDate'
-                ? '75px'
-                : field === 'cvc'
-                  ? '55px'
-                  : field === 'cardNumber'
-                    ? '100%'
-                    : '100%',
-          }}
-        >
+        <span className={CSS_CLASSES.span} style={commonStyle}>
           {valueToShow}
         </span>
       );
@@ -284,18 +192,9 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
       <button
         type="button"
         onClick={() => handleFieldClick(field)}
-        className="font-mono tracking-wider text-left cursor-pointer hover:bg-white/10 rounded px-1 -mx-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20 min-h-[1.25em] inline-block"
+        className={CSS_CLASSES.button}
         aria-label={`Edit ${config.label}`}
-        style={{
-          width:
-            field === 'expiryDate'
-              ? '75px'
-              : field === 'cvc'
-                ? '55px'
-                : field === 'cardNumber'
-                  ? '100%'
-                  : '100%',
-        }}
+        style={commonStyle}
       >
         {valueToShow}
       </button>
