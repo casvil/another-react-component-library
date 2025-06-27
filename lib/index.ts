@@ -53,7 +53,7 @@ export type {
 } from './hooks/useCreditCardFormatting/useCreditCardFormatting';
 
 // Types
-export type { AlertProps, AlertIntent, AlertSize } from './atoms/Alert/Alert';
+export type { AlertProps, AlertSize } from './atoms/Alert/Alert';
 export type { BadgeProps } from './atoms/Badge/Badge';
 export type { CardProps, CardVariant, CardSize } from './atoms/Card/Card';
 export type {
