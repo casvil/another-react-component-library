@@ -73,9 +73,11 @@ function App() {
 
 ```plaintext
 ├── atoms/
+│   ├── Alert/               # Alert/notification component
 │   ├── Avatar/              # User profile image
 │   ├── Badge/               # Status indicator
 │   ├── Button/              # Interactive button
+│   ├── Card/                # Content container with variants
 │   ├── Checkbox/            # Checkbox input
 │   ├── Divider/             # Visual separator
 │   ├── ErrorMessage/        # Error display
@@ -90,6 +92,7 @@ function App() {
 │   ├── Radio/               # Radio input
 │   ├── Spinner/             # Loading spinner
 │   ├── Switch/              # Toggle switch
+│   ├── Text/                # Typography component
 │   ├── TextArea/            # Multi-line input
 │   ├── TimeDisplay/         # Time formatter
 │   └── Tooltip/             # Tooltip element
