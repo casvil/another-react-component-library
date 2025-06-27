@@ -2,7 +2,7 @@ export type Size = 'sm' | 'md' | 'lg';
 export type Intent = 'default' | 'info' | 'success' | 'warning' | 'error';
 
 // Text alignment classes
-export const TEXT_ALIGN_CLASSES = {
+export const textAlignClasses = {
   left: 'text-left',
   center: 'text-center',
   right: 'text-right',

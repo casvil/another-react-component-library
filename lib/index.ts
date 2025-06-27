@@ -97,5 +97,5 @@ export {
   textComponentSizeClasses,
   userPreviewSizeClasses,
   usernameComponentSizeClasses,
-  TEXT_ALIGN_CLASSES,
+  textAlignClasses,
 } from './@types/classes';
