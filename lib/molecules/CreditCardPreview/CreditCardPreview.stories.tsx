@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { CreditCardPreview } from './CreditCardPreview';
@@ -7,12 +8,6 @@ const meta = {
   component: CreditCardPreview,
   parameters: {
     layout: 'centered',
-    docs: {
-      description: {
-        component:
-          'An editable credit card preview component that supports all major international card networks with gradient styling. Detects card types automatically and formats input accordingly.',
-      },
-    },
   },
   tags: ['autodocs'],
   argTypes: {
@@ -71,7 +66,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-// Sample card numbers for testing (from payment industry test sets)
+// Sample card numbers for testing
 const testCardNumbers = {
   visa: '4111 1111 1111 1111',
   mastercard: '5555 5555 5555 4444',
@@ -274,26 +269,6 @@ export const AllCardNetworks: Story = {
       description: {
         story:
           'All supported card networks with their unique gradient styling and formatting rules.',
-      },
-    },
-  },
-};
-
-export const EditableCard: Story = {
-  args: {
-    cardNumber: '4111 1111 1111 1111',
-    cardholderName: 'JOHN DOE',
-    expiryDate: '12/25',
-    cvc: '123',
-    editable: true,
-    showCvc: true,
-    size: 'md',
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Click on any field to edit it. The card type and styling will update automatically as you type.',
       },
     },
   },

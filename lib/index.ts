@@ -43,6 +43,11 @@ export { UserPreview } from './molecules/UserPreview/UserPreview';
 export { useFormState } from './hooks/useFormState/useFormState';
 export { useStableId } from './hooks/useStableId/useStableId';
 export { useField, useFormContext } from './molecules/Form/FormContext';
+export { useCreditCardFormatting } from './hooks/useCreditCardFormatting/useCreditCardFormatting';
+export type {
+  UseCreditCardFormattingReturn,
+  UseCreditCardFormattingProps,
+} from './hooks/useCreditCardFormatting/useCreditCardFormatting';
 
 // Types
 export type {
