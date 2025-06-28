@@ -143,7 +143,7 @@ export const CreditCardPreview: React.FC<CreditCardPreviewProps> = ({
       inputRefs[editingField].current?.focus();
       inputRefs[editingField].current?.select();
     }
-  }, [editingField]);
+  }, [editingField, inputRefs]);
 
   useEffect(() => {
     setTempValues({ cardNumber, cardholderName, expiryDate, cvc });
