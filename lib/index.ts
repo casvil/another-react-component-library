@@ -45,7 +45,8 @@ export { UserPreview } from './molecules/UserPreview/UserPreview';
 // Hooks
 export { useFormState } from './hooks/useFormState/useFormState';
 export { useStableId } from './hooks/useStableId/useStableId';
-export { useField, useFormContext } from './molecules/Form/FormContext';
+export { useField } from './hooks/useField/useField';
+export { useFormContext } from './hooks/useFormContext/useFormContext';
 export { useCreditCardFormatting } from './hooks/useCreditCardFormatting/useCreditCardFormatting';
 export type {
   UseCreditCardFormattingReturn,
