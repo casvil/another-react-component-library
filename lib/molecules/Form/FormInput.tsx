@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import { FormField } from '../FormField/FormField';
 import { ErrorMessage } from '../../atoms/ErrorMessage/ErrorMessage';
-import { useField } from './FormContext';
+import { useField } from '../../hooks/useField/useField';
 import type { FormFieldProps } from '../FormField/FormField';
 
 export interface FormInputProps extends Omit<FormFieldProps, 'children'> {
