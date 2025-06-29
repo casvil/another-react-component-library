@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
 import { alertSizeClasses, Intent } from '../../@types/classes';
@@ -33,70 +33,76 @@ const INTENT_ICONS = {
  * Supports different intents (info, success, warning, error), sizes, and dismissible functionality.
  * Fully accessible with ARIA attributes and proper semantic roles.
  */
-export const Alert = React.memo<AlertProps>(
-  ({
-    children,
-    intent = 'info',
-    size = 'md',
-    dismissible = false,
-    onDismiss,
-    showIcon = true,
-    className,
-    'aria-label': ariaLabel,
-    'aria-live': ariaLive = intent === 'error' ? 'assertive' : 'polite',
-    ...props
-  }) => {
-    const IconComponent = INTENT_ICONS[intent];
+export const Alert = React.memo(
+  forwardRef<HTMLDivElement, AlertProps>(
+    (
+      {
+        children,
+        intent = 'info',
+        size = 'md',
+        dismissible = false,
+        onDismiss,
+        showIcon = true,
+        className,
+        'aria-label': ariaLabel,
+        'aria-live': ariaLive = intent === 'error' ? 'assertive' : 'polite',
+        ...props
+      },
+      ref,
+    ) => {
+      const IconComponent = INTENT_ICONS[intent];
 
-    const alertClasses = clsx(
-      'border flex items-start gap-3',
-      alertSizeClasses.padding[size],
-      alertSizeClasses.borderRadius[size],
-      alertSizeClasses.variant[intent],
-      className,
-    );
+      const alertClasses = clsx(
+        'border flex items-start gap-3',
+        alertSizeClasses.padding[size],
+        alertSizeClasses.borderRadius[size],
+        alertSizeClasses.variant[intent],
+        className,
+      );
 
-    const iconClasses = clsx(
-      'flex-shrink-0 mt-0.5',
-      alertSizeClasses.icon[size],
-      alertSizeClasses.iconVariant[intent],
-    );
+      const iconClasses = clsx(
+        'flex-shrink-0 mt-0.5',
+        alertSizeClasses.icon[size],
+        alertSizeClasses.iconVariant[intent],
+      );
 
-    const contentClasses = clsx('flex-1', alertSizeClasses.text[size]);
+      const contentClasses = clsx('flex-1', alertSizeClasses.text[size]);
 
-    const dismissButtonClasses = clsx(
-      'flex-shrink-0 -mt-1 -mr-1 p-1 rounded transition-colors cursor-pointer',
-      alertSizeClasses.icon[size],
-      alertSizeClasses.dismissHover[intent],
-    );
+      const dismissButtonClasses = clsx(
+        'flex-shrink-0 -mt-1 -mr-1 p-1 rounded transition-colors cursor-pointer',
+        alertSizeClasses.icon[size],
+        alertSizeClasses.dismissHover[intent],
+      );
 
-    return (
-      <div
-        role="alert"
-        aria-label={ariaLabel}
-        aria-live={ariaLive}
-        className={alertClasses}
-        {...props}
-      >
-        {showIcon && (
-          <IconComponent className={iconClasses} aria-hidden="true" />
-        )}
+      return (
+        <div
+          ref={ref}
+          role="alert"
+          aria-label={ariaLabel}
+          aria-live={ariaLive}
+          className={alertClasses}
+          {...props}
+        >
+          {showIcon && (
+            <IconComponent className={iconClasses} aria-hidden="true" />
+          )}
 
-        <div className={contentClasses}>{children}</div>
+          <div className={contentClasses}>{children}</div>
 
-        {dismissible && onDismiss && (
-          <button
-            type="button"
-            className={dismissButtonClasses}
-            onClick={onDismiss}
-            aria-label="Dismiss alert"
-          >
-            <X className="w-full h-full" />
-          </button>
-        )}
-      </div>
-    );
-  },
+          {dismissible && onDismiss && (
+            <button
+              type="button"
+              className={dismissButtonClasses}
+              onClick={onDismiss}
+              aria-label="Dismiss alert"
+            >
+              <X className="w-full h-full" />
+            </button>
+          )}
+        </div>
+      );
+    },
+  ),
 );
 
 Alert.displayName = 'Alert';

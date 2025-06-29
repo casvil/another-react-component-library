@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
 import {
@@ -55,43 +55,48 @@ const VARIANT_ELEMENTS = {
  * Supports multiple variants (h1-h6, body, small, caption), font weights, colors, alignment options,
  * and text truncation. Can be rendered as any HTML element using the 'as' prop for semantic flexibility.
  */
-export const Text = React.memo<TextProps>(
-  ({
-    children,
-    variant = 'body',
-    weight,
-    color = 'primary',
-    align = 'left',
-    truncate = false,
-    className,
-    as,
-    ...props
-  }) => {
-    // Determine the HTML element to use
-    const Component = as || VARIANT_ELEMENTS[variant];
-
-    // Determine the weight class - use provided weight or variant default
-    const weightClass = weight
-      ? textComponentSizeClasses.weight[weight]
-      : textComponentSizeClasses.variantDefaultWeights[variant];
-
-    const textClasses = clsx(
-      textComponentSizeClasses.variant[variant],
-      weightClass,
-      textComponentSizeClasses.color[color],
-      textAlignClasses[align],
+export const Text = React.memo(
+  forwardRef<HTMLElement, TextProps>(
+    (
       {
-        truncate: truncate,
+        children,
+        variant = 'body',
+        weight,
+        color = 'primary',
+        align = 'left',
+        truncate = false,
+        className,
+        as,
+        ...props
       },
-      className,
-    );
+      ref,
+    ) => {
+      // Determine the HTML element to use
+      const Component = as || VARIANT_ELEMENTS[variant];
 
-    return (
-      <Component className={textClasses} {...props}>
-        {children}
-      </Component>
-    );
-  },
+      // Determine the weight class - use provided weight or variant default
+      const weightClass = weight
+        ? textComponentSizeClasses.weight[weight]
+        : textComponentSizeClasses.variantDefaultWeights[variant];
+
+      const textClasses = clsx(
+        textComponentSizeClasses.variant[variant],
+        weightClass,
+        textComponentSizeClasses.color[color],
+        textAlignClasses[align],
+        {
+          truncate: truncate,
+        },
+        className,
+      );
+
+      return (
+        <Component ref={ref} className={textClasses} {...props}>
+          {children}
+        </Component>
+      );
+    },
+  ),
 );
 
 Text.displayName = 'Text';
