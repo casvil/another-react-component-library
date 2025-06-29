@@ -50,41 +50,48 @@ const VARIANT_ELEMENTS = {
   caption: 'span',
 } as const;
 
-export const Text: React.FC<TextProps> = ({
-  children,
-  variant = 'body',
-  weight,
-  color = 'primary',
-  align = 'left',
-  truncate = false,
-  className,
-  as,
-  ...props
-}) => {
-  // Determine the HTML element to use
-  const Component = as || VARIANT_ELEMENTS[variant];
-
-  // Determine the weight class - use provided weight or variant default
-  const weightClass = weight
-    ? textComponentSizeClasses.weight[weight]
-    : textComponentSizeClasses.variantDefaultWeights[variant];
-
-  const textClasses = clsx(
-    textComponentSizeClasses.variant[variant],
-    weightClass,
-    textComponentSizeClasses.color[color],
-    textAlignClasses[align],
-    {
-      truncate: truncate,
-    },
+/**
+ * Text atom component. A flexible typography component for rendering text with various styles.
+ * Supports multiple variants (h1-h6, body, small, caption), font weights, colors, alignment options,
+ * and text truncation. Can be rendered as any HTML element using the 'as' prop for semantic flexibility.
+ */
+export const Text = React.memo<TextProps>(
+  ({
+    children,
+    variant = 'body',
+    weight,
+    color = 'primary',
+    align = 'left',
+    truncate = false,
     className,
-  );
+    as,
+    ...props
+  }) => {
+    // Determine the HTML element to use
+    const Component = as || VARIANT_ELEMENTS[variant];
 
-  return (
-    <Component className={textClasses} {...props}>
-      {children}
-    </Component>
-  );
-};
+    // Determine the weight class - use provided weight or variant default
+    const weightClass = weight
+      ? textComponentSizeClasses.weight[weight]
+      : textComponentSizeClasses.variantDefaultWeights[variant];
 
-export default Text;
+    const textClasses = clsx(
+      textComponentSizeClasses.variant[variant],
+      weightClass,
+      textComponentSizeClasses.color[color],
+      textAlignClasses[align],
+      {
+        truncate: truncate,
+      },
+      className,
+    );
+
+    return (
+      <Component className={textClasses} {...props}>
+        {children}
+      </Component>
+    );
+  },
+);
+
+Text.displayName = 'Text';

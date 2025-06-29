@@ -2,11 +2,11 @@ import React from 'react';
 import clsx from 'clsx';
 
 import { alertSizeClasses, Intent } from '../../@types/classes';
-import InfoIcon from 'lucide-react/icons/info';
-import CheckCircleIcon from 'lucide-react/icons/check-circle';
-import AlertTriangleIcon from 'lucide-react/icons/alert-triangle';
-import XCircleIcon from 'lucide-react/icons/x-circle';
-import XIcon from 'lucide-react/icons/x';
+import Info from 'lucide-react/icons/info';
+import CheckCircle from 'lucide-react/icons/check-circle';
+import AlertTriangle from 'lucide-react/icons/alert-triangle';
+import XCircle from 'lucide-react/icons/x-circle';
+import X from 'lucide-react/icons/x';
 
 export type AlertSize = 'sm' | 'md' | 'lg';
 
@@ -22,72 +22,81 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const INTENT_ICONS = {
-  info: InfoIcon,
-  success: CheckCircleIcon,
-  warning: AlertTriangleIcon,
-  error: XCircleIcon,
+  info: Info,
+  success: CheckCircle,
+  warning: AlertTriangle,
+  error: XCircle,
 } as const;
 
-export const Alert: React.FC<AlertProps> = ({
-  children,
-  intent = 'info',
-  size = 'md',
-  dismissible = false,
-  onDismiss,
-  showIcon = true,
-  className,
-  'aria-label': ariaLabel,
-  'aria-live': ariaLive = intent === 'error' ? 'assertive' : 'polite',
-  ...props
-}) => {
-  const IconComponent = INTENT_ICONS[intent];
-
-  const alertClasses = clsx(
-    'border flex items-start gap-3',
-    alertSizeClasses.padding[size],
-    alertSizeClasses.borderRadius[size],
-    alertSizeClasses.variant[intent],
+/**
+ * Alert atom component. Displays contextual feedback messages to users.
+ * Supports different intents (info, success, warning, error), sizes, and dismissible functionality.
+ * Fully accessible with ARIA attributes and proper semantic roles.
+ */
+export const Alert = React.memo<AlertProps>(
+  ({
+    children,
+    intent = 'info',
+    size = 'md',
+    dismissible = false,
+    onDismiss,
+    showIcon = true,
     className,
-  );
+    'aria-label': ariaLabel,
+    'aria-live': ariaLive = intent === 'error' ? 'assertive' : 'polite',
+    ...props
+  }) => {
+    const IconComponent = INTENT_ICONS[intent];
 
-  const iconClasses = clsx(
-    'flex-shrink-0 mt-0.5',
-    alertSizeClasses.icon[size],
-    alertSizeClasses.iconVariant[intent],
-  );
+    const alertClasses = clsx(
+      'border flex items-start gap-3',
+      alertSizeClasses.padding[size],
+      alertSizeClasses.borderRadius[size],
+      alertSizeClasses.variant[intent],
+      className,
+    );
 
-  const contentClasses = clsx('flex-1', alertSizeClasses.text[size]);
+    const iconClasses = clsx(
+      'flex-shrink-0 mt-0.5',
+      alertSizeClasses.icon[size],
+      alertSizeClasses.iconVariant[intent],
+    );
 
-  const dismissButtonClasses = clsx(
-    'flex-shrink-0 -mt-1 -mr-1 p-1 rounded transition-colors cursor-pointer',
-    alertSizeClasses.icon[size],
-    alertSizeClasses.dismissHover[intent],
-  );
+    const contentClasses = clsx('flex-1', alertSizeClasses.text[size]);
 
-  return (
-    <div
-      role="alert"
-      aria-label={ariaLabel}
-      aria-live={ariaLive}
-      className={alertClasses}
-      {...props}
-    >
-      {showIcon && <IconComponent className={iconClasses} aria-hidden="true" />}
+    const dismissButtonClasses = clsx(
+      'flex-shrink-0 -mt-1 -mr-1 p-1 rounded transition-colors cursor-pointer',
+      alertSizeClasses.icon[size],
+      alertSizeClasses.dismissHover[intent],
+    );
 
-      <div className={contentClasses}>{children}</div>
+    return (
+      <div
+        role="alert"
+        aria-label={ariaLabel}
+        aria-live={ariaLive}
+        className={alertClasses}
+        {...props}
+      >
+        {showIcon && (
+          <IconComponent className={iconClasses} aria-hidden="true" />
+        )}
 
-      {dismissible && onDismiss && (
-        <button
-          type="button"
-          className={dismissButtonClasses}
-          onClick={onDismiss}
-          aria-label="Dismiss alert"
-        >
-          <XIcon className="w-full h-full" />
-        </button>
-      )}
-    </div>
-  );
-};
+        <div className={contentClasses}>{children}</div>
 
-export default Alert;
+        {dismissible && onDismiss && (
+          <button
+            type="button"
+            className={dismissButtonClasses}
+            onClick={onDismiss}
+            aria-label="Dismiss alert"
+          >
+            <X className="w-full h-full" />
+          </button>
+        )}
+      </div>
+    );
+  },
+);
+
+Alert.displayName = 'Alert';
