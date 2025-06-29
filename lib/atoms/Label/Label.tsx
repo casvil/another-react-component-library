@@ -12,21 +12,20 @@ export interface LabelProps
  * Renders a styled label linked to a form input via htmlFor.
  * Returns null if no children are provided.
  */
-export const Label = ({
-  htmlFor,
-  children,
-  className,
-  ...props
-}: LabelProps) => {
-  if (!children) return null;
+export const Label = React.memo<LabelProps>(
+  ({ htmlFor, children, className, ...props }) => {
+    if (!children) return null;
 
-  return (
-    <label
-      htmlFor={htmlFor}
-      className={clsx('text-sm font-medium text-gray-700', className)}
-      {...props}
-    >
-      {children}
-    </label>
-  );
-};
+    return (
+      <label
+        htmlFor={htmlFor}
+        className={clsx('text-sm font-medium text-gray-700', className)}
+        {...props}
+      >
+        {children}
+      </label>
+    );
+  },
+);
+
+Label.displayName = 'Label';

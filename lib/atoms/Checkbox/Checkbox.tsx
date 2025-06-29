@@ -21,72 +21,74 @@ export interface CheckboxProps
  * Renders a native checkbox input with an optional label using the custom Label component.
  * Supports controlled and indeterminate states, as well as custom styling.
  */
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  (
-    {
-      checked,
-      defaultChecked,
-      id,
-      label,
-      indeterminate = false,
-      size = 'md',
-      className,
-      labelClassName,
-      wrapperClassName,
-      disabled,
-      ...rest
-    },
-    ref,
-  ) => {
-    const checkboxId = useStableId(id);
-    const currentSize = checkboxSizeClasses[size];
+export const Checkbox = React.memo(
+  forwardRef<HTMLInputElement, CheckboxProps>(
+    (
+      {
+        checked,
+        defaultChecked,
+        id,
+        label,
+        indeterminate = false,
+        size = 'md',
+        className,
+        labelClassName,
+        wrapperClassName,
+        disabled,
+        ...rest
+      },
+      ref,
+    ) => {
+      const checkboxId = useStableId(id);
+      const currentSize = checkboxSizeClasses[size];
 
-    // Controlled/uncontrolled
-    const isControlled = checked !== undefined;
-    const [internalChecked, setInternalChecked] = React.useState(
-      defaultChecked ?? false,
-    );
-    const inputChecked = isControlled ? checked : internalChecked;
+      // Controlled/uncontrolled
+      const isControlled = checked !== undefined;
+      const [internalChecked, setInternalChecked] = React.useState(
+        defaultChecked ?? false,
+      );
+      const inputChecked = isControlled ? checked : internalChecked;
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!isControlled) setInternalChecked(e.target.checked);
-      if (rest.onChange) rest.onChange(e);
-    };
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!isControlled) setInternalChecked(e.target.checked);
+        if (rest.onChange) rest.onChange(e);
+      };
 
-    return (
-      <div
-        className={clsx(
-          'inline-flex items-center space-x-2',
-          disabled && 'opacity-50 cursor-not-allowed',
-          wrapperClassName,
-        )}
-      >
-        <input
-          ref={ref}
-          id={checkboxId}
-          type="checkbox"
-          checked={inputChecked}
-          disabled={disabled}
-          aria-checked={indeterminate ? 'mixed' : inputChecked}
+      return (
+        <div
           className={clsx(
-            'form-checkbox text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500',
-            currentSize.checkbox,
-            className,
+            'inline-flex items-center space-x-2',
+            disabled && 'opacity-50 cursor-not-allowed',
+            wrapperClassName,
           )}
-          onChange={handleChange}
-          {...rest}
-        />
-        {label && (
-          <Label
-            className={clsx(currentSize.label, labelClassName)}
-            htmlFor={checkboxId}
-          >
-            {label}
-          </Label>
-        )}
-      </div>
-    );
-  },
+        >
+          <input
+            ref={ref}
+            id={checkboxId}
+            type="checkbox"
+            checked={inputChecked}
+            disabled={disabled}
+            aria-checked={indeterminate ? 'mixed' : inputChecked}
+            className={clsx(
+              'form-checkbox text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500',
+              currentSize.checkbox,
+              className,
+            )}
+            onChange={handleChange}
+            {...rest}
+          />
+          {label && (
+            <Label
+              className={clsx(currentSize.label, labelClassName)}
+              htmlFor={checkboxId}
+            >
+              {label}
+            </Label>
+          )}
+        </div>
+      );
+    },
+  ),
 );
 
 Checkbox.displayName = 'Checkbox';
