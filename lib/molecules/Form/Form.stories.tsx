@@ -715,7 +715,11 @@ export const WithUserPreview: Story = {
                 </span>
               </div>
               <div className="flex items-center">
-                <Badge intent="warning" size="sm" className="w-14 justify-center">
+                <Badge
+                  intent="warning"
+                  size="sm"
+                  className="w-14 justify-center"
+                >
                   Email
                 </Badge>
                 <span className="text-sm ml-3 flex-1">
@@ -723,10 +727,16 @@ export const WithUserPreview: Story = {
                 </span>
               </div>
               <div className="flex items-center">
-                <Badge intent="success" size="sm" className="w-14 justify-center">
+                <Badge
+                  intent="success"
+                  size="sm"
+                  className="w-14 justify-center"
+                >
                   Status
                 </Badge>
-                <span className="text-sm ml-3 flex-1 capitalize">{previewData.status}</span>
+                <span className="text-sm ml-3 flex-1 capitalize">
+                  {previewData.status}
+                </span>
               </div>
             </div>
           </div>
