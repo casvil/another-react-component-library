@@ -509,3 +509,65 @@ export const textComponentSizeClasses = {
   weight: textWeightClasses,
   color: textColorClasses,
 } as const;
+
+// DropZone component sizing classes
+const dropZoneHeightClasses = {
+  sm: 'min-h-32',
+  md: 'min-h-40',
+  lg: 'min-h-48',
+} as const;
+
+const dropZonePaddingClasses = {
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8',
+} as const;
+
+const dropZoneBorderRadiusClasses = {
+  sm: 'rounded-lg',
+  md: 'rounded-xl',
+  lg: 'rounded-2xl',
+} as const;
+
+const dropZoneIconSizeClasses = {
+  sm: 'w-8 h-8',
+  md: 'w-12 h-12',
+  lg: 'w-16 h-16',
+} as const;
+
+const dropZoneIconSizeValues = {
+  sm: 32,
+  md: 48,
+  lg: 64,
+} as const;
+
+const dropZoneTextSizeClasses = {
+  sm: {
+    title: 'text-sm',
+    description: 'text-xs',
+  },
+  md: {
+    title: 'text-base',
+    description: 'text-sm',
+  },
+  lg: {
+    title: 'text-lg',
+    description: 'text-base',
+  },
+} as const;
+
+const dropZoneGapClasses = {
+  sm: 'gap-3',
+  md: 'gap-4',
+  lg: 'gap-6',
+} as const;
+
+export const dropZoneSizeClasses = {
+  height: dropZoneHeightClasses,
+  padding: dropZonePaddingClasses,
+  borderRadius: dropZoneBorderRadiusClasses,
+  icon: dropZoneIconSizeClasses,
+  iconValues: dropZoneIconSizeValues,
+  text: dropZoneTextSizeClasses,
+  gap: dropZoneGapClasses,
+} as const;
