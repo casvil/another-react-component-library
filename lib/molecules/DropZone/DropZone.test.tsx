@@ -107,6 +107,16 @@ describe('DropZone', () => {
     return dropEvent;
   };
 
+  // Helper to simulate file input change
+  const simulateFileInput = (input: HTMLInputElement, files: File[]) => {
+    const fileList = createMockFileList(files);
+    Object.defineProperty(input, 'files', {
+      value: fileList,
+      configurable: true,
+    });
+    fireEvent.change(input);
+  };
+
   it('renders correctly with default props', () => {
     render(<DropZone />);
 
@@ -168,29 +178,120 @@ describe('DropZone', () => {
   });
 
   it('handles keyboard activation', () => {
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    render(<DropZone />);
+    render(<DropZone onDrop={mockOnDrop} data-testid="dropzone" />);
 
     const dropzone = screen.getByRole('button');
+    const fileInput = screen
+      .getByRole('button')
+      .querySelector('input[type="file"]') as HTMLInputElement;
+
+    // Mock the click method
+    const clickSpy = vi.spyOn(fileInput, 'click').mockImplementation(() => {});
 
     fireEvent.keyDown(dropzone, { key: 'Enter' });
-    expect(consoleSpy).toHaveBeenCalledWith('DropZone activated via keyboard');
+    expect(clickSpy).toHaveBeenCalled();
 
     fireEvent.keyDown(dropzone, { key: ' ' });
-    expect(consoleSpy).toHaveBeenCalledWith('DropZone activated via keyboard');
+    expect(clickSpy).toHaveBeenCalledTimes(2);
 
-    consoleSpy.mockRestore();
+    clickSpy.mockRestore();
   });
 
   it('does not handle keyboard activation when disabled', () => {
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    render(<DropZone disabled />);
+    render(<DropZone disabled onDrop={mockOnDrop} data-testid="dropzone" />);
 
     const dropzone = screen.getByRole('button');
-    fireEvent.keyDown(dropzone, { key: 'Enter' });
+    const fileInput = screen
+      .getByRole('button')
+      .querySelector('input[type="file"]') as HTMLInputElement;
 
-    expect(consoleSpy).not.toHaveBeenCalled();
-    consoleSpy.mockRestore();
+    // Mock the click method
+    const clickSpy = vi.spyOn(fileInput, 'click').mockImplementation(() => {});
+
+    fireEvent.keyDown(dropzone, { key: 'Enter' });
+    expect(clickSpy).not.toHaveBeenCalled();
+
+    clickSpy.mockRestore();
+  });
+
+  it('opens file dialog when clicked', () => {
+    render(<DropZone onDrop={mockOnDrop} data-testid="dropzone" />);
+
+    const dropzone = screen.getByTestId('dropzone');
+    const fileInput = dropzone.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
+
+    // Mock the click method
+    const clickSpy = vi.spyOn(fileInput, 'click').mockImplementation(() => {});
+
+    fireEvent.click(dropzone);
+    expect(clickSpy).toHaveBeenCalled();
+
+    clickSpy.mockRestore();
+  });
+
+  it('does not open file dialog when disabled', () => {
+    render(<DropZone disabled onDrop={mockOnDrop} data-testid="dropzone" />);
+
+    const dropzone = screen.getByTestId('dropzone');
+    const fileInput = dropzone.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
+
+    // Mock the click method
+    const clickSpy = vi.spyOn(fileInput, 'click').mockImplementation(() => {});
+
+    fireEvent.click(dropzone);
+    expect(clickSpy).not.toHaveBeenCalled();
+
+    clickSpy.mockRestore();
+  });
+
+  it('handles file input change with valid files', async () => {
+    render(<DropZone onDrop={mockOnDrop} data-testid="dropzone" />);
+
+    const dropzone = screen.getByTestId('dropzone');
+    const fileInput = dropzone.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
+
+    const files = [createMockFile('test.txt', 1000, 'text/plain')];
+    simulateFileInput(fileInput, files);
+
+    await waitFor(() => {
+      expect(mockOnDrop).toHaveBeenCalledWith(expect.any(Object));
+    });
+  });
+
+  it('resets file input value after processing files', () => {
+    render(<DropZone onDrop={mockOnDrop} data-testid="dropzone" />);
+
+    const dropzone = screen.getByTestId('dropzone');
+    const fileInput = dropzone.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
+
+    const files = [createMockFile('test.txt', 1000, 'text/plain')];
+    simulateFileInput(fileInput, files);
+
+    expect(fileInput.value).toBe('');
+  });
+
+  it('has hidden file input with correct attributes', () => {
+    render(<DropZone accept="image/*" multiple data-testid="dropzone" />);
+
+    const dropzone = screen.getByTestId('dropzone');
+    const fileInput = dropzone.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
+
+    expect(fileInput).toBeInTheDocument();
+    expect(fileInput).toHaveAttribute('accept', 'image/*');
+    expect(fileInput).toHaveAttribute('multiple');
+    expect(fileInput).toHaveClass('sr-only');
+    expect(fileInput).toHaveAttribute('tabIndex', '-1');
+    expect(fileInput).toHaveAttribute('aria-hidden', 'true');
   });
 
   it('prevents default drag events', () => {
@@ -205,7 +306,7 @@ describe('DropZone', () => {
     expect(preventDefaultSpy).toHaveBeenCalled();
   });
 
-  it('calls onDrop with valid files', async () => {
+  it('calls onDrop with valid files via drag and drop', async () => {
     render(<DropZone onDrop={mockOnDrop} data-testid="dropzone" />);
 
     const dropzone = screen.getByTestId('dropzone');

@@ -3,7 +3,9 @@ import React, {
   useState,
   useCallback,
   useMemo,
+  useRef,
   DragEvent,
+  ChangeEvent,
 } from 'react';
 import { clsx } from 'clsx';
 
@@ -119,10 +121,8 @@ const createFileList = (files: File[]): FileList => {
 };
 
 /**
- * DropZone molecule component. An accessible drag-and-drop file upload area.
- * Supports file validation, multiple files, size limits, and custom styling.
- * Provides visual feedback for drag states and file validation results.
- * Fully accessible with ARIA attributes and proper semantic roles.
+ * DropZone molecule component. A file upload area that supports both drag & drop
+ * and click-to-select functionality with comprehensive validation and accessibility features.
  */
 export const DropZone = React.memo(
   forwardRef<HTMLDivElement, DropZoneProps>(
@@ -152,6 +152,7 @@ export const DropZone = React.memo(
     ) => {
       const dropZoneId = useStableId();
       const descriptionId = `${dropZoneId}-description`;
+      const fileInputRef = useRef<HTMLInputElement>(null);
 
       const [isDragOver, setIsDragOver] = useState(false);
       const [, setDragCounter] = useState(0);
@@ -244,6 +245,45 @@ export const DropZone = React.memo(
         [validationConfig],
       );
 
+      // Process files from any source (drag & drop or file input)
+      const processFiles = useCallback(
+        (files: FileList) => {
+          if (files.length === 0) return;
+
+          const { valid, invalid, error } = validateFiles(files);
+
+          if (valid.length > 0 && onDrop) {
+            onDrop(valid);
+          }
+
+          if (invalid.length > 0 && error && onDropRejected) {
+            onDropRejected(invalid, error);
+          }
+        },
+        [validateFiles, onDrop, onDropRejected],
+      );
+
+      // Handle file input change
+      const handleFileInputChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+          const files = e.target.files;
+          if (files) {
+            processFiles(files);
+          }
+          // Reset input value to allow selecting the same file again
+          if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+          }
+        },
+        [processFiles],
+      );
+
+      // Handle click to open file dialog
+      const handleClick = useCallback(() => {
+        if (disabled || loading) return;
+        fileInputRef.current?.click();
+      }, [disabled, loading]);
+
       // Memoized drag handlers
       const handleDragEnter = useCallback(
         (e: DragEvent<HTMLDivElement>) => {
@@ -299,30 +339,19 @@ export const DropZone = React.memo(
           if (disabled || loading) return;
 
           const files = e.dataTransfer.files;
-          if (files.length === 0) return;
-
-          const { valid, invalid, error } = validateFiles(files);
-
-          if (valid.length > 0 && onDrop) {
-            onDrop(valid);
-          }
-
-          if (invalid.length > 0 && error && onDropRejected) {
-            onDropRejected(invalid, error);
-          }
+          processFiles(files);
         },
-        [disabled, loading, onDrop, onDropRejected, validateFiles],
+        [disabled, loading, processFiles],
       );
 
       const handleKeyDown = useCallback(
         (e: React.KeyboardEvent<HTMLDivElement>) => {
           if ((e.key === 'Enter' || e.key === ' ') && !disabled && !loading) {
             e.preventDefault();
-            // In a real implementation, you'd trigger a file input here
-            console.log('DropZone activated via keyboard');
+            handleClick();
           }
         },
-        [disabled, loading],
+        [disabled, loading, handleClick],
       );
 
       // Memoized style calculations
@@ -399,6 +428,7 @@ export const DropZone = React.memo(
           aria-label={ariaLabel || contentText.title}
           aria-describedby={ariaDescribedBy || descriptionId}
           className={classNames.dropZone}
+          onClick={handleClick}
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
@@ -406,6 +436,18 @@ export const DropZone = React.memo(
           onKeyDown={handleKeyDown}
           {...props}
         >
+          {/* Hidden file input for click-to-upload functionality */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept={accept}
+            multiple={multiple}
+            onChange={handleFileInputChange}
+            className="sr-only"
+            tabIndex={-1}
+            aria-hidden="true"
+          />
+
           <div className={classNames.content}>
             <IconComponent
               size={sizeClasses.iconValues[size]}
