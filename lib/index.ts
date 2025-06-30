@@ -33,6 +33,7 @@ export { CheckboxGroup } from './molecules/CheckboxGroup/CheckboxGroup';
 export { Clock } from './molecules/Clock/Clock';
 export { CreditCardForm } from './molecules/CreditCardForm/CreditCardForm';
 export { CreditCardPreview } from './molecules/CreditCardPreview/CreditCardPreview';
+export { DropZone } from './molecules/DropZone/DropZone';
 export { Form } from './molecules/Form/Form';
 export { FormField } from './molecules/FormField/FormField';
 export { FormInput } from './molecules/Form/FormInput';
@@ -78,6 +79,10 @@ export {
   getCardFormatRules,
   getCardPattern,
 } from './utils/cardPatterns';
+export type {
+  DropZoneProps,
+  DropZoneVariant,
+} from './molecules/DropZone/DropZone';
 export type { Size } from './@types/classes';
 
 // Style utilities
@@ -88,6 +93,7 @@ export {
   buttonSizeClasses,
   cardSizeClasses,
   checkboxSizeClasses,
+  dropZoneSizeClasses,
   iconButtonSizeClasses,
   inputSizeClasses,
   progressBarSizeClasses,
