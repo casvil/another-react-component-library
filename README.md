@@ -105,18 +105,19 @@ function App() {
 
 ```plaintext
 ├── molecules/
-│   ├── BadgeAvatar/ # Avatar with badge overlay
-│   ├── CheckboxGroup/ # Group of checkboxes
-│   ├── Clock/ # Live-updating time
-│   ├── CreditCardForm/ # Credit card input form with validation
-│   ├── CreditCardPreview/ # Editable credit card preview
-│   ├── Form/ # Advanced form component with validation
-│   ├── FormField/ # Complete form field with label and validation
-│   ├── InputField/ # Input with label and validation
-│   ├── RadioGroup/ # Group of radio buttons
-│   ├── Search/ # Search input with functionality
-│   ├── Select/ # Dropdown select
-│   └── UserPreview/ # User information display
+│   ├── BadgeAvatar/          # Avatar with badge overlay
+│   ├── CheckboxGroup/        # Group of checkboxes
+│   ├── Clock/                # Live-updating time
+│   ├── CreditCardForm/       # Credit card input form with validation
+│   ├── CreditCardPreview/    # Editable credit card preview
+│   ├── DropZone/             # File upload with drag & drop functionality
+│   ├── Form/                 # Advanced form component with validation
+│   ├── FormField/            # Complete form field with label and validation
+│   ├── InputField/           # Input with label and validation
+│   ├── RadioGroup/           # Group of radio buttons
+│   ├── Search/               # Search input with functionality
+│   ├── Select/               # Dropdown select
+│   └── UserPreview/          # User information display
 ```
 
 </details>
