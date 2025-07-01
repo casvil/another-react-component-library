@@ -69,7 +69,7 @@ function App() {
 ## 🛠️ Inside the Box
 
 <details>
-<summary>⚛️ atoms/ — Basic building blocks</summary>
+<summary>⚛️ atoms — Basic building blocks</summary>
 
 ```plaintext
 ├── atoms/
@@ -95,13 +95,13 @@ function App() {
 │   ├── Text/                # Typography component
 │   ├── TextArea/            # Multi-line input
 │   ├── TimeDisplay/         # Time formatter
-│   └── Tooltip/             # Tooltip element
+└───└── Tooltip/             # Tooltip element
 ```
 
 </details>
 
 <details> 
-<summary>🧬 molecules/ — Composed components</summary>
+<summary>🧬 molecules — Composed components</summary>
 
 ```plaintext
 ├── molecules/
@@ -117,7 +117,16 @@ function App() {
 │   ├── RadioGroup/           # Group of radio buttons
 │   ├── Search/               # Search input with functionality
 │   ├── Select/               # Dropdown select
-│   └── UserPreview/          # User information display
+└───└── UserPreview/          # User information display
+```
+
+</details>
+<details> 
+<summary>🌱 organisms — Complex composition of atoms and/or molecules</summary>
+
+```plaintext
+├── organisms/
+└───└── Table/                # Data table with sorting, striping, and responsive design
 ```
 
 </details>
