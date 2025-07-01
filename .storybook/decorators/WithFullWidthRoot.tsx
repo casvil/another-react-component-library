@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { Decorator } from '@storybook/react';
+import type { Decorator } from '@storybook/react-vite';
 
 /**
  * Sets `width: 100%` on the #storybook-root element for a specific story.
