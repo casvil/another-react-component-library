@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import { tableSizeClasses } from '../../@types/classes';
+import { tableSizeClasses, tableBaseClasses } from '../../@types/classes';
 import type { Size } from '../../@types/classes';
 
 export interface TableHeaderProps
@@ -32,7 +32,7 @@ export const TableHeader = React.memo(
       ref,
     ) => {
       const headerClasses = clsx(
-        'font-semibold text-gray-900 border-b border-gray-200 bg-gray-50',
+        tableBaseClasses.header,
         tableSizeClasses.header.padding[size],
         tableSizeClasses.header.text[size],
         {

@@ -571,3 +571,66 @@ export const dropZoneSizeClasses = {
   text: dropZoneTextSizeClasses,
   gap: dropZoneGapClasses,
 } as const;
+
+// Table component sizing classes
+const tablePaddingClasses = {
+  sm: 'p-2',
+  md: 'p-3',
+  lg: 'p-4',
+} as const;
+
+const tableBorderRadiusClasses = {
+  sm: 'rounded-md',
+  md: 'rounded-lg',
+  lg: 'rounded-xl',
+} as const;
+
+const tableTextSizeClasses = {
+  sm: 'text-sm',
+  md: 'text-base',
+  lg: 'text-lg',
+} as const;
+
+const tableRowHeightClasses = {
+  sm: 'h-10',
+  md: 'h-12',
+  lg: 'h-14',
+} as const;
+
+const tableHeaderPaddingClasses = {
+  sm: 'px-3 py-2',
+  md: 'px-4 py-3',
+  lg: 'px-6 py-4',
+} as const;
+
+const tableCellPaddingClasses = {
+  sm: 'px-3 py-2',
+  md: 'px-4 py-3',
+  lg: 'px-6 py-4',
+} as const;
+
+export const tableSizeClasses = {
+  container: {
+    padding: tablePaddingClasses,
+    borderRadius: tableBorderRadiusClasses,
+  },
+  text: tableTextSizeClasses,
+  row: {
+    height: tableRowHeightClasses,
+  },
+  header: {
+    padding: tableHeaderPaddingClasses,
+    text: tableTextSizeClasses,
+  },
+  cell: {
+    padding: tableCellPaddingClasses,
+    text: tableTextSizeClasses,
+  },
+} as const;
+
+// Table component base classes (non-size dependent)
+export const tableBaseClasses = {
+  header: 'font-semibold text-gray-900 border-b border-gray-200 bg-gray-50',
+  cell: 'text-gray-900 border-b border-gray-200',
+  row: 'border-b border-gray-200 last:border-b-0',
+} as const;

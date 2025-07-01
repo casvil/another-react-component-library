@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import { tableSizeClasses } from '../../@types/classes';
+import { tableSizeClasses, tableBaseClasses } from '../../@types/classes';
 import type { Size } from '../../@types/classes';
 
 export interface TableDataProps
@@ -34,7 +34,7 @@ export const TableData = React.memo(
       ref,
     ) => {
       const cellClasses = clsx(
-        'text-gray-900 border-b border-gray-200',
+        tableBaseClasses.cell,
         tableSizeClasses.cell.padding[size],
         tableSizeClasses.cell.text[size],
         {

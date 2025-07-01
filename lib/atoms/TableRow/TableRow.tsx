@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import { tableSizeClasses } from '../../@types/classes';
+import { tableSizeClasses, tableBaseClasses } from '../../@types/classes';
 import type { Size } from '../../@types/classes';
 
 export interface TableRowProps
@@ -32,7 +32,7 @@ export const TableRow = React.memo(
       ref,
     ) => {
       const rowClasses = clsx(
-        'border-b border-gray-200 last:border-b-0',
+        tableBaseClasses.row,
         tableSizeClasses.row.height[size],
         {
           'bg-white': variant === 'default',
