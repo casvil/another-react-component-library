@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import type { Spacing } from '../../../../@types/classes';
-import { gapClasses } from '../../../../@types/classes';
+import type { Spacing } from '../../../@types/classes';
+import { gapClasses } from '../../../@types/classes';
 
 export interface FlexProps extends React.HTMLAttributes<HTMLElement> {
   as?: React.ElementType;
