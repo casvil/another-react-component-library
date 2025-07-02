@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+
 import { Flex } from './Flex';
 
 const meta: Meta<typeof Flex> = {
