@@ -15,6 +15,8 @@ export interface FlexProps extends React.HTMLAttributes<HTMLElement> {
 
 /**
  * Flex – low-level flexbox layout component.
+ * Provides full control over direction, alignment, justification, wrapping, and gap.
+ * Use for advanced layouts, toolbars, and responsive arrangements.
  */
 export const Flex = React.memo(
   forwardRef<HTMLElement, FlexProps>(

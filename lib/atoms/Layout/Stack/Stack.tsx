@@ -13,7 +13,9 @@ export interface StackProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /**
- * Stack – simple flex wrapper that arranges children in a column or row with consistent gap.
+ * Stack – flexbox layout for vertical or horizontal stacking with consistent gap.
+ * Ideal for lists, forms, toolbars, and any UI that needs evenly spaced children.
+ * Supports alignment and justification props for flexible layouts.
  */
 export const Stack = React.memo(
   forwardRef<HTMLElement, StackProps>(

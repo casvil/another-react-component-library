@@ -20,6 +20,8 @@ export interface BoxProps extends React.HTMLAttributes<HTMLElement> {
 
 /**
  * Box – a generic layout wrapper (styled `div` replacement).
+ * Provides spacing, sizing, border, and shadow props for quick styling.
+ * Use as a foundation for custom layouts or when you need a styled container.
  */
 export const Box = React.memo(
   forwardRef<HTMLElement, BoxProps>(
