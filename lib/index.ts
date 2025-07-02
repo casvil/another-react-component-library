@@ -8,6 +8,7 @@ export { Button } from './atoms/Button/Button';
 export { Card } from './atoms/Card/Card';
 export { Checkbox } from './atoms/Checkbox/Checkbox';
 export { Divider } from './atoms/Divider/Divider';
+export { ErrorBoundary } from './atoms/ErrorBoundary/ErrorBoundary';
 export { ErrorMessage } from './atoms/ErrorMessage/ErrorMessage';
 export { HelperText } from './atoms/HelperText/HelperText';
 export { Icon } from './atoms/Icon/Icon';
@@ -60,6 +61,7 @@ export { useCreditCardFormatting } from './hooks/useCreditCardFormatting/useCred
 export type { AlertProps, AlertSize } from './atoms/Alert/Alert';
 export type { BadgeProps } from './atoms/Badge/Badge';
 export type { CardProps, CardVariant, CardSize } from './atoms/Card/Card';
+export type { ErrorBoundaryProps } from './atoms/ErrorBoundary/ErrorBoundary';
 export type {
   TextProps,
   TextVariant,
