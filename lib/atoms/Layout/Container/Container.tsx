@@ -33,6 +33,8 @@ export interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
 
 /**
  * Container – responsive wrapper for page sections.
+ * Sets a max-width, horizontal centering, and padding for consistent layouts.
+ * Use to wrap main content, forms, or any section that needs alignment.
  */
 export const Container = React.memo(
   forwardRef<HTMLElement, ContainerProps>(

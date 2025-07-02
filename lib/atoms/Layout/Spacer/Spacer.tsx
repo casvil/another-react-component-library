@@ -11,6 +11,8 @@ export interface SpacerProps extends React.HTMLAttributes<HTMLDivElement> {
 
 /**
  * Spacer – flexible gap filler. Use inside flex layouts or as vertical rhythm helper.
+ * Can render a fixed height or grow to fill available space in flex containers.
+ * Useful for pushing content apart or adding vertical space between elements.
  */
 export const Spacer = React.memo(
   forwardRef<HTMLDivElement, SpacerProps>(

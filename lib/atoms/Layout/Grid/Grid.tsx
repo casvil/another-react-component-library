@@ -16,6 +16,8 @@ export interface GridProps extends React.HTMLAttributes<HTMLElement> {
 
 /**
  * Grid – CSS Grid wrapper with shorthand props for common utilities.
+ * Quickly create responsive, multi-column layouts with gap, alignment, and flow control.
+ * Ideal for dashboards, card layouts, and complex page structures.
  */
 export const Grid = React.memo(
   forwardRef<HTMLElement, GridProps>(
