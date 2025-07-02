@@ -43,4 +43,38 @@ const meta: Meta<typeof Flex> = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-export const Playground: Story = {};
+
+export const ColumnWrap: Story = {
+  args: {
+    direction: 'col',
+    wrap: 'wrap',
+    gap: 'sm',
+  },
+};
+
+export const JustifyBetween: Story = {
+  args: {
+    justify: 'between',
+  },
+};
+
+export const WrapReverse: Story = {
+  args: {
+    wrap: 'wrap-reverse',
+    gap: 'lg',
+    children: [
+      <div key="1" className="bg-pink-200 p-2">
+        1
+      </div>,
+      <div key="2" className="bg-pink-300 p-2">
+        2
+      </div>,
+      <div key="3" className="bg-pink-400 p-2">
+        3
+      </div>,
+      <div key="4" className="bg-pink-500 p-2">
+        4
+      </div>,
+    ],
+  },
+};

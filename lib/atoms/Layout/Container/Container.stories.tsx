@@ -23,4 +23,18 @@ const meta: Meta<typeof Container> = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-export const Playground: Story = {};
+
+export const Sizes: Story = {
+  render: () => (
+    <div className="space-y-6">
+      {(['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] as const).map(
+        (s) => (
+          <Container key={s} size={s} className="bg-yellow-50 py-2 text-center">
+            {s}
+          </Container>
+        ),
+      )}
+    </div>
+  ),
+  parameters: { controls: { hideNoControlsWarning: true } },
+};

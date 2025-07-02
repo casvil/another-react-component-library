@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-
-import { Spacer } from './Spacer';
+import { Spacer, SpacerProps } from './Spacer';
 
 const meta: Meta<typeof Spacer> = {
   title: 'Atoms/Layout/Spacer',
@@ -21,7 +20,15 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  render: (args) => (
+    <div className="bg-gray-50 p-4">
+      <div className="bg-blue-200 p-2">Above</div>
+      <Spacer {...(args as SpacerProps)} />
+      <div className="bg-blue-200 p-2">Below</div>
+    </div>
+  ),
+};
 
 export const GrowInFlex: Story = {
   render: () => (
