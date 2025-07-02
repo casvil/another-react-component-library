@@ -80,6 +80,7 @@ function App() {
 │   ├── Card/                # Content container with variants
 │   ├── Checkbox/            # Checkbox input
 │   ├── Divider/             # Visual separator
+│   ├── ErrorBoundary/       # Error catching component
 │   ├── ErrorMessage/        # Error display
 │   ├── HelperText/          # Form helper text
 │   ├── Icon/                # Icon component
@@ -140,6 +141,7 @@ function App() {
 │   ├── assets/              # Static assets like images or SVGs
 │   ├── atoms/               # Atomic components (basic building blocks)
 │   ├── molecules/           # Composed components (built from atoms)
+│   ├── organisms/           # Section-level components (reusable UI, complex, built from molecules and atoms)
 │   ├── hooks/               # Custom React hooks
 │   ├── index.ts             # Library entry point
 │   ├── index.css            # Global styles
