@@ -87,6 +87,13 @@ function App() {
 │   ├── Image/               # Accessible image
 │   ├── Input/               # Basic input
 │   ├── Label/               # Form label
+│   ├── Layout/              # Foundational layout primitives
+│   │   ├── Box/             # Generic wrapper div with spacing & styling
+│   │   ├── Stack/           # Vertical/horizontal flex stack with consistent gap
+│   │   ├── Flex/            # Low-level flexbox wrapper (direction, gap, wrap)
+│   │   ├── Grid/            # CSS grid wrapper with cols/rows/gap
+│   │   ├── Container/       # Responsive max-width wrapper for page sections
+│   │   └── Spacer/          # Empty space / flex grow helper
 │   ├── Link/                # Navigation link
 │   ├── ProgressBar/         # Progress indicator
 │   ├── Radio/               # Radio input
@@ -95,7 +102,7 @@ function App() {
 │   ├── Text/                # Typography component
 │   ├── TextArea/            # Multi-line input
 │   ├── TimeDisplay/         # Time formatter
-└───└── Tooltip/             # Tooltip element
+│   └── Tooltip/             # Tooltip element
 ```
 
 </details>
