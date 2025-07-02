@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Box } from './Box';
 
@@ -35,4 +35,4 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {}; 
+export const Playground: Story = {};
