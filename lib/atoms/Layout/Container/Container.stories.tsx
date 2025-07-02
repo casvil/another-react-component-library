@@ -1,0 +1,26 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Container } from './Container';
+
+const meta: Meta<typeof Container> = {
+  title: 'Atoms/Layout/Container',
+  component: Container,
+  args: {
+    size: 'lg',
+    padded: true,
+    center: true,
+    children: <div className="bg-yellow-100 p-4">Inside Container</div>,
+  },
+  argTypes: {
+    size: {
+      control: 'select',
+      options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', 'full'],
+    },
+    padded: { control: 'boolean' },
+    center: { control: 'boolean' },
+  },
+  tags: ['autodocs'],
+};
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+export const Playground: Story = {};
