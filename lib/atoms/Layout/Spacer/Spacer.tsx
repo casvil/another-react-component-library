@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import type { Spacing } from '../../../../@types/classes';
-import { spacingClasses } from '../../../../@types/classes';
+import type { Spacing } from '../../../@types/classes';
+import { spacingClasses } from '../../../@types/classes';
 
 export interface SpacerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: Spacing; // fixed height (vertical spacer)

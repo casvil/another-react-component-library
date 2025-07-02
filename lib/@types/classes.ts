@@ -634,3 +634,39 @@ export const tableBaseClasses = {
   cell: 'text-gray-900 border-b border-gray-200',
   row: 'border-b border-gray-200 last:border-b-0',
 } as const;
+
+export type Spacing =
+  | '0'
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | '3xl'
+  | '4xl';
+
+// Map spacing token
+const spacingScale: Record<Spacing, string> = {
+  '0': '0',
+  xs: '0.5', // 0.125rem (2px)
+  sm: '1', // 0.25rem (4px)
+  md: '2', // 0.5rem  (8px)
+  lg: '4', // 1rem    (16px)
+  xl: '6', // 1.5rem  (24px)
+  '2xl': '8', // 2rem    (32px)
+  '3xl': '12', // 3rem    (48px)
+  '4xl': '24', // 6rem    (96px)
+};
+
+export const spacingClasses: Record<Spacing, string> = spacingScale;
+
+// Utility helpers so components can quickly map props
+export const paddingClasses = (s: Spacing): string =>
+  s === '0' ? '' : `p-${spacingScale[s]}`;
+
+export const marginClasses = (s: Spacing): string =>
+  s === '0' ? '' : `m-${spacingScale[s]}`;
+
+export const gapClasses = (s: Spacing): string =>
+  s === '0' ? '' : `gap-${spacingScale[s]}`;

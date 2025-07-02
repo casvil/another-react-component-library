@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import type { Spacing } from '../../../../@types/classes';
-import { paddingClasses, marginClasses } from '../../../../@types/classes';
+import type { Spacing } from '../../../@types/classes';
+import { paddingClasses, marginClasses } from '../../../@types/classes';
 
 export interface BoxProps extends React.HTMLAttributes<HTMLElement> {
   as?: React.ElementType;
