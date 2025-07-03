@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/react-vite';
+
 import '../lib/index.css';
 import { withTheme } from './decorators/withTheme';
 

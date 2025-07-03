@@ -494,13 +494,13 @@ const textWeightClasses = {
 } as const;
 
 const textColorClasses = {
-  primary: 'text-gray-900',
-  secondary: 'text-gray-600',
-  muted: 'text-gray-500',
-  success: 'text-green-600',
-  warning: 'text-yellow-600',
-  error: 'text-red-600',
-  info: 'text-blue-600',
+  primary: 'text-[var(--color-text-primary)]',
+  secondary: 'text-[var(--color-text-secondary)]',
+  muted: 'text-[var(--color-text-tertiary)]',
+  success: 'text-[var(--color-text-success)]',
+  warning: 'text-[var(--color-text-warning)]',
+  error: 'text-[var(--color-text-error)]',
+  info: 'text-[var(--color-text-info)]',
 } as const;
 
 export const textComponentSizeClasses = {
