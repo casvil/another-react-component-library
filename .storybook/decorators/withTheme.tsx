@@ -6,10 +6,7 @@ import { ThemeProvider } from '../../lib/theme';
  * Storybook decorator that wraps stories with ThemeProvider
  * Provides theme switching capability in Storybook
  */
-export const withTheme = (
-  Story: StoryFn,
-  context: StoryContext,
-) => {
+export const withTheme = (Story: StoryFn, context: StoryContext) => {
   const theme = context.globals.theme || 'light';
 
   return (
