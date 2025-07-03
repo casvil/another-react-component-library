@@ -9,3 +9,35 @@
 .digital7 {
   font-family: 'Digital-7', monospace;
 }
+
+/* Theme system CSS variables will be injected here by ThemeProvider */
+/* Base styles for theme support */
+:root {
+  /* These will be overridden by ThemeProvider */
+  --color-background-primary: #ffffff;
+  --color-text-primary: #111827;
+  --color-border-primary: #e5e7eb;
+}
+
+/* Ensure smooth theme transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0ms;
+  }
+}
+
+/* Dark mode utility classes (fallback for when ThemeProvider is not used) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --color-background-primary: #0f172a;
+    --color-text-primary: #f8fafc;
+    --color-border-primary: #334155;
+  }
+}

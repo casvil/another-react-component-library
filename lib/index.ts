@@ -63,6 +63,22 @@ export { useField } from './hooks/useField/useField';
 export { useFormContext } from './hooks/useFormContext/useFormContext';
 export { useCreditCardFormatting } from './hooks/useCreditCardFormatting/useCreditCardFormatting';
 
+// Theme System
+export {
+  ThemeProvider,
+  useTheme,
+  ThemeToggle,
+  lightTheme,
+  darkTheme,
+  themes,
+  lightTokens,
+  darkTokens,
+  generateCSSVariables,
+  createThemeClasses,
+  cssVar,
+  themeClasses,
+} from './theme';
+
 // Types
 export type { AlertProps, AlertSize } from './atoms/Alert/Alert';
 export type { BadgeProps } from './atoms/Badge/Badge';
@@ -101,6 +117,15 @@ export type {
   UseCreditCardFormattingProps,
 } from './hooks/useCreditCardFormatting/useCreditCardFormatting';
 export type { TableProps } from './organisms/Table/Table';
+
+// Theme Types
+export type {
+  ColorScheme,
+  DesignTokens,
+  Theme,
+  ThemeContextValue,
+  ThemeName,
+} from './theme';
 
 // Utility exports (after types)
 export {
