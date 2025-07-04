@@ -1,15 +1,22 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { render } from '@testing-library/react';
+import { ThemeProvider } from '../../theme';
+import { lightTokens, darkTokens } from '../../theme';
+import { waitFor } from '@testing-library/react';
+import { mockMatchMedia } from '../../test/utils/themeTest';
 
 import { Badge } from './Badge';
 import type { BadgeProps } from './Badge';
 
 const intentClasses: Record<NonNullable<BadgeProps['intent']>, string[]> = {
-  default: ['bg-gray-100', 'text-gray-800'],
-  success: ['bg-green-100', 'text-green-800'],
-  error: ['bg-red-100', 'text-red-800'],
-  warning: ['bg-yellow-100', 'text-yellow-800'],
-  info: ['bg-blue-100', 'text-blue-800'],
+  default: [
+    'bg-[var(--color-surface-secondary)]',
+    'text-[var(--color-text-primary)]',
+  ],
+  success: ['bg-[var(--color-success-50)]', 'text-[var(--color-success-700)]'],
+  error: ['bg-[var(--color-error-50)]', 'text-[var(--color-error-700)]'],
+  warning: ['bg-[var(--color-warning-50)]', 'text-[var(--color-warning-700)]'],
+  info: ['bg-[var(--color-info-50)]', 'text-[var(--color-info-700)]'],
 };
 
 const sizeClasses: Record<NonNullable<BadgeProps['size']>, string> = {
@@ -17,6 +24,8 @@ const sizeClasses: Record<NonNullable<BadgeProps['size']>, string> = {
   md: 'text-sm',
   lg: 'text-base',
 };
+
+beforeAll(mockMatchMedia);
 
 describe('Badge', () => {
   it('renders without crashing', () => {
@@ -28,8 +37,8 @@ describe('Badge', () => {
     const { getByRole } = render(<Badge>Default</Badge>);
     const badge = getByRole('status', { name: /default/i });
 
-    expect(badge.className).toContain('bg-gray-100');
-    expect(badge.className).toContain('text-gray-800');
+    expect(badge.className).toContain('bg-[var(--color-surface-secondary)]');
+    expect(badge.className).toContain('text-[var(--color-text-primary)]');
     expect(badge.className).toContain('text-sm');
   });
 
@@ -143,8 +152,8 @@ describe('Badge', () => {
     expect(badge.className).toContain('animate-pulse');
 
     // Intent classes
-    expect(badge.className).toContain('bg-green-100');
-    expect(badge.className).toContain('text-green-800');
+    expect(badge.className).toContain('bg-[var(--color-success-50)]');
+    expect(badge.className).toContain('text-[var(--color-success-700)]');
 
     // Size classes
     expect(badge.className).toContain('text-base');
@@ -163,5 +172,33 @@ describe('Badge', () => {
 
     expect(badge).toHaveAttribute('role', 'status');
     expect(badge).toHaveAttribute('aria-live', 'polite');
+  });
+
+  it('adapts to light and dark themes', async () => {
+    const { unmount } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <Badge>Theme</Badge>
+      </ThemeProvider>,
+    );
+
+    await waitFor(() => {
+      expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+      expect(
+        document.documentElement.style.getPropertyValue('--color-info-50'),
+      ).toBe(lightTokens.colors.intent.info[50]);
+    });
+
+    unmount();
+    render(
+      <ThemeProvider defaultColorScheme="dark">
+        <Badge>Theme</Badge>
+      </ThemeProvider>,
+    );
+    await waitFor(() => {
+      expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+      expect(
+        document.documentElement.style.getPropertyValue('--color-info-50'),
+      ).toBe(darkTokens.colors.intent.info[50]);
+    });
   });
 });

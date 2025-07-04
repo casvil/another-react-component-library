@@ -223,6 +223,15 @@ export const badgeSizeClasses = {
   lg: 'text-base px-1.5 py-1.5',
 } as const;
 
+export const badgeIntentClasses = {
+  default:
+    'bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)]',
+  success: 'bg-[var(--color-success-50)] text-[var(--color-success-700)]',
+  error: 'bg-[var(--color-error-50)] text-[var(--color-error-700)]',
+  warning: 'bg-[var(--color-warning-50)] text-[var(--color-warning-700)]',
+  info: 'bg-[var(--color-info-100)] text-[var(--color-info-800)]',
+} as const;
+
 export const inputSizeClasses = combineTextAndPadding(
   textSizeClasses,
   paddingSizeClasses,

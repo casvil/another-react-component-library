@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { ThemeProvider, ThemeToggle } from '../../theme';
 
 import { Badge } from './Badge';
 
@@ -163,3 +164,37 @@ export const AllSizes = {
     </div>
   ),
 } satisfies StoryObj<typeof meta>;
+
+export const DarkTheme: Story = {
+  args: {
+    children: 'Dark Badge',
+    intent: 'info',
+  },
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <Badge {...args} />
+    </ThemeProvider>
+  ),
+  parameters: { globals: { theme: 'dark' } },
+};
+
+export const InteractiveThemeDemo: Story = {
+  args: {
+    children: 'Toggle Theme',
+    intent: 'success',
+  },
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="light">
+      <div
+        className="p-4 rounded border inline-flex flex-col gap-4"
+        style={{
+          backgroundColor: 'var(--color-background-primary)',
+          borderColor: 'var(--color-border-primary)',
+        }}
+      >
+        <ThemeToggle />
+        <Badge {...args} />
+      </div>
+    </ThemeProvider>
+  ),
+};
