@@ -1,8 +1,11 @@
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, beforeAll, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import type { LucideIcon } from 'lucide-icon-type';
+import { waitFor, cleanup } from '@testing-library/react';
 
+import { ThemeProvider } from '../../theme';
+import { lightTokens, darkTokens } from '../../theme';
 import { Button } from './Button';
 import { buttonSizeClasses } from '../../@types/classes';
 
@@ -18,6 +21,20 @@ const MockArrowRight: LucideIcon = (props) => (
     <path d="M5 12h14M12 5l7 7-7 7" />
   </svg>
 );
+
+// Mock matchMedia for ThemeProvider
+beforeAll(() => {
+  window.matchMedia = vi.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  }));
+});
 
 describe('Button', () => {
   it('renders the label', () => {
@@ -127,5 +144,38 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: /focus me/i });
     button.focus();
     expect(button).toHaveFocus();
+  });
+
+  it('applies correct CSS variables in light and dark themes', async () => {
+    // Light theme
+    const { unmount } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <Button label="Theme" />
+      </ThemeProvider>,
+    );
+
+    await waitFor(() => {
+      expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+      expect(
+        document.documentElement.style.getPropertyValue('--color-primary-600'),
+      ).toBe(lightTokens.colors.intent.primary[600]);
+    });
+
+    // Switch to dark theme
+    unmount();
+    render(
+      <ThemeProvider defaultColorScheme="dark">
+        <Button label="Theme" />
+      </ThemeProvider>,
+    );
+
+    await waitFor(() => {
+      expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+      expect(
+        document.documentElement.style.getPropertyValue('--color-primary-600'),
+      ).toBe(darkTokens.colors.intent.primary[600]);
+    });
+
+    cleanup();
   });
 });
