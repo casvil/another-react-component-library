@@ -11,6 +11,7 @@ import { Box } from '../atoms/Layout/Box/Box';
 import { Stack } from '../atoms/Layout/Stack/Stack';
 import { Flex } from '../atoms/Layout/Flex/Flex';
 import { Grid } from '../atoms/Layout/Grid/Grid';
+import { Avatar } from '../atoms/Avatar/Avatar';
 
 const meta: Meta = {
   title: 'Theme/Showcase',
@@ -166,6 +167,16 @@ const ThemeShowcaseContent = () => {
                 <Badge intent="warning">Warning</Badge>
                 <Badge intent="error">Error</Badge>
                 <Badge intent="info">Info</Badge>
+              </Flex>
+            </div>
+
+            {/* Avatars */}
+            <div className="space-y-4">
+              <Text variant="h5">Avatars</Text>
+              <Flex gap="sm" wrap>
+                <Avatar name="Alice" size="sm" />
+                <Avatar name="Bob Builder" />
+                <Avatar name="Charlie Chaplin" size="lg" />
               </Flex>
             </div>
 

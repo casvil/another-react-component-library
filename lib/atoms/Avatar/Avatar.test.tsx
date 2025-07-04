@@ -1,7 +1,14 @@
 import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
+
 import { Avatar } from './Avatar';
+import { ThemeProvider } from '../../theme';
+import { lightTokens, darkTokens } from '../../theme';
+import { waitFor } from '@testing-library/react';
+import { mockMatchMedia } from '../../test/utils/themeTest';
+
+beforeAll(mockMatchMedia);
 
 describe('Avatar component', () => {
   it('renders img element when src is provided', () => {
@@ -76,5 +83,36 @@ describe('Avatar component', () => {
     const ref = createRef<HTMLSpanElement>();
     render(<Avatar name="Jane Doe" ref={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLSpanElement);
+  });
+
+  it('adapts to light and dark themes', async () => {
+    const { unmount } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <Avatar name="Theme" />
+      </ThemeProvider>,
+    );
+    await waitFor(() => {
+      expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+      expect(
+        document.documentElement.style.getPropertyValue(
+          '--color-surface-secondary',
+        ),
+      ).toBe(lightTokens.colors.surface.secondary);
+    });
+
+    unmount();
+    render(
+      <ThemeProvider defaultColorScheme="dark">
+        <Avatar name="Theme" />
+      </ThemeProvider>,
+    );
+    await waitFor(() => {
+      expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+      expect(
+        document.documentElement.style.getPropertyValue(
+          '--color-surface-secondary',
+        ),
+      ).toBe(darkTokens.colors.surface.secondary);
+    });
   });
 });

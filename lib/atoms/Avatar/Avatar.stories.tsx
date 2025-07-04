@@ -1,4 +1,7 @@
+import React from 'react';
 import { Meta, StoryObj } from '@storybook/react-vite';
+
+import { ThemeProvider, ThemeToggle } from '../../theme';
 
 import { Avatar } from './Avatar';
 
@@ -93,4 +96,39 @@ export const CustomStyleAvatar: Story = {
     name: 'Custom Style',
     className: 'bg-purple-300 text-purple-900',
   },
+};
+
+export const DarkTheme: Story = {
+  args: {
+    name: 'Dark Mode',
+    size: 'md',
+  },
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <Avatar {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    globals: { theme: 'dark' },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  args: {
+    name: 'Toggle Theme',
+  },
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="light">
+      <div
+        className="p-6 rounded border inline-flex flex-col items-center gap-4"
+        style={{
+          backgroundColor: 'var(--color-background-primary)',
+          borderColor: 'var(--color-border-primary)',
+        }}
+      >
+        <ThemeToggle />
+        <Avatar {...args} />
+      </div>
+    </ThemeProvider>
+  ),
 };

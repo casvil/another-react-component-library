@@ -34,7 +34,8 @@ export const Avatar = React.memo(
       const ariaLabel = alt || name || 'User avatar';
 
       const baseInitialsClasses = clsx(
-        'inline-flex items-center justify-center rounded-full font-semibold bg-gray-200 text-gray-700 select-none',
+        'inline-flex items-center justify-center rounded-full font-semibold select-none',
+        'bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)]',
         avatarSizeClasses[size],
         border,
         className,
