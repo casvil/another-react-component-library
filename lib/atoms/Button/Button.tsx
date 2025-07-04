@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import type { LucideIcon } from 'lucide-icon-type';
 
 import type { Size } from '../../@types/classes';
-import { buttonSizeClasses } from '../../@types/classes';
+import { buttonSizeClasses, buttonVariantClasses } from '../../@types/classes';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'tertiary';
@@ -11,12 +11,13 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   icon?: LucideIcon;
   iconPosition?: 'left' | 'right';
+  style?: React.CSSProperties;
 }
 
 /**
  * Button atom component.
  * Renders a styled button with support for variants, sizes, and optional icons.
- * Uses Tailwind for styling and supports accessibility, custom classes, and disabled state.
+ * Uses Tailwind for layout/utilities and CSS variables for theming. Supports accessibility, custom classes, and disabled state.
  */
 export const Button = React.memo(
   forwardRef<HTMLButtonElement, ButtonProps>(
@@ -29,21 +30,13 @@ export const Button = React.memo(
         iconPosition = 'left',
         className,
         disabled = false,
+        style,
         ...props
       },
       ref,
     ) => {
       const base =
-        'inline-flex items-center justify-center font-semibold rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer';
-
-      const variants = {
-        primary:
-          'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500',
-        secondary:
-          'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-400',
-        tertiary:
-          'bg-transparent text-gray-800 hover:bg-gray-100 focus:ring-gray-300 border border-gray-300',
-      };
+        'inline-flex items-center justify-center font-semibold rounded-md transition-colors focus:outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer';
 
       // Get icon size based on button size
       const iconSize = size === 'sm' ? 16 : size === 'lg' ? 24 : 20;
@@ -54,10 +47,11 @@ export const Button = React.memo(
           ref={ref}
           className={clsx(
             base,
-            variants[variant],
             buttonSizeClasses[size],
+            buttonVariantClasses[variant],
             className,
           )}
+          style={style}
           disabled={disabled}
           {...props}
         >

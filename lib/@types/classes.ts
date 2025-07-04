@@ -670,3 +670,13 @@ export const marginClasses = (s: Spacing): string =>
 
 export const gapClasses = (s: Spacing): string =>
   s === '0' ? '' : `gap-${spacingScale[s]}`;
+
+// Button variant classes using theme CSS variables (primary/secondary/tertiary)
+export const buttonVariantClasses = {
+  primary:
+    'bg-[var(--color-primary-600)] text-[var(--color-text-inverse)] hover:bg-[var(--color-primary-700)] focus:ring-2 focus:ring-[var(--color-border-focus)]',
+  secondary:
+    'bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] border border-[var(--color-border-primary)] hover:bg-[var(--color-surface-hover)] focus:ring-2 focus:ring-[var(--color-border-focus)]',
+  tertiary:
+    'bg-transparent text-[var(--color-text-primary)] border border-[var(--color-border-secondary)] hover:bg-[var(--color-surface-hover)] focus:ring-2 focus:ring-[var(--color-border-focus)]',
+} as const;
