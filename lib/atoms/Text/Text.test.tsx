@@ -10,7 +10,11 @@ describe('Text', () => {
     const text = screen.getByText('Test content');
     expect(text).toBeInTheDocument();
     expect(text.tagName).toBe('P');
-    expect(text).toHaveClass('text-base', 'text-gray-900', 'text-left');
+    expect(text).toHaveClass(
+      'text-base',
+      'text-[var(--color-text-primary)]',
+      'text-left',
+    );
   });
 
   it('renders children correctly', () => {
@@ -111,13 +115,34 @@ describe('Text', () => {
   describe('Colors', () => {
     it('applies color classes correctly', () => {
       const colors = [
-        { color: 'primary', expectedClass: 'text-gray-900' },
-        { color: 'secondary', expectedClass: 'text-gray-600' },
-        { color: 'muted', expectedClass: 'text-gray-500' },
-        { color: 'success', expectedClass: 'text-green-600' },
-        { color: 'warning', expectedClass: 'text-yellow-600' },
-        { color: 'error', expectedClass: 'text-red-600' },
-        { color: 'info', expectedClass: 'text-blue-600' },
+        {
+          color: 'primary' as const,
+          expectedClass: 'text-[var(--color-text-primary)]',
+        },
+        {
+          color: 'secondary' as const,
+          expectedClass: 'text-[var(--color-text-secondary)]',
+        },
+        {
+          color: 'muted' as const,
+          expectedClass: 'text-[var(--color-text-tertiary)]',
+        },
+        {
+          color: 'success' as const,
+          expectedClass: 'text-[var(--color-text-success)]',
+        },
+        {
+          color: 'warning' as const,
+          expectedClass: 'text-[var(--color-text-warning)]',
+        },
+        {
+          color: 'error' as const,
+          expectedClass: 'text-[var(--color-text-error)]',
+        },
+        {
+          color: 'info' as const,
+          expectedClass: 'text-[var(--color-text-info)]',
+        },
       ] as const;
 
       colors.forEach(({ color, expectedClass }) => {
@@ -196,7 +221,7 @@ describe('Text', () => {
 
       const text = screen.getByText('Span body');
       expect(text.tagName).toBe('SPAN');
-      expect(text).toHaveClass('text-base', 'text-green-600');
+      expect(text).toHaveClass('text-base', 'text-[var(--color-text-success)]');
     });
   });
 
@@ -214,7 +239,7 @@ describe('Text', () => {
       const text = screen.getByText('Test');
       expect(text).toHaveClass(
         'text-base',
-        'text-gray-900',
+        'text-[var(--color-text-primary)]',
         'text-left',
         'custom-class',
       );
@@ -267,7 +292,7 @@ describe('Text', () => {
       expect(text).toHaveClass(
         'text-3xl', // h2 variant
         'font-medium', // medium weight
-        'text-green-600', // success color
+        'text-[var(--color-text-success)]', // success color
         'text-center', // center align
         'truncate', // truncate
         'custom-class', // custom class

@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Text } from './Text';
+import React from 'react';
+import { ThemeProvider } from '../../theme';
 
 const meta: Meta<typeof Text> = {
   title: 'Atoms/Text',
@@ -268,4 +270,26 @@ export const AllVariants: Story = {
       ))}
     </div>
   ),
+};
+
+export const DarkTheme: Story = {
+  render: () => (
+    <ThemeProvider defaultColorScheme="dark">
+      <div className="space-y-4">
+        <Text variant="h2">Heading Dark</Text>
+        <Text color="secondary">Secondary color in dark</Text>
+        <Text color="muted">Muted color in dark</Text>
+      </div>
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Text component preview in dark theme.',
+      },
+    },
+    globals: {
+      theme: 'dark',
+    },
+  },
 };
