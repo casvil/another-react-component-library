@@ -5,13 +5,13 @@ export const lightTokens: DesignTokens = {
   colors: {
     background: {
       primary: '#ffffff',
-      secondary: '#f9fafb',
+      secondary: '#e5e7eb',
       tertiary: '#f3f4f6',
       overlay: 'rgba(0, 0, 0, 0.5)',
     },
     surface: {
       primary: '#ffffff',
-      secondary: '#f9fafb',
+      secondary: '#e5e7eb',
       tertiary: '#f3f4f6',
       elevated: '#ffffff',
       hover: '#f3f4f6',
