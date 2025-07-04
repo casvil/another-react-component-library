@@ -405,24 +405,27 @@ const alertBorderRadiusClasses = {
 } as const;
 
 const alertIntentClasses = {
-  info: 'bg-blue-50 border-blue-200 text-blue-800',
-  success: 'bg-green-50 border-green-200 text-green-800',
-  warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-  error: 'bg-red-50 border-red-200 text-red-800',
+  info: 'bg-[var(--color-info-50)] border-[var(--color-info-200)] text-[var(--color-info-700)]',
+  success:
+    'bg-[var(--color-success-50)] border-[var(--color-success-200)] text-[var(--color-success-700)]',
+  warning:
+    'bg-[var(--color-warning-50)] border-[var(--color-warning-200)] text-[var(--color-warning-700)]',
+  error:
+    'bg-[var(--color-error-50)] border-[var(--color-error-200)] text-[var(--color-error-700)]',
 } as const;
 
 const alertIconIntentClasses = {
-  info: 'text-blue-600',
-  success: 'text-green-600',
-  warning: 'text-yellow-600',
-  error: 'text-red-600',
+  info: 'text-[var(--color-info-600)]',
+  success: 'text-[var(--color-success-600)]',
+  warning: 'text-[var(--color-warning-600)]',
+  error: 'text-[var(--color-error-600)]',
 } as const;
 
 const alertDismissButtonHoverClasses = {
-  info: 'hover:bg-blue-100',
-  success: 'hover:bg-green-100',
-  warning: 'hover:bg-yellow-100',
-  error: 'hover:bg-red-100',
+  info: 'hover:bg-[var(--color-info-100)]',
+  success: 'hover:bg-[var(--color-success-100)]',
+  warning: 'hover:bg-[var(--color-warning-100)]',
+  error: 'hover:bg-[var(--color-error-100)]',
 } as const;
 
 export const alertSizeClasses = {
