@@ -9,7 +9,11 @@ describe('Card', () => {
 
     const card = screen.getByText('Test content').closest('div');
     expect(card).toBeInTheDocument();
-    expect(card).toHaveClass('bg-white', 'border', 'border-gray-200');
+    expect(card).toHaveClass(
+      'bg-[var(--color-surface-primary)]',
+      'border',
+      'border-[var(--color-border-primary)]',
+    );
   });
 
   it('renders children correctly', () => {
@@ -29,7 +33,11 @@ describe('Card', () => {
       render(<Card variant="default">Test</Card>);
 
       const card = screen.getByText('Test').closest('div');
-      expect(card).toHaveClass('bg-white', 'border', 'border-gray-200');
+      expect(card).toHaveClass(
+        'bg-[var(--color-surface-primary)]',
+        'border',
+        'border-[var(--color-border-primary)]',
+      );
       expect(card).not.toHaveClass('border-2', 'shadow-md');
     });
 
@@ -37,7 +45,11 @@ describe('Card', () => {
       render(<Card variant="outlined">Test</Card>);
 
       const card = screen.getByText('Test').closest('div');
-      expect(card).toHaveClass('bg-white', 'border-2', 'border-gray-300');
+      expect(card).toHaveClass(
+        'bg-[var(--color-surface-primary)]',
+        'border-2',
+        'border-[var(--color-border-secondary)]',
+      );
     });
 
     it('renders elevated variant correctly', () => {
@@ -49,9 +61,9 @@ describe('Card', () => {
 
       const card = screen.getByText('Test').closest('div');
       expect(card).toHaveClass(
-        'bg-white',
+        'bg-[var(--color-surface-elevated)]',
         'border',
-        'border-gray-100',
+        'border-[var(--color-border-primary)]',
         'shadow-md',
       );
     });
@@ -176,7 +188,7 @@ describe('Card', () => {
       const card = screen.getByText('Test').closest('div');
       expect(card).toHaveClass(
         'rounded-xl',
-        'bg-white',
+        'bg-[var(--color-surface-primary)]',
         'border',
         'custom-class',
       );

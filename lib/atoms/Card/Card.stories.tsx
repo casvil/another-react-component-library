@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Card } from './Card';
+import React from 'react';
+import { ThemeProvider } from '../../theme';
 
 const meta: Meta<typeof Card> = {
   title: 'Atoms/Card',
@@ -200,6 +202,29 @@ export const CustomStyling: Story = {
         story:
           "Cards can be extensively customized using the `className` prop. You can override default styles, add gradients, custom colors, animations, and create theme-specific designs while maintaining the card's structural behavior.",
       },
+    },
+  },
+};
+
+export const DarkTheme: Story = {
+  render: () => (
+    <ThemeProvider defaultColorScheme="dark">
+      <Card variant="elevated" size="md">
+        <h3 className="text-lg font-semibold mb-2">Dark Theme Card</h3>
+        <p className="text-sm">
+          This card previews appearance in the dark theme using CSS variables.
+        </p>
+      </Card>
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Card rendered inside ThemeProvider with dark color scheme.',
+      },
+    },
+    globals: {
+      theme: 'dark',
     },
   },
 };

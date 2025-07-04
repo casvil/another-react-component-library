@@ -15,9 +15,12 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const VARIANT_CLASSES = {
-  default: 'bg-white border border-gray-200',
-  outlined: 'bg-white border-2 border-gray-300',
-  elevated: 'bg-white border border-gray-100',
+  default:
+    'bg-[var(--color-surface-primary)] border border-[var(--color-border-primary)]',
+  outlined:
+    'bg-[var(--color-surface-primary)] border-2 border-[var(--color-border-secondary)]',
+  elevated:
+    'bg-[var(--color-surface-elevated)] border border-[var(--color-border-primary)]',
 } as const;
 
 /**
