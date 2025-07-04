@@ -1,6 +1,13 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, beforeAll, it, expect, vi } from 'vitest';
+import { waitFor } from '@testing-library/react';
+
 import { Alert } from './Alert';
+import { mockMatchMedia } from '../../test/utils/themeTest';
+import { ThemeProvider } from '../../theme';
+import { lightTokens, darkTokens } from '../../theme';
+
+beforeAll(mockMatchMedia);
 
 describe('Alert', () => {
   it('renders with default props', () => {
@@ -43,9 +50,9 @@ describe('Alert', () => {
 
       const alert = screen.getByRole('alert');
       expect(alert).toHaveClass(
-        'bg-blue-50',
-        'border-blue-200',
-        'text-blue-800',
+        'bg-[var(--color-info-50)]',
+        'border-[var(--color-info-200)]',
+        'text-[var(--color-info-700)]',
       );
     });
 
@@ -54,9 +61,9 @@ describe('Alert', () => {
 
       const alert = screen.getByRole('alert');
       expect(alert).toHaveClass(
-        'bg-green-50',
-        'border-green-200',
-        'text-green-800',
+        'bg-[var(--color-success-50)]',
+        'border-[var(--color-success-200)]',
+        'text-[var(--color-success-700)]',
       );
     });
 
@@ -65,9 +72,9 @@ describe('Alert', () => {
 
       const alert = screen.getByRole('alert');
       expect(alert).toHaveClass(
-        'bg-yellow-50',
-        'border-yellow-200',
-        'text-yellow-800',
+        'bg-[var(--color-warning-50)]',
+        'border-[var(--color-warning-200)]',
+        'text-[var(--color-warning-700)]',
       );
     });
 
@@ -75,7 +82,11 @@ describe('Alert', () => {
       render(<Alert intent="error">Error message</Alert>);
 
       const alert = screen.getByRole('alert');
-      expect(alert).toHaveClass('bg-red-50', 'border-red-200', 'text-red-800');
+      expect(alert).toHaveClass(
+        'bg-[var(--color-error-50)]',
+        'border-[var(--color-error-200)]',
+        'text-[var(--color-error-700)]',
+      );
     });
   });
 
@@ -125,19 +136,19 @@ describe('Alert', () => {
     it('renders correct icon for each intent', () => {
       const { rerender } = render(<Alert intent="info">Test</Alert>);
       let icon = screen.getByRole('alert').querySelector('svg');
-      expect(icon).toHaveClass('text-blue-600');
+      expect(icon).toHaveClass('text-[var(--color-info-600)]');
 
       rerender(<Alert intent="success">Test</Alert>);
       icon = screen.getByRole('alert').querySelector('svg');
-      expect(icon).toHaveClass('text-green-600');
+      expect(icon).toHaveClass('text-[var(--color-success-600)]');
 
       rerender(<Alert intent="warning">Test</Alert>);
       icon = screen.getByRole('alert').querySelector('svg');
-      expect(icon).toHaveClass('text-yellow-600');
+      expect(icon).toHaveClass('text-[var(--color-warning-600)]');
 
       rerender(<Alert intent="error">Test</Alert>);
       icon = screen.getByRole('alert').querySelector('svg');
-      expect(icon).toHaveClass('text-red-600');
+      expect(icon).toHaveClass('text-[var(--color-error-600)]');
     });
   });
 
@@ -258,16 +269,17 @@ describe('Alert', () => {
       const alert = screen.getByRole('alert');
       expect(alert).toHaveClass('custom-styling', 'shadow-lg');
       expect(alert).toHaveClass(
-        'bg-green-50',
-        'border-green-200',
-        'text-green-800',
+        'bg-[var(--color-success-50)]',
+        'border-[var(--color-success-200)]',
+        'text-[var(--color-success-700)]',
       ); // success intent
       expect(alert).toHaveClass('p-5', 'rounded-xl'); // large size
 
-      // Should not have intent icon (showIcon=false)
-      // Check by finding the specific intent icon classes
-      const intentIcon = alert.querySelector('svg.text-green-600'); // success intent should be green
-      expect(intentIcon).toBeNull();
+      // Ensure the success intent icon is not rendered (showIcon=false)
+      const intentIcon = Array.from(alert.querySelectorAll('svg')).find((svg) =>
+        svg.classList.contains('text-[var(--color-success-600)]'),
+      );
+      expect(intentIcon).toBeUndefined();
 
       // Should have dismiss button with its own icon
       const dismissButton = screen.getByRole('button', {
@@ -345,10 +357,22 @@ describe('Alert', () => {
 
     it('dismiss button has intent-specific hover styles', () => {
       const intents = [
-        { intent: 'info', expectedHover: 'hover:bg-blue-100' },
-        { intent: 'success', expectedHover: 'hover:bg-green-100' },
-        { intent: 'warning', expectedHover: 'hover:bg-yellow-100' },
-        { intent: 'error', expectedHover: 'hover:bg-red-100' },
+        {
+          intent: 'info' as const,
+          expectedHover: 'hover:bg-[var(--color-info-100)]',
+        },
+        {
+          intent: 'success' as const,
+          expectedHover: 'hover:bg-[var(--color-success-100)]',
+        },
+        {
+          intent: 'warning' as const,
+          expectedHover: 'hover:bg-[var(--color-warning-100)]',
+        },
+        {
+          intent: 'error' as const,
+          expectedHover: 'hover:bg-[var(--color-error-100)]',
+        },
       ] as const;
 
       intents.forEach(({ intent, expectedHover }) => {
@@ -365,6 +389,43 @@ describe('Alert', () => {
         expect(dismissButton).toHaveClass(expectedHover);
 
         unmount();
+      });
+    });
+  });
+
+  describe('Theme adaptation', () => {
+    it('updates CSS variables between light and dark themes', async () => {
+      // light theme
+      const { unmount } = render(
+        <ThemeProvider defaultColorScheme="light">
+          <Alert>Theme</Alert>
+        </ThemeProvider>,
+      );
+
+      await waitFor(() => {
+        expect(document.documentElement.getAttribute('data-theme')).toBe(
+          'light',
+        );
+        expect(
+          document.documentElement.style.getPropertyValue('--color-info-50'),
+        ).toBe(lightTokens.colors.intent.info[50]);
+      });
+
+      // dark theme
+      unmount();
+      render(
+        <ThemeProvider defaultColorScheme="dark">
+          <Alert>Theme</Alert>
+        </ThemeProvider>,
+      );
+
+      await waitFor(() => {
+        expect(document.documentElement.getAttribute('data-theme')).toBe(
+          'dark',
+        );
+        expect(
+          document.documentElement.style.getPropertyValue('--color-info-50'),
+        ).toBe(darkTokens.colors.intent.info[50]);
       });
     });
   });

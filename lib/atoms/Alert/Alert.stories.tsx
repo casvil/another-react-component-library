@@ -1,4 +1,7 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+
+import { ThemeProvider, ThemeToggle } from '../../theme';
 
 import { Alert } from './Alert';
 
@@ -200,4 +203,47 @@ export const FullyCustomized: Story = {
       </Alert>
     </div>
   ),
+};
+
+export const DarkTheme: Story = {
+  args: {
+    children: 'Dark theme Alert',
+    intent: 'info',
+    size: 'md',
+  },
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <Alert {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    globals: { theme: 'dark' },
+    docs: { description: { story: 'Alert rendered in dark theme.' } },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  args: {
+    children: 'Toggle theme to see alert adapt',
+    intent: 'success',
+  },
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="light">
+      <div
+        className="p-6 rounded border"
+        style={{
+          backgroundColor: 'var(--color-background-primary)',
+          borderColor: 'var(--color-border-primary)',
+        }}
+      >
+        <div className="mb-4">
+          <ThemeToggle />
+        </div>
+        <Alert {...args} />
+      </div>
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: { description: { story: 'Interactive demo with theme toggle.' } },
+  },
 };
