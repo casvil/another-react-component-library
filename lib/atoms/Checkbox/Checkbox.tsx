@@ -5,6 +5,7 @@ import { Label } from '../Label/Label';
 import { useStableId } from '../../hooks/useStableId/useStableId';
 import type { Size } from '../../@types/classes';
 import { checkboxSizeClasses } from '../../@types/classes';
+import { themeClasses } from '../../theme/utils';
 
 export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
@@ -70,7 +71,11 @@ export const Checkbox = React.memo(
             disabled={disabled}
             aria-checked={indeterminate ? 'mixed' : inputChecked}
             className={clsx(
-              'form-checkbox text-indigo-600 rounded border-gray-300 focus:ring-2 focus:ring-indigo-500',
+              'form-checkbox rounded',
+              themeClasses.border.primary,
+              themeClasses.text.primary,
+              'focus:ring-2',
+              themeClasses.border.focus,
               currentSize.checkbox,
               className,
             )}

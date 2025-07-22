@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 import { Button } from '../../atoms/Button/Button';
 import { FormProvider } from './FormContext';
@@ -136,7 +137,12 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(
     // Form error message
     const formError = errors.form && (
       <div
-        className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-3"
+        className={clsx(
+          'text-sm rounded-md p-3',
+          themeClasses.text.error,
+          themeClasses.surface.error,
+          themeClasses.border.error,
+        )}
         role="alert"
         aria-live="polite"
       >

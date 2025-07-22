@@ -1,6 +1,7 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 import { BadgeAvatar } from './BadgeAvatar';
 
 describe('BadgeAvatar', () => {
@@ -119,5 +120,27 @@ describe('BadgeAvatar', () => {
     );
     const avatar = screen.getByRole('img', { name: 'Custom alt' });
     expect(avatar).toBeInTheDocument();
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <BadgeAvatar avatarProps={{ name: 'Theme test' }}>
+          Theme test
+        </BadgeAvatar>
+      </ThemeProvider>,
+    );
+    const badge = screen.getByRole('status');
+    expect(badge).toBeInTheDocument();
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <BadgeAvatar avatarProps={{ name: 'Theme test' }}>
+          Theme test
+        </BadgeAvatar>
+      </ThemeProvider>,
+    );
+    // Should still be in the document
+    expect(badge).toBeInTheDocument();
   });
 });

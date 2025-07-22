@@ -2,6 +2,7 @@ import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { Checkbox } from './Checkbox';
 import { checkboxSizeClasses } from '../../@types/classes';
@@ -105,5 +106,24 @@ describe('Checkbox', () => {
     expect(input.checked).toBe(false);
     await user.click(input);
     expect(input.checked).toBe(true);
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <Checkbox label="Theme test" />
+      </ThemeProvider>,
+    );
+    const input = screen.getByRole('checkbox', { name: 'Theme test' });
+    expect(input).toHaveClass('text-[var(--color-text-primary)]');
+    expect(input).toHaveClass('border-[var(--color-border-primary)]');
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <Checkbox label="Theme test" />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(input).toHaveClass('text-[var(--color-text-primary)]');
+    expect(input).toHaveClass('border-[var(--color-border-primary)]');
   });
 });

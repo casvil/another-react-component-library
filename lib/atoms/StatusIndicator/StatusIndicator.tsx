@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 import type { Size } from '../../@types/classes';
 import { statusIndicatorComponentSizeClasses } from '../../@types/classes';
@@ -15,19 +16,19 @@ export interface StatusIndicatorProps
 
 const statusConfig = {
   online: {
-    color: 'bg-green-500',
+    color: 'bg-[var(--color-success-500)]',
     label: 'Online',
   },
   offline: {
-    color: 'bg-gray-400',
+    color: 'bg-[var(--color-text-tertiary)]',
     label: 'Offline',
   },
   away: {
-    color: 'bg-yellow-500',
+    color: 'bg-[var(--color-warning-500)]',
     label: 'Away',
   },
   busy: {
-    color: 'bg-red-500',
+    color: 'bg-[var(--color-error-500)]',
     label: 'Busy',
   },
 } as const;
@@ -66,7 +67,7 @@ export const StatusIndicator = forwardRef<
       {showLabel && (
         <span
           className={clsx(
-            'text-gray-700',
+            themeClasses.text.primary,
             statusIndicatorComponentSizeClasses.text[size],
           )}
         >

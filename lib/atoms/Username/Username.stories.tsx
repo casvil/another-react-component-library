@@ -1,5 +1,7 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react-vite';
+import { ThemeProvider } from '../../theme/ThemeProvider';
+import { ThemeDemo } from '../../theme/ThemeDemo';
 
 import { Username } from './Username';
 
@@ -107,4 +109,33 @@ export const AllSizes: Story = {
       <Username size="lg">johndoe</Username>
     </div>
   ),
+};
+
+export const DarkTheme: Story = {
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <Username {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Username in dark theme context.',
+      },
+    },
+    globals: {
+      theme: 'dark',
+    },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  render: () => <ThemeDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive demo for toggling light/dark theme with Username.',
+      },
+    },
+  },
 };

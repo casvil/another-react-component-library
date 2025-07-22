@@ -1,5 +1,6 @@
 import React, { forwardRef, TextareaHTMLAttributes } from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 import { Label } from '../Label/Label';
 import { useStableId } from '../../hooks/useStableId/useStableId';
@@ -51,7 +52,9 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           id={textareaId}
           ref={ref}
           className={clsx(
-            'resize-none rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500',
+            'resize-none rounded border focus:outline-none focus:ring-2',
+            themeClasses.border.primary,
+            themeClasses.border.focus,
             inputSizeClasses[size],
             className,
           )}

@@ -2,6 +2,7 @@ import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { RadioGroup } from './RadioGroup';
 
@@ -176,5 +177,23 @@ describe('RadioGroup', () => {
 
     const radioButtons = screen.queryAllByRole('radio');
     expect(radioButtons).toHaveLength(0);
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <RadioGroup label="Theme test" options={defaultOptions} />
+      </ThemeProvider>,
+    );
+    const container = screen.getByRole('radiogroup');
+    expect(container).toBeInTheDocument();
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <RadioGroup label="Theme test" options={defaultOptions} />
+      </ThemeProvider>,
+    );
+    // Should still be in the document
+    expect(container).toBeInTheDocument();
   });
 });

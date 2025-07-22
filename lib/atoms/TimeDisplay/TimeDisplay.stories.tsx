@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { ThemeProvider } from '../../theme/ThemeProvider';
+import { ThemeDemo } from '../../theme/ThemeDemo';
 
 import { TimeDisplay } from './TimeDisplay';
 
@@ -70,6 +72,36 @@ export const CustomStyleDigital7Font: Story = {
       description: {
         story:
           'Uses a custom `digital-7` font (make sure to load it globally in your project).',
+      },
+    },
+  },
+};
+
+export const DarkTheme: Story = {
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <TimeDisplay {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'TimeDisplay in dark theme context.',
+      },
+    },
+    globals: {
+      theme: 'dark',
+    },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  render: () => <ThemeDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Interactive demo for toggling light/dark theme with TimeDisplay.',
       },
     },
   },

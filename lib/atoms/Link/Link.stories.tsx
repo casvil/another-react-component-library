@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { ThemeProvider } from '../../theme/ThemeProvider';
+import { ThemeDemo } from '../../theme/ThemeDemo';
 
 import { Link } from './Link';
 
@@ -51,5 +53,34 @@ export const OpensInNewTab: Story = {
 export const CustomClass: Story = {
   args: {
     className: 'underline decoration-2 decoration-indigo-500',
+  },
+};
+
+export const DarkTheme: Story = {
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <Link {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Link in dark theme context.',
+      },
+    },
+    globals: {
+      theme: 'dark',
+    },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  render: () => <ThemeDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive demo for toggling light/dark theme with Link.',
+      },
+    },
   },
 };

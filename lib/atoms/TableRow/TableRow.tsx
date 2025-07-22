@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 import { tableSizeClasses, tableBaseClasses } from '../../@types/classes';
 import type { Size } from '../../@types/classes';
@@ -35,12 +36,13 @@ export const TableRow = React.memo(
         tableBaseClasses.row,
         tableSizeClasses.row.height[size],
         {
-          'bg-white': variant === 'default',
-          'bg-gray-50': variant === 'striped',
-          'bg-blue-50': variant === 'highlighted',
-          'hover:bg-gray-100 cursor-pointer transition-colors': interactive,
-          'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset':
-            interactive,
+          'bg-[var(--color-surface-primary)]': variant === 'default',
+          'bg-[var(--color-surface-secondary)]': variant === 'striped',
+          'bg-[var(--color-primary-50)]': variant === 'highlighted',
+          'cursor-pointer transition-colors': interactive,
+          [themeClasses.surface.hover]: interactive,
+          'focus:outline-none focus:ring-2 focus:ring-inset': interactive,
+          [themeClasses.border.focus]: interactive,
         },
         className,
       );

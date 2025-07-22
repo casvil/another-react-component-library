@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { ThemeProvider } from '../../theme/ThemeProvider';
+import { ThemeDemo } from '../../theme/ThemeDemo';
 
 import { Select } from './Select';
 
@@ -83,5 +85,34 @@ export const Large: Story = {
   args: {
     size: 'lg',
     placeholder: 'Large select',
+  },
+};
+
+export const DarkTheme: Story = {
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <Select {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Select in dark theme context.',
+      },
+    },
+    globals: {
+      theme: 'dark',
+    },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  render: () => <ThemeDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive demo for toggling light/dark theme with Select.',
+      },
+    },
   },
 };

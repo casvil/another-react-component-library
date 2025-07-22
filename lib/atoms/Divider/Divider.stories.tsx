@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { ThemeProvider } from '../../theme/ThemeProvider';
+import { ThemeDemo } from '../../theme/ThemeDemo';
 
 import { Divider } from './Divider';
 import { Label } from '../Label/Label';
@@ -72,5 +74,34 @@ export const CustomStyled: Story = {
   args: {
     orientation: 'horizontal',
     className: 'border-red-500 border-2',
+  },
+};
+
+export const DarkTheme: Story = {
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <Divider {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Divider in dark theme context.',
+      },
+    },
+    globals: {
+      theme: 'dark',
+    },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  render: () => <ThemeDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive demo for toggling light/dark theme with Divider.',
+      },
+    },
   },
 };

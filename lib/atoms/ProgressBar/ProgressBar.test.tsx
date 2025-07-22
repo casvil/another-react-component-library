@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { ProgressBar } from './ProgressBar';
 
@@ -49,5 +50,23 @@ describe('ProgressBar', () => {
 
     const label = screen.getByText('Progress');
     expect(label).toHaveClass('custom-label');
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <ProgressBar value={50} label="Theme test" />
+      </ThemeProvider>,
+    );
+    const progressBar = screen.getByRole('progressbar');
+    expect(progressBar).toHaveClass('bg-[var(--color-surface-secondary)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <ProgressBar value={50} label="Theme test" />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(progressBar).toHaveClass('bg-[var(--color-surface-secondary)]');
   });
 });

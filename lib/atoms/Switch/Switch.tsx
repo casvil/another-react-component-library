@@ -8,6 +8,7 @@ import React, {
   useMemo,
 } from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 import { Label } from '../Label/Label';
 import { useStableId } from '../../hooks/useStableId/useStableId';
@@ -125,11 +126,18 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           <label
             htmlFor={switchId}
             className={clsx(
-              'relative inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-in-out focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2',
+              'relative inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-in-out focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2',
+              themeClasses.border.focus,
               currentSize.track,
               visualChecked
-                ? clsx('bg-indigo-600', !disabled && 'hover:bg-indigo-700')
-                : clsx('bg-gray-200', !disabled && 'hover:bg-gray-300'),
+                ? clsx(
+                    'bg-[var(--color-primary-600)]',
+                    !disabled && 'hover:bg-[var(--color-primary-700)]',
+                  )
+                : clsx(
+                    'bg-[var(--color-surface-secondary)]',
+                    !disabled && 'hover:bg-[var(--color-surface-hover)]',
+                  ),
               disabled && 'cursor-not-allowed',
             )}
           >
@@ -162,7 +170,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
               <span
                 id={descriptionId}
                 className={clsx(
-                  'text-gray-500',
+                  themeClasses.text.tertiary,
                   size === 'sm'
                     ? 'text-xs'
                     : size === 'md'

@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 export interface ErrorMessageProps
   extends React.HTMLAttributes<HTMLParagraphElement> {
@@ -25,7 +26,7 @@ export const ErrorMessage = ({
     <p
       id={id}
       role="alert"
-      className={clsx('text-xs text-red-600', className)}
+      className={clsx('text-xs', themeClasses.text.error, className)}
       {...props}
     >
       {children}

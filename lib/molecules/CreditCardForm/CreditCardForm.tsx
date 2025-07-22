@@ -4,6 +4,7 @@ import CreditCard from 'lucide-react/icons/credit-card';
 import Calendar from 'lucide-react/icons/calendar';
 import Lock from 'lucide-react/icons/lock';
 import User from 'lucide-react/icons/user';
+import { themeClasses } from '../../theme/utils';
 
 import { Input } from '../../atoms/Input/Input';
 import { Label } from '../../atoms/Label/Label';
@@ -292,7 +293,7 @@ export const CreditCardForm: React.FC<CreditCardFormProps> = ({
 
       {/* Card Type Display */}
       {cardType && cardType !== 'unknown' && (
-        <div className="text-sm text-gray-600">
+        <div className={clsx('text-sm', themeClasses.text.secondary)}>
           <span className="font-medium">Detected card:</span>{' '}
           <span className="capitalize font-semibold">{cardType}</span>
         </div>

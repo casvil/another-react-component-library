@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 export interface TimeDisplayProps {
   time: Date | string | number;
@@ -37,7 +38,8 @@ export const TimeDisplay = forwardRef<HTMLTimeElement, TimeDisplayProps>(
         dateTime={date.toISOString()}
         className={clsx(
           'inline-block font-mono',
-          bordered && 'border border-black-300 rounded-md px-2 py-1',
+          bordered && 'border rounded-md px-2 py-1',
+          bordered && themeClasses.border.primary,
           className,
         )}
       >

@@ -2,12 +2,14 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { ColorScheme, ThemeContextValue } from '../@types/theme';
 import { themes } from './themes';
 import { generateCSSVariables } from './utils';
+import { lightTokens, darkTokens } from './tokens';
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export interface ThemeProviderProps {
   children: React.ReactNode;
   defaultColorScheme?: ColorScheme;
+  colorScheme?: ColorScheme;
   storageKey?: string;
 }
 
@@ -24,17 +26,16 @@ export interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   defaultColorScheme = 'light',
+  colorScheme,
   storageKey = 'ui-theme',
 }) => {
-  const [colorScheme, setColorSchemeState] = useState<ColorScheme>(() => {
-    // Try to get saved theme from localStorage
+  const [internalScheme, setInternalScheme] = useState<ColorScheme>(() => {
+    if (colorScheme) return colorScheme;
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem(storageKey) as ColorScheme;
       if (saved && (saved === 'light' || saved === 'dark')) {
         return saved;
       }
-
-      // Check system preference
       if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         return 'dark';
       }
@@ -42,63 +43,70 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     return defaultColorScheme;
   });
 
-  const theme = themes[colorScheme];
+  const effectiveScheme = colorScheme ?? internalScheme;
+  const theme = themes[effectiveScheme];
 
   const setColorScheme = (scheme: ColorScheme) => {
-    setColorSchemeState(scheme);
+    if (colorScheme) return;
+    setInternalScheme(scheme);
     if (typeof window !== 'undefined') {
       localStorage.setItem(storageKey, scheme);
     }
   };
 
   const toggleColorScheme = () => {
-    setColorScheme(colorScheme === 'light' ? 'dark' : 'light');
+    if (colorScheme) return;
+    setColorScheme(internalScheme === 'light' ? 'dark' : 'light');
+  };
+
+  // Helper to get all possible theme variable keys
+  const getAllThemeVariableKeys = () => {
+    const allVars = {
+      ...generateCSSVariables(lightTokens),
+      ...generateCSSVariables(darkTokens),
+    };
+    return Object.keys(allVars);
   };
 
   // Inject CSS variables when theme changes
   useEffect(() => {
     const root = document.documentElement;
+    // Debug log to confirm which tokens are being applied
+    console.log('Applying theme', effectiveScheme, theme.tokens);
+    // Always clean up all possible theme variables
+    getAllThemeVariableKeys().forEach((property) => {
+      root.style.removeProperty(property);
+    });
     const cssVariables = generateCSSVariables(theme.tokens);
-
-    // Apply CSS variables to :root
     Object.entries(cssVariables).forEach(([property, value]) => {
       root.style.setProperty(property, value);
     });
-
-    // Set data-theme attribute for CSS selectors
-    root.setAttribute('data-theme', colorScheme);
-
-    // Set color-scheme for browser defaults
-    root.style.colorScheme = colorScheme;
-
-    // Clean up function
+    root.setAttribute('data-theme', effectiveScheme);
+    root.style.colorScheme = effectiveScheme;
     return () => {
-      Object.keys(cssVariables).forEach((property) => {
+      getAllThemeVariableKeys().forEach((property) => {
         root.style.removeProperty(property);
       });
     };
-  }, [theme, colorScheme]);
+  }, [theme, effectiveScheme, colorScheme]);
 
-  // Listen for system theme changes
+  // Listen for system theme changes (only if uncontrolled)
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
+    if (colorScheme || typeof window === 'undefined') return;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
-      // Only auto-switch if no manual preference is saved
       const savedTheme = localStorage.getItem(storageKey);
       if (!savedTheme) {
-        setColorSchemeState(e.matches ? 'dark' : 'light');
+        setInternalScheme(e.matches ? 'dark' : 'light');
       }
     };
-
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [storageKey]);
+  }, [storageKey, colorScheme]);
 
   const value: ThemeContextValue = {
     theme,
-    colorScheme,
+    colorScheme: effectiveScheme,
     setColorScheme,
     toggleColorScheme,
   };

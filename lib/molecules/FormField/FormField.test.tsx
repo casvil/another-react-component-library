@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Mail } from 'lucide-react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { FormField } from './FormField';
 
@@ -203,6 +204,24 @@ describe('FormField', () => {
     const describedBy = input.getAttribute('aria-describedby');
     expect(describedBy).toBeTruthy();
     expect(describedBy).toContain('tooltip');
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <FormField label="Theme test" tooltip="Help text" />
+      </ThemeProvider>,
+    );
+    const helpIcon = screen.getByLabelText('Help: Help text');
+    expect(helpIcon).toHaveStyle({ color: 'var(--color-text-tertiary)' });
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <FormField label="Theme test" tooltip="Help text" />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable styles
+    expect(helpIcon).toHaveStyle({ color: 'var(--color-text-tertiary)' });
   });
 
   it('handles controlled input correctly', async () => {

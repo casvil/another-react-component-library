@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { TimeDisplay } from './TimeDisplay';
 
@@ -59,5 +60,23 @@ describe('TimeDisplay', () => {
     render(<TimeDisplay time={testDate} />);
     const el = screen.getByLabelText('Time is 12:34:56');
     expect(el).toBeInTheDocument();
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <TimeDisplay time={testDate} bordered />
+      </ThemeProvider>,
+    );
+    const timeEl = screen.getByText('12:34:56');
+    expect(timeEl).toHaveClass('border-[var(--color-border-primary)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <TimeDisplay time={testDate} bordered />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(timeEl).toHaveClass('border-[var(--color-border-primary)]');
   });
 });

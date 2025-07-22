@@ -2,6 +2,7 @@ import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { Switch } from './Switch';
 
@@ -191,5 +192,23 @@ describe('Switch', () => {
         .nextElementSibling.querySelector('span');
       expect(thumbChecked).toHaveClass(checked);
     });
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <Switch label="Theme test" />
+      </ThemeProvider>,
+    );
+    const track = screen.getByRole('switch').nextElementSibling;
+    expect(track).toHaveClass('bg-[var(--color-surface-secondary)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <Switch label="Theme test" />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(track).toHaveClass('bg-[var(--color-surface-secondary)]');
   });
 });

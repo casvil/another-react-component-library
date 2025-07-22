@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { ThemeProvider } from '../../theme/ThemeProvider';
+import { ThemeDemo } from '../../theme/ThemeDemo';
 
 import { ProgressBar } from './ProgressBar';
 import { WithFullWidthRoot } from '../../../.storybook/decorators/WithFullWidthRoot';
@@ -79,5 +81,35 @@ export const Large: Story = {
   args: {
     size: 'lg',
     label: 'Large progress bar',
+  },
+};
+
+export const DarkTheme: Story = {
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <ProgressBar {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'ProgressBar in dark theme context.',
+      },
+    },
+    globals: {
+      theme: 'dark',
+    },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  render: () => <ThemeDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Interactive demo for toggling light/dark theme with ProgressBar.',
+      },
+    },
   },
 };

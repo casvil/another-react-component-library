@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { Select } from './Select';
 
@@ -194,5 +195,28 @@ describe('Select', () => {
     const option = screen.getByRole('option', { name: 'Apple' });
     await user.click(option);
     expect(input).toHaveValue('Apple');
+  });
+
+  it('adapts to light and dark themes', async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <Select options={options} />
+      </ThemeProvider>,
+    );
+
+    // Open dropdown to check theme classes
+    const input = screen.getByRole('textbox');
+    await user.click(input);
+    const dropdown = screen.getByRole('listbox');
+    expect(dropdown).toHaveClass('bg-[var(--color-surface-primary)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <Select options={options} />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(dropdown).toHaveClass('bg-[var(--color-surface-primary)]');
   });
 });

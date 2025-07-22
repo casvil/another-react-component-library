@@ -1,6 +1,7 @@
 import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import clsx from 'clsx';
 import type { LucideIcon } from 'lucide-icon-type';
+import { themeClasses } from '../../theme/utils';
 
 import type { Size } from '../../@types/classes';
 import { iconButtonSizeClasses } from '../../@types/classes';
@@ -36,11 +37,11 @@ export const IconButton = React.memo(
 
       const variants = {
         primary:
-          'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500',
+          'bg-[var(--color-primary-600)] text-[var(--color-text-inverse)] hover:bg-[var(--color-primary-700)] focus:ring-[var(--color-border-focus)]',
         secondary:
-          'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-400',
+          'bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] focus:ring-[var(--color-border-focus)]',
         tertiary:
-          'bg-transparent text-gray-800 hover:bg-gray-100 focus:ring-gray-300 border border-gray-300',
+          'bg-transparent text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] focus:ring-[var(--color-border-focus)] border border-[var(--color-border-primary)]',
       };
 
       // Get icon size based on button size

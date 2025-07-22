@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 export interface LabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement> {
@@ -19,7 +20,11 @@ export const Label = React.memo<LabelProps>(
     return (
       <label
         htmlFor={htmlFor}
-        className={clsx('text-sm font-medium text-gray-700', className)}
+        className={clsx(
+          'text-sm font-medium',
+          themeClasses.text.primary,
+          className,
+        )}
         {...props}
       >
         {children}

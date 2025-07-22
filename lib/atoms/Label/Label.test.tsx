@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { Label } from './Label';
 import { Input } from '../Input/Input';
@@ -22,7 +23,11 @@ describe('Label', () => {
   it('applies default Tailwind classes', () => {
     render(<Label htmlFor="input-2">Email</Label>);
     const label = screen.getByText('Email');
-    expect(label).toHaveClass('text-sm', 'font-medium', 'text-gray-700');
+    expect(label).toHaveClass(
+      'text-sm',
+      'font-medium',
+      'text-[var(--color-text-primary)]',
+    );
   });
 
   it('appends custom className', () => {
@@ -66,5 +71,23 @@ describe('Label', () => {
     );
     const label = screen.getByText('Email');
     expect(label).toHaveAttribute('aria-describedby', 'email-help');
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <Label htmlFor="test">Theme test</Label>
+      </ThemeProvider>,
+    );
+    const label = screen.getByText('Theme test');
+    expect(label).toHaveClass('text-[var(--color-text-primary)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <Label htmlFor="test">Theme test</Label>
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(label).toHaveClass('text-[var(--color-text-primary)]');
   });
 });

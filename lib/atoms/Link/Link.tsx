@@ -5,6 +5,7 @@ import React, {
   useMemo,
 } from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 export interface LinkProps
   extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'className' | 'href'> {
@@ -47,10 +48,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       'inline-flex items-center cursor-pointer font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50';
 
     const variants = {
-      primary: 'text-indigo-600 hover:text-indigo-800 focus:ring-indigo-500',
-      secondary: 'text-gray-600 hover:text-gray-800 focus:ring-gray-400',
-      tertiary:
-        'text-gray-600 hover:text-gray-800 focus:ring-gray-400 underline',
+      primary: `${themeClasses.text.link} hover:text-[var(--color-primary-700)] focus:ring-[var(--color-border-focus)]`,
+      secondary: `${themeClasses.text.secondary} hover:text-[var(--color-text-primary)] focus:ring-[var(--color-border-focus)]`,
+      tertiary: `${themeClasses.text.secondary} hover:text-[var(--color-text-primary)] focus:ring-[var(--color-border-focus)] underline`,
     };
 
     const classes = clsx(

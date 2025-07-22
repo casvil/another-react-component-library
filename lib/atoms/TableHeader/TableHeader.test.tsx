@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 import { TableHeader } from './TableHeader';
 
 describe('TableHeader', () => {
@@ -36,10 +37,10 @@ describe('TableHeader', () => {
       expect(header).toHaveAttribute('scope', 'col');
       expect(header).toHaveClass(
         'font-semibold',
-        'text-gray-900',
+        'text-[var(--color-text-primary)]',
         'border-b',
-        'border-gray-200',
-        'bg-gray-50',
+        'border-[var(--color-border-primary)]',
+        'bg-[var(--color-surface-secondary)]',
         'px-4',
         'py-3',
         'text-base',
@@ -86,7 +87,10 @@ describe('TableHeader', () => {
       renderHeader({ variant: 'sortable' }, 'Sortable');
 
       const header = screen.getByTestId('header');
-      expect(header).toHaveClass('cursor-pointer', 'hover:bg-gray-100');
+      expect(header).toHaveClass(
+        'cursor-pointer',
+        'hover:bg-[var(--color-surface-hover)]',
+      );
       expect(header).toHaveAttribute('tabIndex', '0');
       expect(header).toHaveAttribute('role', 'columnheader');
       expect(header).toHaveAttribute('aria-sort', 'none');
@@ -120,6 +124,36 @@ describe('TableHeader', () => {
         'data-custom',
         'value',
       );
+    });
+
+    it('adapts to light and dark themes', () => {
+      const { rerender } = render(
+        <ThemeProvider defaultColorScheme="light">
+          <table>
+            <thead>
+              <tr>
+                <TableHeader data-testid="header">Theme test</TableHeader>
+              </tr>
+            </thead>
+          </table>
+        </ThemeProvider>,
+      );
+      const header = screen.getByTestId('header');
+      expect(header).toHaveClass('text-[var(--color-text-primary)]');
+
+      rerender(
+        <ThemeProvider defaultColorScheme="dark">
+          <table>
+            <thead>
+              <tr>
+                <TableHeader data-testid="header">Theme test</TableHeader>
+              </tr>
+            </thead>
+          </table>
+        </ThemeProvider>,
+      );
+      // Should still have the same theme variable classes
+      expect(header).toHaveClass('text-[var(--color-text-primary)]');
     });
   });
 });

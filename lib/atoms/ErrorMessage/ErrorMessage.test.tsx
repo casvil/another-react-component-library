@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { ErrorMessage } from './ErrorMessage';
 
@@ -32,5 +33,23 @@ describe('ErrorMessage', () => {
 
     expect(error).toHaveClass('italic');
     expect(error).toHaveAttribute('role', 'alert');
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <ErrorMessage id="test">Theme test</ErrorMessage>
+      </ThemeProvider>,
+    );
+    const error = screen.getByRole('alert');
+    expect(error).toHaveClass('text-[var(--color-text-error)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <ErrorMessage id="test">Theme test</ErrorMessage>
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(error).toHaveClass('text-[var(--color-text-error)]');
   });
 });

@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 import { TextArea } from './TextArea';
 
 describe('TextArea', () => {
@@ -98,5 +99,23 @@ describe('TextArea', () => {
 
       unmount();
     });
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <TextArea label="Theme test" />
+      </ThemeProvider>,
+    );
+    const textarea = screen.getByRole('textbox', { name: 'Theme test' });
+    expect(textarea).toHaveClass('border-[var(--color-border-primary)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <TextArea label="Theme test" />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(textarea).toHaveClass('border-[var(--color-border-primary)]');
   });
 });

@@ -8,6 +8,7 @@ import React, {
   ChangeEvent,
 } from 'react';
 import { clsx } from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 import Upload from 'lucide-react/icons/upload';
 import CheckCircle from 'lucide-react/icons/check-circle';
@@ -65,11 +66,11 @@ const getIconColor = (
   variant: DropZoneVariant,
   isDragOver: boolean,
 ) => {
-  if (disabled) return 'text-gray-400';
-  if (variant === 'success') return 'text-green-500';
-  if (variant === 'error') return 'text-red-500';
-  if (isDragOver) return 'text-blue-500';
-  return 'text-gray-500';
+  if (disabled) return 'text-[var(--color-text-tertiary)]';
+  if (variant === 'success') return 'text-[var(--color-success-500)]';
+  if (variant === 'error') return 'text-[var(--color-error-500)]';
+  if (isDragOver) return 'text-[var(--color-primary-500)]';
+  return 'text-[var(--color-text-secondary)]';
 };
 
 const getBorderColor = (
@@ -77,11 +78,11 @@ const getBorderColor = (
   variant: DropZoneVariant,
   isDragOver: boolean,
 ) => {
-  if (disabled) return 'border-gray-200';
-  if (variant === 'success') return 'border-green-300';
-  if (variant === 'error') return 'border-red-300';
-  if (isDragOver) return 'border-blue-400 border-solid';
-  return 'border-gray-300 border-dashed';
+  if (disabled) return 'border-[var(--color-border-tertiary)]';
+  if (variant === 'success') return 'border-[var(--color-success-300)]';
+  if (variant === 'error') return 'border-[var(--color-error-300)]';
+  if (isDragOver) return 'border-[var(--color-primary-400)] border-solid';
+  return 'border-[var(--color-border-primary)] border-dashed';
 };
 
 const getBackgroundColor = (
@@ -89,11 +90,11 @@ const getBackgroundColor = (
   variant: DropZoneVariant,
   isDragOver: boolean,
 ) => {
-  if (disabled) return 'bg-gray-50';
-  if (variant === 'success') return 'bg-green-50';
-  if (variant === 'error') return 'bg-red-50';
-  if (isDragOver) return 'bg-blue-50';
-  return 'bg-white hover:bg-gray-50';
+  if (disabled) return 'bg-[var(--color-surface-tertiary)]';
+  if (variant === 'success') return 'bg-[var(--color-success-50)]';
+  if (variant === 'error') return 'bg-[var(--color-error-50)]';
+  if (isDragOver) return 'bg-[var(--color-primary-50)]';
+  return 'bg-[var(--color-surface-primary)] hover:bg-[var(--color-surface-secondary)]';
 };
 
 const getTextColor = (

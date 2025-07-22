@@ -2,6 +2,7 @@ import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { CheckboxGroup } from './CheckboxGroup';
 
@@ -106,5 +107,23 @@ describe('CheckboxGroup', () => {
     const group = screen.getByRole('group');
     expect(group).toBeInTheDocument();
     expect(screen.getByText('A11y Group')).toBeInTheDocument();
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <CheckboxGroup label="Theme test" options={options} />
+      </ThemeProvider>,
+    );
+    const group = screen.getByRole('group');
+    expect(group).toBeInTheDocument();
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <CheckboxGroup label="Theme test" options={options} />
+      </ThemeProvider>,
+    );
+    // Should still be in the document
+    expect(group).toBeInTheDocument();
   });
 });

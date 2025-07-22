@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 import { tableSizeClasses, tableBaseClasses } from '../../@types/classes';
 import type { Size } from '../../@types/classes';
@@ -39,8 +40,8 @@ export const TableHeader = React.memo(
           'text-left': align === 'left',
           'text-center': align === 'center',
           'text-right': align === 'right',
-          'cursor-pointer hover:bg-gray-100 transition-colors':
-            variant === 'sortable',
+          'cursor-pointer transition-colors': variant === 'sortable',
+          [themeClasses.surface.hover]: variant === 'sortable',
         },
         className,
       );

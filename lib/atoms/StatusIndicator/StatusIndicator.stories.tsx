@@ -1,4 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
+import { ThemeProvider } from '../../theme/ThemeProvider';
+import { ThemeDemo } from '../../theme/ThemeDemo';
 
 import { StatusIndicator } from './StatusIndicator';
 
@@ -107,4 +109,34 @@ export const AllStatuses: Story = {
       </div>
     </div>
   ),
+};
+
+export const DarkTheme: Story = {
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <StatusIndicator {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'StatusIndicator in dark theme context.',
+      },
+    },
+    globals: {
+      theme: 'dark',
+    },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  render: () => <ThemeDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Interactive demo for toggling light/dark theme with StatusIndicator.',
+      },
+    },
+  },
 };

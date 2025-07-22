@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { Link } from './Link';
 
@@ -23,7 +24,9 @@ describe('Link', () => {
         Example
       </Link>,
     );
-    expect(screen.getByRole('link')).toHaveClass('text-gray-600');
+    expect(screen.getByRole('link')).toHaveClass(
+      'text-[var(--color-text-secondary)]',
+    );
 
     rerender(
       <Link href="https://example.com" variant="tertiary">
@@ -81,5 +84,27 @@ describe('Link', () => {
       </Link>,
     );
     expect(screen.getByRole('link')).toHaveAttribute('rel', 'nofollow');
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <Link href="https://example.com" variant="primary">
+          Theme test
+        </Link>
+      </ThemeProvider>,
+    );
+    const link = screen.getByRole('link', { name: 'Theme test' });
+    expect(link).toHaveClass('text-[var(--color-text-link)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <Link href="https://example.com" variant="primary">
+          Theme test
+        </Link>
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(link).toHaveClass('text-[var(--color-text-link)]');
   });
 });

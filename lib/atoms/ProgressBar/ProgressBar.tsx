@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 import { Label } from '../Label/Label';
 import type { Size } from '../../@types/classes';
@@ -42,13 +43,15 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
         aria-valuemax={100}
         aria-valuenow={safeValue}
         className={clsx(
-          'relative w-full bg-gray-200 rounded overflow-hidden',
+          'relative w-full rounded overflow-hidden',
+          themeClasses.surface.secondary,
           currentSize.bar,
         )}
       >
         <div
           className={clsx(
-            'h-full bg-indigo-600 transition-all duration-300 ease-in-out',
+            'h-full transition-all duration-300 ease-in-out',
+            'bg-[var(--color-primary-600)]',
             barClassName,
           )}
           style={{ width: `${safeValue}%` }}

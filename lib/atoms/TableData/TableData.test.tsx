@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 import { TableData } from './TableData';
 
 describe('TableData', () => {
@@ -36,9 +37,9 @@ describe('TableData', () => {
         'px-4',
         'py-3',
         'text-base',
-        'text-gray-900',
+        'text-[var(--color-text-primary)]',
         'border-b',
-        'border-gray-200',
+        'border-[var(--color-border-primary)]',
       );
     });
   });
@@ -171,6 +172,36 @@ describe('TableData', () => {
         'data-custom',
         'value',
       );
+    });
+
+    it('adapts to light and dark themes', () => {
+      const { rerender } = render(
+        <ThemeProvider defaultColorScheme="light">
+          <table>
+            <tbody>
+              <tr>
+                <TableData data-testid="cell">Theme test</TableData>
+              </tr>
+            </tbody>
+          </table>
+        </ThemeProvider>,
+      );
+      const cell = screen.getByTestId('cell');
+      expect(cell).toHaveClass('text-[var(--color-text-primary)]');
+
+      rerender(
+        <ThemeProvider defaultColorScheme="dark">
+          <table>
+            <tbody>
+              <tr>
+                <TableData data-testid="cell">Theme test</TableData>
+              </tr>
+            </tbody>
+          </table>
+        </ThemeProvider>,
+      );
+      // Should still have the same theme variable classes
+      expect(cell).toHaveClass('text-[var(--color-text-primary)]');
     });
   });
 });

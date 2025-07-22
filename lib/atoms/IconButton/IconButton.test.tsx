@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import type { LucideIcon } from 'lucide-icon-type';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { IconButton } from './IconButton';
 import { iconButtonSizeClasses } from '../../@types/classes';
@@ -82,5 +83,23 @@ describe('IconButton', () => {
       expect(icon).toHaveAttribute('size', expectedSize.toString());
       unmount();
     });
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <IconButton icon={MockIcon} aria-label="Theme test" variant="primary" />
+      </ThemeProvider>,
+    );
+    const button = screen.getByRole('button', { name: 'Theme test' });
+    expect(button).toHaveClass('bg-[var(--color-primary-600)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <IconButton icon={MockIcon} aria-label="Theme test" variant="primary" />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(button).toHaveClass('bg-[var(--color-primary-600)]');
   });
 });

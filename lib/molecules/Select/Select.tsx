@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import ChevronDown from 'lucide-react/icons/chevron-down';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 import { Input } from '../../atoms/Input/Input';
 import { Label } from '../../atoms/Label/Label';
@@ -154,7 +155,9 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         {isOpen && (
           <div
             className={clsx(
-              'absolute z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto',
+              'absolute z-10 mt-1 rounded-md shadow-lg max-h-60 overflow-auto',
+              themeClasses.surface.primary,
+              themeClasses.border.primary,
               dropdownClassName,
             )}
             style={{ width: inputWidth }}
@@ -166,8 +169,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
                 role="option"
                 aria-selected={option.value === selected}
                 className={clsx(
-                  'px-3 py-2 cursor-pointer hover:bg-gray-100 focus:bg-gray-100 focus:outline-none',
-                  option.value === selected && 'bg-indigo-50 text-indigo-900',
+                  'px-3 py-2 cursor-pointer focus:outline-none',
+                  themeClasses.surface.hover,
+                  option.value === selected &&
+                    'bg-[var(--color-primary-50)] text-[var(--color-primary-900)]',
                 )}
                 onClick={() => handleSelect(option.value)}
                 onKeyDown={(e) => {

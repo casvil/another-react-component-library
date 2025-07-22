@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 import HelpCircle from 'lucide-react/icons/help-circle';
+import { themeClasses } from '../../theme/utils';
 
 import { Label } from '../../atoms/Label/Label';
 import { Input } from '../../atoms/Input/Input';
@@ -76,7 +77,8 @@ export const FormField = React.memo(
           >
             <HelpCircle
               size={16}
-              className="text-gray-400 hover:text-gray-600 cursor-help transition-colors"
+              className="cursor-help transition-colors hover:text-[var(--color-text-secondary)]"
+              style={{ color: 'var(--color-text-tertiary)' }}
               aria-label={`Help: ${tooltip}`}
             />
           </Tooltip>

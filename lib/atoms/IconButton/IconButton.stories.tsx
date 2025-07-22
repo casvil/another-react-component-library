@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { X } from 'lucide-react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
+import { ThemeDemo } from '../../theme/ThemeDemo';
 
 import { IconButton, IconButtonProps } from './IconButton';
 
@@ -72,3 +74,33 @@ export const AllSizes = {
     </div>
   ),
 } satisfies StoryObj<IconButtonProps>;
+
+export const DarkTheme: Story = {
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <IconButton {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'IconButton in dark theme context.',
+      },
+    },
+    globals: {
+      theme: 'dark',
+    },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  render: () => <ThemeDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Interactive demo for toggling light/dark theme with IconButton.',
+      },
+    },
+  },
+};

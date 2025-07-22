@@ -2,6 +2,7 @@ import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Search } from 'lucide-react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { InputField } from './InputField';
 import { inputSizeClasses } from '../../@types/classes';
@@ -84,5 +85,23 @@ describe('InputField', () => {
 
       unmount();
     });
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <InputField label="Theme test" />
+      </ThemeProvider>,
+    );
+    const input = screen.getByLabelText('Theme test');
+    expect(input).toBeInTheDocument();
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <InputField label="Theme test" />
+      </ThemeProvider>,
+    );
+    // Should still be in the document
+    expect(input).toBeInTheDocument();
   });
 });

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { Divider } from './Divider';
 
@@ -36,5 +37,23 @@ describe('Divider', () => {
   it('accepts and applies custom className', () => {
     render(<Divider className="border-blue-500" />);
     expect(screen.getByRole('separator')).toHaveClass('border-blue-500');
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <Divider />
+      </ThemeProvider>,
+    );
+    const divider = screen.getByRole('separator');
+    expect(divider).toHaveClass('border-[var(--color-border-primary)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <Divider />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(divider).toHaveClass('border-[var(--color-border-primary)]');
   });
 });

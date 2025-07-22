@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
+import { themeClasses } from '../../theme/utils';
 
 export interface DividerProps extends React.HTMLAttributes<HTMLHRElement> {
   orientation?: 'horizontal' | 'vertical';
@@ -21,7 +22,8 @@ export const Divider = forwardRef<HTMLHRElement, DividerProps>(
         role="separator"
         aria-orientation={orientation}
         className={clsx(
-          'border-gray-300 border-solid border',
+          'border-solid border',
+          themeClasses.border.primary,
           isHorizontal ? 'h-px w-full' : 'w-px h-full mx-2',
           className,
         )}

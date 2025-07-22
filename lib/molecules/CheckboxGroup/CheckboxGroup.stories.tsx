@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { ThemeProvider } from '../../theme/ThemeProvider';
+import { ThemeDemo } from '../../theme/ThemeDemo';
 
 import { CheckboxGroup } from './CheckboxGroup';
 
@@ -70,5 +72,35 @@ export const CustomStyles: Story = {
     options,
     className: 'bg-gray-50 p-4 rounded-lg',
     labelClassName: 'text-indigo-700 font-bold',
+  },
+};
+
+export const DarkTheme: Story = {
+  render: (args) => (
+    <ThemeProvider defaultColorScheme="dark">
+      <CheckboxGroup {...args} />
+    </ThemeProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'CheckboxGroup in dark theme context.',
+      },
+    },
+    globals: {
+      theme: 'dark',
+    },
+  },
+};
+
+export const InteractiveThemeDemo: Story = {
+  render: () => <ThemeDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Interactive demo for toggling light/dark theme with CheckboxGroup.',
+      },
+    },
   },
 };

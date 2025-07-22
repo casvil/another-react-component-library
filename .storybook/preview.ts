@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react-vite';
 
 import '../lib/index.css';
-import { withTheme } from './decorators/withTheme';
+// import { withTheme } from './decorators/withTheme';
 
 const preview: Preview = {
   parameters: {
@@ -23,24 +23,6 @@ const preview: Preview = {
       disable: true, // Disable default background since we handle this with themes
     },
   },
-
-  globalTypes: {
-    theme: {
-      description: 'Global theme for components',
-      defaultValue: 'light',
-      toolbar: {
-        title: 'Theme',
-        icon: 'paintbrush',
-        items: [
-          { value: 'light', title: 'Light', icon: 'sun' },
-          { value: 'dark', title: 'Dark', icon: 'moon' },
-        ],
-        dynamicTitle: true,
-      },
-    },
-  },
-
-  decorators: [withTheme],
 };
 
 export default preview;

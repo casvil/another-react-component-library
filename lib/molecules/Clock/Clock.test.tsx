@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { Clock } from './Clock';
 
@@ -53,5 +54,23 @@ describe('Clock', () => {
     render(<Clock className="border px-2 py-1" />);
     const timeEl = screen.getByText('12:34:56');
     expect(timeEl).toHaveClass('border', 'px-2', 'py-1');
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <Clock bordered />
+      </ThemeProvider>,
+    );
+    const timeEl = screen.getByText('12:34:56');
+    expect(timeEl).toHaveClass('border-[var(--color-border-primary)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <Clock bordered />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(timeEl).toHaveClass('border-[var(--color-border-primary)]');
   });
 });

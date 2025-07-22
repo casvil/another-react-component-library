@@ -1,6 +1,7 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from '../../theme/ThemeProvider';
 
 import { StatusIndicator } from './StatusIndicator';
 
@@ -74,5 +75,24 @@ describe('StatusIndicator', () => {
 
     expect(statusElement).toBeInTheDocument();
     expect(screen.queryByText('Online')).not.toBeInTheDocument();
+  });
+
+  it('adapts to light and dark themes', () => {
+    const { rerender } = render(
+      <ThemeProvider defaultColorScheme="light">
+        <StatusIndicator status="online" showLabel />
+      </ThemeProvider>,
+    );
+    const statusElement = screen.getByRole('status');
+    const dot = statusElement.querySelector('span[aria-hidden="true"]');
+    expect(dot).toHaveClass('bg-[var(--color-success-500)]');
+
+    rerender(
+      <ThemeProvider defaultColorScheme="dark">
+        <StatusIndicator status="online" showLabel />
+      </ThemeProvider>,
+    );
+    // Should still have the same theme variable classes
+    expect(dot).toHaveClass('bg-[var(--color-success-500)]');
   });
 });
